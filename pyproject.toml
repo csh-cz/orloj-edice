@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: 2026 David Knespl
+# SPDX-License-Identifier: EUPL-1.2
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "transcribus"
+version = "0.1.0"
+description = "Automated pipeline: archive scans -> Transkribus HTR -> cleaned text"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "EUPL-1.2"
+authors = [{ name = "David Knespl" }]
+dependencies = [
+    "httpx>=0.27",
+    "pillow>=10.0",
+    "lxml>=5.0",
+    "typer>=0.12",
+    "pydantic>=2.6",
+    "pydantic-settings>=2.2",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.4"]
+
+[project.scripts]
+transcribus = "transcribus.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/transcribus"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# Typer's idiomatic API puts Option()/Argument() calls in argument defaults.
+"src/transcribus/cli.py" = ["B008"]
+# Inline HTML/CSS template strings naturally exceed the line length.
+"src/transcribus/processing/edition.py" = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
