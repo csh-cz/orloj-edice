@@ -19,8 +19,8 @@ _RULES: list[tuple[str, str]] = [
     ("ʃ", "s"),  # long s (U+0283)
     ("ſ", "s"),  # long s (U+017F)
     ("ss", "š"),
-    ("cž", "č"),
-    ("cz", "č"),
+    ("cž", "č"),  # č was written with the cž spřežka
+    ("cz", "c"),  # plain cz spřežka = c (jsoucze->jsouce, zprawcze->zpravce)
     ("rž", "ř"),
     ("rz", "ř"),
     ("au", "ou"),  # dlauho -> dlouho

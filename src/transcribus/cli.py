@@ -27,6 +27,19 @@ def _client():
     return client
 
 
+def _parse_pages(spec: str) -> list[int]:
+    """Parse a page spec like '3,50,55-61' into a sorted list of ints."""
+    out: set[int] = set()
+    for part in spec.split(","):
+        part = part.strip()
+        if "-" in part:
+            lo, hi = part.split("-", 1)
+            out.update(range(int(lo), int(hi) + 1))
+        elif part:
+            out.add(int(part))
+    return sorted(out)
+
+
 @app.command()
 def login(
     user: str | None = typer.Option(None, "--user", help="Override .env user/email"),
@@ -128,7 +141,7 @@ def run(
     source: str = typer.Option("ahmp", "--source"),
     coll_id: int | None = typer.Option(None, "--coll", help="Target collection ID"),
     model_id: int | None = typer.Option(None, "--model-id", help="HTR model id"),
-    engine: str = typer.Option("pylaia", "--engine", help="pylaia | citlab"),
+    engine: str = typer.Option("auto", "--engine", help="pylaia | citlab"),
     limit: int | None = typer.Option(None, "--limit", help="Max scans to process"),
     title: str | None = typer.Option(None, "--title"),
 ) -> None:
@@ -149,6 +162,123 @@ def run(
     finally:
         p.close()
     typer.echo(f"Transcript: {result}")
+
+
+@app.command()
+def tables(
+    out: Path = typer.Option(..., "--out", help="Work directory (uses its scans/)"),
+    pages: str = typer.Option(..., "--pages", help="Table pages, e.g. '3,50,55-61,66'"),
+) -> None:
+    """Extract table structure from table-page scans via Docling (TableFormer)."""
+    from transcribus.processing.docling_tables import (
+        docling_available,
+        extract_tables,
+        tables_to_json,
+    )
+
+    if not docling_available():
+        raise typer.BadParameter("Docling CLI not found on PATH.")
+    scans = Path(out) / "scans"
+    tdir = Path(out) / "tables"
+    tdir.mkdir(parents=True, exist_ok=True)
+    for n in _parse_pages(pages):
+        img = scans / f"{n:04d}.jpg"
+        if not img.exists():
+            typer.echo(f"f{n:04d}: scan missing, skip")
+            continue
+        tbls = extract_tables(img)
+        (tdir / f"{n:04d}.json").write_text(tables_to_json(tbls), encoding="utf-8")
+        cells = sum(len(t.cells) for t in tbls)
+        typer.echo(f"f{n:04d}: {len(tbls)} tables, {cells} cells")
+
+
+@app.command()
+def figures(
+    out: Path = typer.Option(..., "--out", help="Work directory (uses its scans/)"),
+    pages: str = typer.Option(..., "--pages", help="Folios with figures, e.g. '71,73'"),
+) -> None:
+    """Crop figures from named folios via Docling (targeted, for real diagrams)."""
+    import json
+
+    from transcribus.processing.docling_tables import (
+        crop_figures,
+        docling_available,
+        extract_layout,
+    )
+
+    if not docling_available():
+        raise typer.BadParameter("Docling CLI not found on PATH.")
+    out = Path(out)
+    scans = out / "scans"
+    figs_dir = out / "figures"
+    for n in _parse_pages(pages):
+        img = scans / f"{n:04d}.jpg"
+        if not img.exists():
+            typer.echo(f"f{n:04d}: scan missing, skip")
+            continue
+        _tables, boxes = extract_layout(img)
+        names = crop_figures(img, boxes, figs_dir, n)
+        if names:
+            figs_dir.mkdir(parents=True, exist_ok=True)
+            (figs_dir / f"{n:04d}.json").write_text(
+                json.dumps(names, ensure_ascii=False), encoding="utf-8"
+            )
+        typer.echo(f"f{n:04d}: {len(names)} figure(s) cropped {names}")
+
+
+@app.command()
+def layout(
+    out: Path = typer.Option(..., "--out", help="Work directory (uses its scans/)"),
+) -> None:
+    """Full Docling layout over ALL scans: tables + figures (cropped locally)."""
+    import json
+    import tempfile
+
+    from PIL import Image
+
+    from transcribus.processing.docling_tables import (
+        _tables_from_doc,
+        crop_figures,
+        docling_available,
+        pictures_px_from_doc,
+        run_docling_dir,
+        tables_to_json,
+    )
+
+    if not docling_available():
+        raise typer.BadParameter("Docling CLI not found on PATH.")
+    out = Path(out)
+    scans = out / "scans"
+    n_tables = n_figs = 0
+    with tempfile.TemporaryDirectory() as td:
+        typer.echo("Running Docling over all scans (single model load)…")
+        run_docling_dir(scans, Path(td))
+        for jf in sorted(Path(td).glob("*.json")):
+            try:
+                n = int(jf.stem)
+            except ValueError:
+                continue
+            doc = json.loads(jf.read_text(encoding="utf-8"))
+            tabs = _tables_from_doc(doc)
+            if tabs:
+                (out / "tables").mkdir(parents=True, exist_ok=True)
+                (out / "tables" / f"{n:04d}.json").write_text(
+                    tables_to_json(tabs), encoding="utf-8"
+                )
+                n_tables += 1
+            scan = scans / f"{n:04d}.jpg"
+            if scan.exists():
+                with Image.open(scan) as im:
+                    w, h = im.size
+                names = crop_figures(scan, pictures_px_from_doc(doc, w, h), out / "figures", n)
+                if names:
+                    (out / "figures").mkdir(parents=True, exist_ok=True)
+                    (out / "figures" / f"{n:04d}.json").write_text(
+                        json.dumps(names, ensure_ascii=False), encoding="utf-8"
+                    )
+                    n_figs += 1
+                    typer.echo(f"f{n:04d}: {len(names)} figure(s)")
+    typer.echo(f"Done: {n_tables} pages with tables, {n_figs} pages with figures.")
 
 
 @app.command()
@@ -174,7 +304,7 @@ def htr(
     coll_id: int = typer.Option(..., "--coll", help="Collection ID"),
     doc_id: int = typer.Option(..., "--doc", help="Existing document ID to recognize"),
     model_id: int = typer.Option(..., "--model-id", help="HTR model id"),
-    engine: str = typer.Option("pylaia", "--engine", help="pylaia | citlab"),
+    engine: str = typer.Option("auto", "--engine", help="pylaia | citlab"),
     title: str | None = typer.Option(None, "--title"),
 ) -> None:
     """Run HTR on an already-uploaded document: layout -> HTR -> export -> clean."""

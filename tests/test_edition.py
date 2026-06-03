@@ -44,3 +44,51 @@ def test_build_edition_html(tmp_path):
     assert "jenž slove hlavni" in page  # normalized layer
     assert "sken v AHMP" in page
     assert 'name="mode"' in page  # mode switcher present
+
+
+TABLE_PAGE = """<?xml version="1.0" encoding="UTF-8"?>
+<PcGts xmlns="http://schema.primaresearch.org/PAGE/gts/pagecontent/2013-07-15">
+  <Page imageFilename="0055.jpg">
+    <TableRegion id="tab1">
+      <TableCell row="0" col="0"><TextLine><TextEquiv><Unicode>Januarius</Unicode></TextEquiv></TextLine></TableCell>
+      <TableCell row="0" col="1"><TextLine><TextEquiv><Unicode>Februarius</Unicode></TextEquiv></TextLine></TableCell>
+      <TableCell row="1" col="0"><TextLine><TextEquiv><Unicode>31</Unicode></TextEquiv></TextLine></TableCell>
+      <TableCell row="1" col="1"><TextLine><TextEquiv><Unicode>28</Unicode></TextEquiv></TextLine></TableCell>
+    </TableRegion>
+  </Page>
+</PcGts>
+"""
+
+
+def test_parse_and_render_table(tmp_path):
+    from transcribus.processing.edition import _table_html
+    from transcribus.processing.page_xml import parse_tables
+
+    tables = parse_tables(TABLE_PAGE)
+    assert len(tables) == 1
+    t = tables[0]
+    assert t.n_rows() == 2 and t.n_cols() == 2
+    html = _table_html(t)
+    assert "<table" in html and "Januarius" in html and "<td>28</td>" in html
+
+
+def test_edition_renders_table_page(tmp_path):
+    xml_dir = tmp_path / "page_xml"
+    xml_dir.mkdir()
+    (xml_dir / "0055.xml").write_text(TABLE_PAGE, encoding="utf-8")
+    build_edition(tmp_path, title="T")
+    page = (tmp_path / "edition" / "p0055.html").read_text(encoding="utf-8")
+    assert 'class="page-table"' in page and "Februarius" in page
+
+
+def test_docling_tables_json_roundtrip():
+    from transcribus.processing.docling_tables import tables_from_json, tables_to_json
+    from transcribus.processing.page_xml import Table, TableCell
+
+    t = Table(region_id="docling0", cells=[
+        TableCell(row=0, col=0, text="Januarius"),
+        TableCell(row=1, col=0, text="31", row_span=1, col_span=1),
+    ])
+    back = tables_from_json(tables_to_json([t]))
+    assert len(back) == 1 and back[0].n_rows() == 2
+    assert back[0].cells[0].text == "Januarius"

@@ -32,7 +32,7 @@ class Pipeline:
         ref: str,
         coll_id: int | None,
         model_id: int | None,
-        engine: str = "pylaia",
+        engine: str = "auto",
         limit: int | None = None,
     ) -> None:
         self.settings = settings

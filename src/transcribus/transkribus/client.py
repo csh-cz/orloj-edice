@@ -242,22 +242,46 @@ class TranskribusClient:
         raise TranskribusError(f"Unexpected LA response: {str(data)[:200]}")
 
     # -- recognition ------------------------------------------------------
+    _PROVIDER_ENGINE = {
+        "PyLaia": "pylaia",
+        "TrHtr": "trhtr",
+        "CITlabPlus": "citlab",
+        "CITlab": "citlab",
+    }
+
+    def resolve_engine(self, coll_id: int, model_id: int) -> str:
+        """Pick the recognition engine from the model's provider."""
+        for m in self.list_models(coll_id):
+            if m.model_id == model_id:
+                engine = self._PROVIDER_ENGINE.get(m.provider)
+                if not engine:
+                    raise TranskribusError(
+                        f"Unknown provider {m.provider!r} for model {model_id}"
+                    )
+                return engine
+        raise TranskribusError(f"Model {model_id} not available in collection {coll_id}")
+
     def run_htr(
         self,
         coll_id: int,
         doc_id: int,
         model_id: int,
         *,
-        engine: str = "pylaia",
+        engine: str = "auto",
         pages: str | None = None,
     ) -> int:
         """Submit an HTR job and return its jobId.
 
-        ``pylaia`` is the neural engine for "text" models (e.g. Text Titan, Kurrent
-        M-series); ``citlab`` is the legacy engine.
+        ``engine`` defaults to "auto" — resolved from the model's provider
+        (PyLaia / TrHtr / CITlab). The Text Titan super models are TrHtr; the
+        Kurrent / Czech M-series are PyLaia.
         """
+        if engine == "auto":
+            engine = self.resolve_engine(coll_id, model_id)
         if engine == "pylaia":
             path = f"/pylaia/{coll_id}/{model_id}/recognition"
+        elif engine == "trhtr":
+            path = f"/recognition/{coll_id}/{model_id}/trhtr"
         elif engine == "citlab":
             path = f"/recognition/{coll_id}/{model_id}/htrCITlab"
         else:

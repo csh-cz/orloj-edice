@@ -22,6 +22,27 @@ class TextRegion:
     rtype: str = "paragraph"  # paragraph | marginalia | heading | page-number | ...
 
 
+@dataclass
+class TableCell:
+    row: int
+    col: int
+    text: str
+    row_span: int = 1
+    col_span: int = 1
+
+
+@dataclass
+class Table:
+    region_id: str
+    cells: list[TableCell]
+
+    def n_rows(self) -> int:
+        return max((c.row + c.row_span for c in self.cells), default=0)
+
+    def n_cols(self) -> int:
+        return max((c.col + c.col_span for c in self.cells), default=0)
+
+
 def _local(tag: str) -> str:
     return tag.rsplit("}", 1)[-1]
 
@@ -48,36 +69,52 @@ def _reading_order_index(elem: etree._Element, ns: dict[str, str]) -> dict[str, 
     return order
 
 
+def _bbox(region: etree._Element) -> tuple[int, int, int, int] | None:
+    for c in region.iter():
+        if _local(c.tag) == "Coords" and c.get("points"):
+            pts = [tuple(map(int, p.split(","))) for p in c.get("points").split()]
+            xs = [x for x, _ in pts]
+            ys = [y for _, y in pts]
+            return min(xs), min(ys), max(xs), max(ys)
+    return None
+
+
+def _geom_type(bbox: tuple[int, int, int, int] | None, page_w: int, n_regions: int) -> str:
+    """Heuristic: a narrow region hugging an outer margin is a marginal note."""
+    if not bbox or not page_w or n_regions < 2:
+        return "paragraph"
+    x0, _y0, x1, _y1 = bbox
+    width_frac = (x1 - x0) / page_w
+    if width_frac < 0.25 and (x0 / page_w < 0.15 or x1 / page_w > 0.85):
+        return "marginalia"
+    return "paragraph"
+
+
 def parse_page_xml(xml: str | bytes) -> list[TextRegion]:
     if isinstance(xml, str):
         xml = xml.encode("utf-8")
     root = etree.fromstring(xml)
-    ns = {"p": root.nsmap.get(None, "")} if root.nsmap.get(None) else {}
 
-    order = _reading_order_index(root, ns)
+    order = _reading_order_index(root, {})
+    page = next((e for e in root.iter() if _local(e.tag) == "Page"), None)
+    page_w = int(page.get("imageWidth", 0)) if page is not None else 0
 
+    raw = [r for r in root.iter() if _local(r.tag) == "TextRegion"]
     regions: list[tuple[int, TextRegion]] = []
-    doc_pos = 0
-    for region in root.iter():
-        if _local(region.tag) != "TextRegion":
-            continue
+    for doc_pos, region in enumerate(raw):
         rid = region.get("id", f"r{doc_pos}")
         lines: list[tuple[int, str]] = []
-        line_pos = 0
-        for line in region.iter():
-            if _local(line.tag) != "TextLine":
-                continue
+        for line_pos, line in enumerate(ln for ln in region.iter() if _local(ln.tag) == "TextLine"):
             text = _line_text(line)
             if text is not None:
-                # explicit custom reading order isn't always present; keep doc order
                 lines.append((line_pos, text))
-            line_pos += 1
         ordered_lines = [t for _, t in sorted(lines, key=lambda x: x[0])]
+        # Prefer an explicit PAGE/Transkribus type; else infer from geometry.
+        rtype = _region_type(region)
+        if rtype == "paragraph":
+            rtype = _geom_type(_bbox(region), page_w, len(raw))
         sort_key = order.get(rid, 1000 + doc_pos)
-        regions.append(
-            (sort_key, TextRegion(region_id=rid, lines=ordered_lines, rtype=_region_type(region)))
-        )
-        doc_pos += 1
+        regions.append((sort_key, TextRegion(region_id=rid, lines=ordered_lines, rtype=rtype)))
 
     regions.sort(key=lambda x: x[0])
     return [r for _, r in regions]
@@ -99,3 +136,32 @@ def page_to_lines(xml: str | bytes) -> list[str]:
     for region in parse_page_xml(xml):
         lines.extend(region.lines)
     return lines
+
+
+def parse_tables(xml: str | bytes) -> list[Table]:
+    """Extract TableRegion/TableCell structure (row/col) from PAGE XML, if any."""
+    if isinstance(xml, str):
+        xml = xml.encode("utf-8")
+    root = etree.fromstring(xml)
+    tables: list[Table] = []
+    for tr in root.iter():
+        if _local(tr.tag) != "TableRegion":
+            continue
+        cells: list[TableCell] = []
+        for cell in tr.iter():
+            if _local(cell.tag) != "TableCell":
+                continue
+            texts = [t for line in cell.iter() if _local(line.tag) == "TextLine"
+                     for t in [_line_text(line)] if t]
+            cells.append(
+                TableCell(
+                    row=int(cell.get("row", 0)),
+                    col=int(cell.get("col", 0)),
+                    text=" ".join(texts).strip(),
+                    row_span=int(cell.get("rowSpan", 1)),
+                    col_span=int(cell.get("colSpan", 1)),
+                )
+            )
+        if cells:
+            tables.append(Table(region_id=tr.get("id", f"t{len(tables)}"), cells=cells))
+    return tables

@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     # Optional defaults for pipeline runs
     coll_id: int | None = None
     model_id: int | None = None
-    engine: str = "pylaia"
+    engine: str = "auto"
 
     # FTP bulk upload (host fixed by Transkribus; creds default to the login).
     ftp_host: str = "transkribus.eu"

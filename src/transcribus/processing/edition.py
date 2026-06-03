@@ -20,7 +20,7 @@ import json
 from pathlib import Path
 
 from transcribus.processing.normalize import normalize_text
-from transcribus.processing.page_xml import TextRegion, parse_page_xml
+from transcribus.processing.page_xml import Table, TextRegion, parse_page_xml, parse_tables
 from transcribus.processing.teige import TeigeIndex, fold
 
 _MARGINALIA = {"marginalia", "margin-text", "margin"}
@@ -92,6 +92,33 @@ def _region_html(region: TextRegion) -> str:
     return f'<p class="region paragraph">{inner}</p>'
 
 
+def _table_html(table: Table) -> str:
+    """Render a TableRegion as an HTML <table>, honouring row/col spans."""
+    by_pos = {(c.row, c.col): c for c in table.cells}
+    occupied: set[tuple[int, int]] = set()
+    rows_html = []
+    for r in range(table.n_rows()):
+        tds = []
+        for c in range(table.n_cols()):
+            if (r, c) in occupied:
+                continue
+            cell = by_pos.get((r, c))
+            if cell is None:
+                tds.append("<td></td>")
+                continue
+            for dr in range(cell.row_span):
+                for dc in range(cell.col_span):
+                    occupied.add((r + dr, c + dc))
+            span = ""
+            if cell.row_span > 1:
+                span += f' rowspan="{cell.row_span}"'
+            if cell.col_span > 1:
+                span += f' colspan="{cell.col_span}"'
+            tds.append(f"<td{span}>{_esc(cell.text)}</td>")
+        rows_html.append("<tr>" + "".join(tds) + "</tr>")
+    return '<table class="page-table">' + "".join(rows_html) + "</table>"
+
+
 def _teige_html(passage: str | None, page_folded: set[str]) -> str:
     if not passage:
         return (
@@ -109,8 +136,23 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
 def _page_doc(
     *, title: str, page_nr: int, total: int, regions: list[TextRegion],
     ahmp_url: str | None, teige_passage: str | None, section_label: str = "",
+    tables: list[Table] | None = None, figures: list[str] | None = None,
+    clean_lines: list[str] | None = None,
 ) -> str:
+    tables = tables or []
+    figures = figures or []
     has_text = any(r.lines and any(line.strip() for line in r.lines) for r in regions)
+    has_content = has_text or bool(tables) or bool(figures) or bool(clean_lines)
+    cap_link = (
+        f' · <a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken</a>'
+        if ahmp_url else ""
+    )
+    fig_note = "".join(
+        f'<figure class="fig"><img src="figures/{_esc(name)}" loading="lazy" '
+        f'alt="vyobrazení fol. {page_nr:04d}">'
+        f"<figcaption>Vyobrazení — Archiv hl. m. Prahy{cap_link}</figcaption></figure>"
+        for name in figures
+    )
     prev_link = f"p{page_nr-1:04d}.html" if page_nr > 1 else ""
     next_link = f"p{page_nr+1:04d}.html" if page_nr < total else ""
     ahmp = (
@@ -118,14 +160,24 @@ def _page_doc(
         if ahmp_url else ""
     )
 
-    if has_text:
-        body_regions = "\n".join(_region_html(r) for r in regions)
+    if has_content:
+        # Precedence: corrected clean text > Docling table grid > raw per-line HTR.
+        if clean_lines:
+            body_regions = (
+                '<span class="clean-flag">opravený přepis</span><p class="region paragraph">'
+                + "\n".join(_line_html(line) for line in clean_lines if line)
+                + "</p>"
+            )
+        elif tables:
+            body_regions = "".join(_table_html(t) for t in tables)
+        else:
+            body_regions = "\n".join(_region_html(r) for r in regions)
         page_folded = {
             fold(w) for r in regions for line in r.lines for w in line.split() if len(fold(w)) >= 4
         }
         teige = _teige_html(teige_passage, page_folded)
         body = (
-            f'<div class="folio">{body_regions}</div>'
+            f'<div class="folio">{fig_note}{body_regions}</div>'
             f'<div class="teige-pane"><div class="teige-label">Teige (1570), přibližné zarovnání</div>{teige}</div>'
         )
     else:
@@ -225,6 +277,14 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .heading{font-size:1.05rem;font-weight:bold}
 .marginalia{float:right;width:32%;margin:0 0 .4rem 1rem;padding-left:.6rem;border-left:2px solid #cdbf9f;
   color:#5a5446;font-size:.9em;font-style:italic}
+.page-table{border-collapse:collapse;margin:.6rem 0;font-family:system-ui,sans-serif;font-size:.85rem}
+.page-table td{border:1px solid #cdbf9f;padding:.15rem .4rem;text-align:center;min-width:1.6rem}
+.clean-flag{display:inline-block;background:#3f6b3f;color:#fff;font-family:system-ui,sans-serif;
+  font-size:.65rem;border-radius:3px;padding:0 .35rem;margin-bottom:.4rem}
+.fig{margin:0 0 1rem;text-align:center}
+.fig img{max-width:100%;height:auto;border:1px solid #cdbf9f;border-radius:3px}
+.fig figcaption{font-family:system-ui,sans-serif;font-size:.75rem;color:#6b6256;margin-top:.3rem}
+.fig figcaption a{color:#7a5c2e}
 .empty{color:#a99;font-style:italic;font-family:system-ui,sans-serif;padding:1rem}
 /* mode switching */
 .norm{display:none}
@@ -299,29 +359,63 @@ def build_edition(
     (out_dir / "assets" / "edition.js").write_text(_JS, encoding="utf-8")
 
     total = len(xml_files)
-    # Pass 1: parse pages and compute Teige matches.
-    entries: list[tuple[int, list[TextRegion], str, str | None]] = []
+    # Pass 1: parse pages, tables, and compute Teige matches.
+    entries: list[
+        tuple[int, list[TextRegion], list[Table], str, str | None, list[str], list[str]]
+    ] = []
+    tables_dir = work_dir / "tables"
+    figures_dir = work_dir / "figures"
     for xf in xml_files:
         page_nr = int(xf.stem)
-        regions = parse_page_xml(xf.read_text(encoding="utf-8"))
+        xml = xf.read_text(encoding="utf-8")
+        regions = parse_page_xml(xml)
+        tables = parse_tables(xml)
+        # Docling table sidecar (TableFormer) takes precedence when present.
+        sidecar = tables_dir / f"{page_nr:04d}.json"
+        if sidecar.exists():
+            from transcribus.processing.docling_tables import tables_from_json
+
+            docling_tables = tables_from_json(sidecar.read_text(encoding="utf-8"))
+            if docling_tables:
+                tables = docling_tables
+        fig_sidecar = figures_dir / f"{page_nr:04d}.json"
+        fig_names = json.loads(fig_sidecar.read_text()) if fig_sidecar.exists() else []
+        clean_file = work_dir / "clean" / f"{page_nr:04d}.txt"
+        clean_lines = (
+            [ln for ln in clean_file.read_text(encoding="utf-8").splitlines()]
+            if clean_file.exists() else []
+        )
         plain = " ".join(line for r in regions for line in r.lines if line.strip())
         passage = teige_index.align(plain) if (teige_index and plain) else None
-        entries.append((page_nr, regions, plain, passage))
+        entries.append((page_nr, regions, tables, plain, passage, fig_names, clean_lines))
 
-    matched = {n for n, _r, _p, passage in entries if passage}
+    matched = {e[0] for e in entries if e[4]}
     sections = derive_sections(matched, total)
     folio_section = {n: label for _k, lo, hi, label in sections for n in range(lo, hi + 1)}
 
+    # Copy figure crops into the edition so it stays self-contained.
+    if any(e[5] for e in entries):
+        (out_dir / "figures").mkdir(parents=True, exist_ok=True)
+        for e in entries:
+            for name in e[5]:
+                src = figures_dir / name
+                if src.exists():
+                    (out_dir / "figures" / name).write_bytes(src.read_bytes())
+
     # Pass 2: write per-folio pages + index.
     toc: dict[int, tuple[str, bool]] = {}
-    for page_nr, regions, plain, passage in entries:
+    for page_nr, regions, tables, plain, passage, fig_names, clean_lines in entries:
         doc = _page_doc(
             title=title, page_nr=page_nr, total=total, regions=regions,
             ahmp_url=ahmp_permalink, teige_passage=passage,
-            section_label=folio_section.get(page_nr, ""),
+            section_label=folio_section.get(page_nr, ""), tables=tables, figures=fig_names,
+            clean_lines=clean_lines,
         )
         (out_dir / f"p{page_nr:04d}.html").write_text(doc, encoding="utf-8")
-        toc[page_nr] = ((plain[:80] + "…") if plain else "[prázdná]", passage is not None)
+        snip = (plain[:80] + "…") if plain else (
+            "[tabulka]" if tables else ("[vyobrazení]" if fig_names else "[prázdná]")
+        )
+        toc[page_nr] = (snip, passage is not None)
 
     index = out_dir / "index.html"
     index.write_text(_index_doc(title, sections, toc), encoding="utf-8")
