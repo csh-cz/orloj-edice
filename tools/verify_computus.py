@@ -167,6 +167,25 @@ def verify_sunrise() -> bool:
     print(f"f55 sunrise (Prague, {len(pts)} days): RMS scatter {rms_p:.2f} min (= rounding level "
           f"-> COMPUTED, not observed); geometric-centre mean {mean_p:+.1f} min; "
           f"vs modern upper-limb {mean_m:+.1f} min -> {'OK' if ok else 'FAIL'}")
+
+    # forensic: true Sun (equation of centre) vs mean Sun -> which solar model did they use?
+    def resid_mean(h0_deg: float) -> list[int]:
+        out = []
+        for m, d, ms in pts:
+            jd = _jd_greg(2000, m, d)
+            t = (jd - 2451545.0) / 36525.0
+            lam = math.radians(280.46646 + 36000.76983 * t)  # MEAN longitude, no eq. of centre
+            dec = math.asin(math.sin(math.radians(23.5)) * math.sin(lam))
+            cosH = (math.sin(math.radians(h0_deg)) - math.sin(phi) * math.sin(dec)) / (
+                math.cos(phi) * math.cos(dec)
+            )
+            sr = 12 - math.degrees(math.acos(max(-1, min(1, cosH)))) / 15.0
+            out.append(round(sr * 60) - ms)
+        return out
+    rms_true, rms_mean = rms(r_period), rms(resid_mean(0.0))
+    print(f"         solar model: true Sun RMS {rms_true:.2f} vs mean Sun RMS {rms_mean:.2f} "
+          f"-> table used the {'TRUE' if rms_true < rms_mean else 'MEAN'} Sun "
+          "(declination-by-date table, equation of centre included)")
     return ok
 
 
