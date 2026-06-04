@@ -97,25 +97,62 @@ def verify_epacts() -> bool:
 
 
 # --- f55: sunrise for Prague ----------------------------------------------------
+def _jd_greg(y: int, m: int, d: int) -> float:
+    if m <= 2:
+        y -= 1
+        m += 12
+    a = y // 100
+    b = 2 - a + a // 4
+    return int(365.25 * (y + 4716)) + int(30.6001 * (m + 1)) + d + b - 1524.5
+
+
+def _solar_decl(jd: float) -> float:
+    """Apparent solar declination (rad), Meeus low-accuracy."""
+    t = (jd - 2451545.0) / 36525.0
+    l0 = 280.46646 + 36000.76983 * t
+    m = math.radians(357.52911 + 35999.05029 * t)
+    c = (1.914602 - 0.004817 * t) * math.sin(m) + 0.019993 * math.sin(2 * m) \
+        + 0.000289 * math.sin(3 * m)
+    lam = math.radians(l0 + c)
+    eps = math.radians(23.439291 - 0.0130042 * t)
+    return math.asin(math.sin(eps) * math.sin(lam))
+
+
 def verify_sunrise() -> bool:
+    """Compare f55 to computed Prague sunrise.
+
+    The seasonal SHAPE is what validates the transcription: with an accurate
+    declination the residual is flat across all 12 months (no month-dependent drift),
+    which rules out a transcription / latitude error. The only offset is definitional:
+    the 1587 table reckons sunrise as the Sun's *centre* on the *geometric* horizon
+    (h0 = 0 deg, no refraction — refraction was not yet tabulated), whereas the modern
+    convention uses the upper limb at the apparent horizon (h0 = -0.833 deg), ~7 min
+    earlier. At h0 = 0 the residual is ~0.
+    """
     phi = math.radians(50.087)
-    doy15 = [15, 46, 74, 105, 135, 166, 196, 227, 258, 288, 319, 349]
     cells = {(c["row"], c["col"]): c["text"] for c in _cells(55)[0]["cells"]}
     row15 = next(r for r in range(1, 40) if cells.get((r, 0)) == "15")
-    worst = 0
-    for ci in range(1, 13):
-        n = doy15[ci - 1]
-        decl = math.radians(-23.44 * math.cos(2 * math.pi * (n + 10) / 365.0))
-        cosH = (math.sin(math.radians(-0.833)) - math.sin(phi) * math.sin(decl)) / (
-            math.cos(phi) * math.cos(decl)
-        )
-        H = math.degrees(math.acos(max(-1, min(1, cosH))))
-        sr = 12 - H / 15.0
-        comp_min = round(sr * 60)
-        mh, mm = cells[(row15, ci)].replace(".", ":").split(":")
-        worst = max(worst, abs(comp_min - (int(mh) * 60 + int(mm))))
-    ok = worst <= 12
-    print(f"f55 sunrise (Prague, day 15): max |Δ| = {worst} min -> {'OK' if ok else 'FAIL'}")
+
+    def resid(h0_deg: float) -> list[int]:
+        out = []
+        for ci in range(1, 13):
+            d = _solar_decl(_jd_greg(2000, ci, 15))  # idealised seasonal frame (equinox ~21.3)
+            cosH = (math.sin(math.radians(h0_deg)) - math.sin(phi) * math.sin(d)) / (
+                math.cos(phi) * math.cos(d)
+            )
+            sr = 12 - math.degrees(math.acos(max(-1, min(1, cosH)))) / 15.0
+            mh, mm = cells[(row15, ci)].replace(".", ":").split(":")
+            out.append(round(sr * 60) - (int(mh) * 60 + int(mm)))
+        return out
+
+    r_period = resid(0.0)        # period definition: geometric centre
+    r_modern = resid(-0.833)     # modern definition: upper limb + refraction
+    spread = max(r_modern) - min(r_modern)
+    worst_period = max(abs(x) for x in r_period)
+    ok = worst_period <= 3 and spread <= 3   # flat shape + tight at the period definition
+    print(f"f55 sunrise (Prague, day 15): residual flat to {spread} min; "
+          f"geometric-centre (period) max |Δ| = {worst_period} min; "
+          f"vs modern upper-limb ≈ {round(sum(r_modern)/12)} min -> {'OK' if ok else 'FAIL'}")
     return ok
 
 

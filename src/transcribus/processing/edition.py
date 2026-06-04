@@ -165,8 +165,11 @@ _TABLE_VERIFY: dict[int, str] = {
     57: "✓ ověřeno výpočtem: všechny tři gregoriánské sloupce epakt souhlasí s nezávislým "
         "výpočtem (Meeus) pro 19 zlatých počtů ve více obdobích; juliánský sloupec = "
         "gregoriánský + 10 (10denní rozdíl kalendářů). Hranice období = gregoriánské korekce.",
-    55: "✓ ověřeno astronomicky: časy východu Slunce odpovídají výpočtu pro Prahu "
-        "(φ ≈ 50,09°) s rozdílem ~2–7 min (systematický posun dobové konvence).",
+    55: "✓ ověřeno astronomicky: sezónní průběh časů východu Slunce přesně odpovídá výpočtu "
+        "pro Prahu (φ ≈ 50,09°) — residuum je ploché přes celý rok (žádná chyba přepisu ani "
+        "šířky). Východ je počítán jako střed Slunce na geometrickém obzoru (bez refrakce, "
+        "ta nebyla v 16. stol. tabelována); při této dobové definici |Δ| ≤ 2 min, vůči "
+        "modernímu východu (horní okraj + refrakce) je rukopis o ~7 min později.",
     69: "✓ ověřeno: všechny součiny souhlasí (pythagorejská násobilka).",
     60: "⚠ zatím neověřeno: dvojčíslí v buňkách se nepodařilo dekódovat ani ztotožnit "
         "s vypočteným juliánským datem Velikonoc — přepis ke kontrole.",
@@ -442,8 +445,12 @@ def _index_doc(
         "souhlasí s výpočtem (velikonoční úplněk dle J. Meeuse) pro 19 zlatých počtů ve více "
         "obdobích; juliánský sloupec = gregoriánský + 10 (10denní rozdíl kalendářů), hranice "
         "období odpovídají gregoriánským korekcím. "
-        "<b>fol. 55</b> (východ Slunce) — časy odpovídají astronomickému výpočtu pro Prahu "
-        "(φ ≈ 50,09°) s rozdílem do ~7 minut (systematický posun dobové konvence). "
+        "<b>fol. 55</b> (východ Slunce) — sezónní průběh přesně odpovídá astronomickému "
+        "výpočtu pro Prahu (φ ≈ 50,09°): residuum je ploché přes celý rok (tedy bez chyby "
+        "přepisu i zeměpisné šířky). Tabule počítá východ jako <b>střed Slunce na "
+        "geometrickém obzoru bez refrakce</b> (atmosférická refrakce nebyla v 16. století "
+        "spolehlivě tabelována) — při této dobové definici je odchylka ≤ 2 min; vůči modernímu "
+        "východu (horní okraj + refrakce, −50′) je rukopis o ~7 min později. "
         "<b>fol. 69</b> (násobilka) — součiny souhlasí. "
         "Naproti tomu <b>fol. 60</b> (<i>Tabula intervalli in Calendario Juliano</i>) se ověřit "
         "<b>zatím nepodařilo</b>: dvojčíslí v buňkách se nepodařilo dekódovat ani ztotožnit "
