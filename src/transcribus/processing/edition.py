@@ -133,6 +133,29 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
     return '<div class="teige-text">' + " ".join(out) + "</div>"
 
 
+# Popisky tabulkových folií (z hlaviček; data zatím nepřepsána). Komputistický aparát.
+_TABLE_CAPTIONS: dict[int, str] = {
+    2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — pro zpravování orloje celého i polovičního.",
+    3: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — z obojího (celého i polovičního) orloje (pokrač.).",
+    50: "Tabula, ex qua Littera Dominicalis desumitur — pro určení nedělní písmene.",
+    55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
+    56: "Tabula, ex qua Littera Dominicalis desumitur — pro určení nedělní písmene.",
+    57: "Numerus (zlatý počet) — část komputistické tabulky.",
+    58: "Tabula festorum mobilium Calendarii [novi] — pohyblivé svátky (nového kalendáře).",
+    59: "Epacta[?] — tabulka epakt.",
+    60: "Littera dominicalis — tabulka nedělních písmen.",
+    61: "Littera dominicalis — tabulka nedělních písmen (pokrač.).",
+    62: "O slunečném cyklu (28letém), aneb jak najít nedělní písmeno pro každý rok.",
+    63: "Výpočet v obojím — starém i novém — kalendáři (pokrač.).",
+    64: "O zlatém počtu — cyklus decennovenalis (19letý lunární), měsíčný cyklus.",
+    65: "Ukazatel nového měsíce — návodná próza (česky) k výpočtu novoluní.",
+    66: "Tabulka epakt / zlatého počtu (číselné hodnoty).",
+    67: "Komputus na prstech — výpočet měsíce/data na ruce (odkaz fol. 487).",
+    68: "Nalezení nového a plného měsíce pro každý měsíc — výpočet.",
+    69: "Tabule dlúhosti dne s nedělními písmeny[?].",
+}
+
+
 def _split_marginalia(lines: list[str]) -> tuple[list[str], list[str]]:
     """Split clean lines into (main text, marginalia block).
 
@@ -228,9 +251,10 @@ def _page_doc(
                 f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP</a>'
                 if ahmp_url else "sken v AHMP"
             )
+            cap = _TABLE_CAPTIONS.get(page_nr, "Komputistická / astronomická tabulka")
             body_regions = (
-                '<div class="table-todo">Komputistická / astronomická <b>tabulka</b> — '
-                f"zatím nepřepsána (strojové rozpoznání u ručně psaných tabulek selhává). Viz {link}.</div>"
+                f'<div class="table-todo"><b>{_esc(cap)}</b><br>Data tabulky zatím nepřepsána '
+                f"(strojové rozpoznání ručně psaných tabulek selhává). Viz {link}.</div>"
             )
         else:
             body_regions = "\n".join(_region_html(r) for r in regions)
@@ -291,18 +315,18 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 # klíč stavu: done = hotový čistý přepis · partial = rozpracováno · todo = chybí · na = prázdná
 _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
-    ("f2–f3", "úvodní astronomické tabulky", "todo", "tabulky (Docling)"),
+    ("f2–f3", "úvodní astronomické tabulky", "partial", "popsány; data k přepisu"),
     ("f4", "latinský verš", "todo", "přepis"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
     ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie ověřeny ze skenu (f13 nejisté)"),
     ("f31–f42", "Táborský: kap. XIII–XVIII", "partial",
      "Teige-ukotveno; diplomatická kontrola po řádcích"),
     ("f43–f49", "Táborský: biografický závěr, verše, kolofony 1570 + 1587", "done", "—"),
-    ("f50", "komputistická tabulka", "todo", "tabulka (Docling)"),
+    ("f50", "komputistická tabulka (Littera dominicalis)", "partial", "popsána; data k přepisu"),
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "done", "f54: pokrač. něm. návod"),
-    ("f55–f69", "komputistické/astron. tabulky + próza (f65)", "todo",
-     "tabulky (Docling) + próza f65"),
+    ("f55–f69", "komputistické/astron. tabulky + próza (f65)", "partial",
+     "popsány; data k přepisu; próza f65"),
     ("f70–f79", "Astrolabium parvum", "done", "—"),
     ("f80", "latinsko-český epigram (Pythagoras)", "todo", "přepis"),
     ("f81", "předsádka", "na", "—"),
