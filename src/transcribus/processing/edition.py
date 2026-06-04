@@ -240,6 +240,47 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
     )
 
 
+# Stav zpracování po částech knihy. Průběžně se aktualizuje (edit → regenerace → deploy).
+# klíč stavu: done = hotový čistý přepis · partial = rozpracováno · todo = chybí · na = prázdná
+_STATUS_ROWS: list[tuple[str, str, str, str]] = [
+    ("f1", "předsádka", "na", "—"),
+    ("f2–f3", "úvodní astronomické tabulky", "todo", "tabulky (Docling)"),
+    ("f4", "latinský verš", "todo", "přepis"),
+    ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
+    ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie neověřené ze skenu"),
+    ("f31–f42", "Táborský: kap. XIII–XVIII", "partial",
+     "Teige-ukotveno; diplomatická kontrola po řádcích"),
+    ("f43–f49", "Táborský: biografický závěr, verše, kolofony 1570 + 1587", "done", "—"),
+    ("f50", "komputistická tabulka", "todo", "tabulka (Docling)"),
+    ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
+    ("f53–f54", "List purkmistra — dobový český překlad", "done", "f54: pokrač. něm. návod"),
+    ("f55–f69", "komputistické/astron. tabulky + próza (f65)", "todo",
+     "tabulky (Docling) + próza f65"),
+    ("f70–f79", "Astrolabium parvum", "done", "—"),
+    ("f80", "latinsko-český epigram (Pythagoras)", "todo", "přepis"),
+    ("f81", "předsádka", "na", "—"),
+]
+_STATUS_BADGE = {
+    "done": '<span class="b-done">✅ hotovo</span>',
+    "partial": '<span class="b-partial">🔶 rozpracováno</span>',
+    "todo": '<span class="b-todo">❌ chybí</span>',
+    "na": '<span class="b-na">— prázdná</span>',
+}
+
+
+def _status_html() -> str:
+    rows = "".join(
+        f"<tr><td>{_esc(fol)}</td><td>{_esc(part)}</td>"
+        f"<td>{_STATUS_BADGE.get(st, _esc(st))}</td><td>{_esc(rest)}</td></tr>"
+        for fol, part, st, rest in _STATUS_ROWS
+    )
+    return (
+        '<table class="status"><caption>Stav zpracování (průběžně aktualizováno)</caption>'
+        "<thead><tr><th>folia</th><th>část knihy</th><th>stav</th><th>zbývá</th></tr></thead>"
+        f"<tbody>{rows}</tbody></table>"
+    )
+
+
 def _index_doc(
     title: str,
     sections: list[tuple[str, int, int, str]],
@@ -310,6 +351,7 @@ def _index_doc(
 <body class="mode-dipl">
 <header><h1>{_esc(title)}</h1></header>
 <main>
+{_status_html()}
 {tiraz}
 <p class="note">Jedna svázaná kniha (více částí, jeden celek). <span class="teige-badge">T</span> = folia s opisem
 Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní oddíly referenci nemají.
@@ -376,6 +418,15 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .tiraz .warn{background:#fbeed6;border-left:3px solid #b8860b;padding:.4rem .6rem;border-radius:3px}
 .tiraz .teige{background:#eef1f6;border-left:3px solid #5a6b8c;padding:.4rem .6rem;border-radius:3px}
 .tiraz a{color:#7a5c2e}
+.status{font-family:system-ui,sans-serif;font-size:.82rem;border-collapse:collapse;width:100%;margin:0 0 1.4rem}
+.status caption{text-align:left;font-weight:bold;font-size:1rem;margin-bottom:.4rem;color:#3a342a}
+.status th,.status td{border:1px solid #cdbf9f;padding:.3rem .55rem;text-align:left;vertical-align:top}
+.status th{background:#efe7d3}
+.status tbody tr:nth-child(even){background:#faf6ec}
+.status .b-done{color:#2e7d32;font-weight:bold;white-space:nowrap}
+.status .b-partial{color:#b8860b;font-weight:bold;white-space:nowrap}
+.status .b-todo{color:#a3332b;font-weight:bold;white-space:nowrap}
+.status .b-na{color:#999;white-space:nowrap}
 .toc-section h2{font-size:1rem;border-bottom:1px solid #cdbf9f;padding-bottom:.2rem;margin:1.4rem 0 .4rem}
 .toc-section h2 .range{font-weight:normal;color:#8a8071;font-size:.85rem}
 .note{font-family:system-ui,sans-serif;font-size:.85rem;color:#5a5446;background:var(--paper);
