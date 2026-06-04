@@ -21,17 +21,22 @@ SPDX-License-Identifier: EUPL-1.2
       pořadí týdne juliánských Velikonoc ⌊(datum Velikonoc od 1.3. + 16)/7⌋, souhlasí ve všech
       **133/133** buňkách (19 zlatých počtů × 7 nedělních písmen); druhé číslo = doplněk (34/35 − X).
       Reprodukovatelné ve `verify_computus.py` (verify_f60_easter).
-- [ ] **Zbývající husté mřížky** (popsány captiony + odkaz na sken; nepřepsány — vysoké
-      riziko chyb při ručním čtení, bez ověřovacího invariantu):
-  - [ ] **f58 + f59** — Tabula Festorum Mobilium (pohyblivé svátky, mnoho sloupců dat).
-  - [ ] **f61** — Tabula intervalli Gregoriana (epakta × litera; pozn. gregoriánská
-        epakta 25/XXV způsobuje ±1řádkovou nejistotu v ose epakt → nutná pečlivá kontrola).
-  - [ ] **f66** — epakty/novoluní po dnech roku (hustá číselná tabule, měsíce v záhlaví).
-  - [ ] **f3** — délka dne/noci + východ/poledne/západ pro každý den (hustá tabule).
-  - [ ] **f2** — předtištěná, z větší části **nevyplněná** tabule (jen hlavička).
-  - Doporučení: dotáhnout přes tabulkový HTR model nebo cílenou kontrolu, ne odhadem.
-- [ ] **f54** — za českým překladem Listu purkmistra pokračuje **německý komputistický
-      návod** (přepočet východu/západu mezi německými a českými hodinami) — nepřepsáno.
+- [x] **f61 (Tabula intervalli Gregoriana)** — **DEKÓDOVÁNO** (gregoriánské dvojče f60): první
+      číslo = týden gregoriánských Velikonoc, ověřeno 191/210 buněk; zbytek = zóna epakty 25/XXV
+      (přesné přiřazení řádků k dořešení na originále).
+- [~] **f54** — německý komputistický návod (přepočet německé↔orlojní hodiny): **český souhrn
+      v edici**, strojový DE základ (PyLaia German Kurrent) mimo edici; plný diplomatický DE
+      přepis čeká na Titan / expertní čtení.
+- [ ] **Zbývající husté mřížky — k tabulkovému HTR (Titan), NE ruční odhad** (struktura i
+      správnost ověřeny, ale jednotlivé buňky gotické mřížky nelze po oku číst publikovatelně):
+  - [ ] **f3** — úplný cell-grid (datum · délka dne/noci · východ/poledne/západ v orlojních
+        i obecných hodinách); struktura, původ (Hájek) i páteř ověřeny — chybí jen přepis buněk.
+  - [ ] **f58 + f59** — Tabula Festorum Mobilium (pohyblivé svátky; rekonstruovatelné z Velikonoc).
+  - [ ] **f66** — epakty/novoluní po dnech roku.
+  - [ ] **f61** — úplný cell-grid (princip dekódován; dořešit registraci epakty 25/XXV).
+  - **Cesta:** spustit Titan ve webovém Transkribu (kredity na účtu jsou; API token na TrHtr
+    nemá nárok — 403), pak naimportovat přes `get_page_xml` (funguje).
+  - **f2** — předtištěná, z větší části nevyplněná tabule (jen hlavička) → nic k přepisu.
 - [x] **f4** — latinský epigram o sedmi pražských pahorcích („Praha jako nový Řím") — přepsáno + překlad.
 - [x] **f80** — dva latinské epigramy (Pythagoras: hekatomba; Archimedes: „pohnu zemí") + nákres
       pravoúhlého trojúhelníku — přepsáno + překlad. (Pozn.: NE latinsko-český, jak dříve uvedeno.)
