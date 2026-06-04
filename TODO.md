@@ -42,7 +42,15 @@ spravena, **Léta M.DC.LXXXIV [≈ 1684]**“ (vydaná „před 66 lety“). Tj.
 - [ ] Ověřit na originále čtení letopočtu (1674/1684) a údaje „před LXVI (66) lety“ (drobné napětí
       s Hájkovým úmrtím 1600 → pravděpodobně opis převzal i hlavičku staršího tištěného vydání).
 - [ ] Přepsat číselnou mřížku f3 (365 dní) a ověřit stejnou metodou jako f55 (`verify_computus.py`).
-- [ ] Případně dohledat Hájkovu tištěnou tabuli (minuce/efemeridy konce 16. stol., pól 50°).
+- [ ] **Dohledat Hájkovu tištěnou tabuli k přímému srovnání.** Hájek 20 let vydával české
+      **minuce/pranostiky**; dochovaly se a jsou částečně digitalizované:
+  - „Minucí a pranostika … Tadeáše Hájka z Hájku k létu 1567" — **NK ČR**, digitalizováno
+    (Europeana / Manuscriptorium); Knihopis eviduje i 1560, 1565, 1598, 1607 (knihoveda.lib.cas.cz).
+  - Pro srovnání s naší tabulí je potřeba **post-1584 (nový kalendář)** minuce/tabule (1567 je
+    starý kalendář → měla by být ~10 dní sezónně posunutá oproti naší — testovatelná predikce).
+  - Hájek byl přímo zapojen do **gregoriánské reformy** (studie Hladký–Šolc) → nová-kalendářní
+    tabule od něj je velmi pravděpodobná.
+  - Pozor: minuce jsou na konkrétní rok; naše tabule je **perpetuální** (možná samostatný tisk).
 
 ## (původně) Dohledání předlohy tabulky východu/délky dne (f55, sekce ~1641)
 Forenzně určeno (viz `tools/verify_computus.py` a poznámka u f55): **počítaná**, ne měřená;
