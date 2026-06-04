@@ -136,7 +136,7 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
 # Popisky tabulkových folií (z hlaviček; data zatím nepřepsána). Komputistický aparát.
 _TABLE_CAPTIONS: dict[int, str] = {
     2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — předtištěná (z větší části nevyplněná) tabule pro zpravování orloje.",
-    3: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu Slunce — pro každý den roku (z celého i polovičního orloje).",
+    3: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu Slunce — pro každý den roku (z celého i polovičního orloje). Dle záhlaví od Tadeáše Hájka z Hájku, pro výšku pólu 50° (Praha), upravená na nový kalendář (opis ≈ 1684).",
     50: "Tabula, ex qua Litera Dominicalis desumitur in ingressu cum Cyclo Solari („N. I”) — nedělní písmeno pro každý rok 28letého slunečního cyklu, juliánské i gregoriánské.",
     55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
     56: "Tabula, ex qua Litera Dominicalis desumitur („N. I”) — duplikát tabule z fol. 50 (nedělní písmeno, juliánské i gregoriánské).",
@@ -178,6 +178,29 @@ _TABLE_VERIFY: dict[int, str] = {
 
 # Delší metodické poznámky pod vybranými tabulkami (rozbalovací <details>).
 _TABLE_NOTE_LONG: dict[int, str] = {
+    3: (
+        "<p><b>Záhlaví tabule (přepis).</b> „<i>Tabule dlúhosti dne i noci, vejchodu, poledne "
+        "i západu, obojího — celého i polovičného [orloje] — kterak ten srovnán býti má podle "
+        "spravování orloje a jeho hodin, a to přes celý rok položená, [pro českou(?)] zemi a "
+        "k vyvýšení Polum L [= 50] graduů, od někdy D. Tadeáše Hájka z Hájku před LXVI [= 66] "
+        "lety vydaná, a nyní dle nového kalendáře spravena. Léta M.DC.LXXXIV [≈ 1684].</i>“ "
+        "(Jednotlivá slova úvodu a čtení letopočtu jsou ke kontrole na originále.)</p>"
+        "<p><b>Tady rukopis sám jmenuje původ tabulky.</b> Tabule délky dne / východu / "
+        "poledne / západu Slunce je <b>od „někdy“ (tj. nebožtíka) Dr. Tadeáše Hájka z Hájku</b> "
+        "(<i>Thaddaeus Hagecius ab Hayek</i>, ~1525–1600, přední pražský astronom, lékař "
+        "Rudolfa II. a Tychonův korespondent), spočtená pro <b>výšku pólu 50°</b> (Praha) a "
+        "<b>upravená na nový (gregoriánský) kalendář</b>. To <b>přesně potvrzuje otisk, který "
+        "jsme nezávisle změřili u fol. 55</b> (geometrický východ, výška pólu ~50°, nový "
+        "kalendář) — a dává mu jméno: zdroj orlojních slunečních tabulek je <b>Hájkova tabule "
+        "pro Prahu</b>, ne dovezená cizí efemerida.</p>"
+        "<p><b>Vrstvení v čase.</b> Tento opis na předním listě nese rok <b>≈ 1684</b> (a uvádí, "
+        "že tabule byla „před 66 lety vydaná“) — je tedy <b>mladší než komputistická sekce "
+        "fol. 50–69</b> (datovatelná do ~1641). Přední listy knihy (fol. 2–3) byly tedy "
+        "popsány později než hlavní sekvence; původní Hájkův výpočet ovšem spadá do konce "
+        "16. století (Hájek †1600). Číselná mřížka tabule (365 dní × délka dne/noci, východ, "
+        "poledne, západ) zatím není přepsána — ověření stejnou metodou jako u fol. 55 je "
+        "připravené.</p>"
+    ),
     55: (
         "<p>Porovnali jsme tuto tabuli s nezávislým astronomickým výpočtem východu Slunce "
         "pro Prahu (zeměpisná šířka φ ≈ 50,09°). Náš výpočet pracuje s <b>pravým Sluncem</b> "
@@ -283,8 +306,13 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "dále zužuje: je <b>bez refrakce</b> — součet východů o obou slunovratech je u rukopisu "
         "přesně 12:00 (3:55 + 8:05 = 720 min), kdežto tabulka s refrakcí (−50′) by dala ~707 min "
         "(3:48 + 7:58). Předloha tedy patří ke <b>geometrické tradici</b>. Konkrétní tištěný "
-        "exemplář pro pražskou šířku 50° je úkolem pro knihovní rešerši (Knihopis, digitální "
-        "knihovny MZK/NKP); definitivní ztotožnění by chtělo srovnání číslo po čísle.</p>"
+        "exemplář pro pražskou šířku 50° by se dal hledat v knihovnách (Knihopis, MZK/NKP). "
+        "<b>Hlavně ale: zdroj jmenuje sám rukopis</b> — záhlaví příbuzné tabule <b>fol. 3</b> "
+        "uvádí, že jde o tabuli <b>„od někdy D. Tadeáše Hájka z Hájku … k vyvýšení Polum L "
+        "[= 50] graduů … dle nového kalendáře spravena“</b>. Náš nezávisle změřený otisk "
+        "(geometrická, výška pólu ~50°, nový kalendář) tak dostává jméno: orlojní sluneční "
+        "tabule pocházejí z <b>Hájkovy tabule pro Prahu</b> (Tadeáš Hájek z Hájku, †1600), ne "
+        "z dovezené cizí efemeridy.</p>"
         "<p><b>Závěr.</b> Tabule východu (a obdobně poledne a západu) Slunce je <b>produktem "
         "výpočtu, ne měření</b>, a do orlojní knihy <b>byla pravděpodobně opsána z hotové "
         "tištěné tabulky</b> pro pražskou šířku (sekce je datovatelná kolem r. 1641). Vychází ze "
@@ -412,9 +440,16 @@ def _page_doc(
             )
             cap = _TABLE_CAPTIONS.get(page_nr, "Komputistická / astronomická tabulka")
             body_regions = (
-                f'<div class="table-todo"><b>{_esc(cap)}</b><br>Data tabulky zatím nepřepsána '
-                f"(strojové rozpoznání ručně psaných tabulek selhává). Viz {link}.</div>"
+                f'<div class="table-todo"><b>{_esc(cap)}</b><br>Číselná data tabulky zatím '
+                f"nepřepsána (strojové rozpoznání ručně psaných tabulek selhává). Viz {link}.</div>"
             )
+            long_note = _TABLE_NOTE_LONG.get(page_nr)
+            if long_note:
+                body_regions += (
+                    '<details class="method-note" open><summary>Záhlaví tabule a původ '
+                    "(Tadeáš Hájek z Hájku)</summary>"
+                    f"{long_note}</details>"
+                )
         else:
             body_regions = "\n".join(_region_html(r) for r in regions)
         page_folded = {
@@ -474,8 +509,9 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 # klíč stavu: done = hotový čistý přepis · partial = rozpracováno · todo = chybí · na = prázdná
 _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
-    ("f2–f3", "úvodní astronomické tabulky", "partial",
-     "f2 nevyplněná předtištěná tabule; f3 hustá tabule délky dne — popsána, data k přepisu"),
+    ("f2–f3", "úvodní astronomické tabulky (přední list, opis ≈ 1684)", "partial",
+     "f2 nevyplněná předtištěná tabule; f3 hustá tabule délky dne/východu/poledne/západu — "
+     "záhlaví přepsáno (zdroj: Tadeáš Hájek z Hájku, pól 50°, nový kalendář), číselná data k přepisu"),
     ("f4", "latinský verš", "todo", "přepis"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
     ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie ověřeny ze skenu (f13 nejisté)"),

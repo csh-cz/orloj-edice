@@ -34,7 +34,17 @@ SPDX-License-Identifier: EUPL-1.2
 - [ ] **f4** — latinský verš („Praga…") — přepis.
 - [ ] **f80** — latinsko-český epigram (Pythagoras) — přepis.
 
-## Dohledání předlohy tabulky východu/délky dne (f55, sekce ~1641)
+## ✅ Zdroj slunečních tabulek NALEZEN — v samotném rukopise (záhlaví f3)
+Záhlaví f3 přímo jmenuje původ: tabule délky dne/východu/poledne/západu je „**od někdy
+D. Tadeáše Hájka z Hájku** … k vyvýšení **Polum L [= 50] graduů** … dle **nového kalendáře**
+spravena, **Léta M.DC.LXXXIV [≈ 1684]**“ (vydaná „před 66 lety“). Tj. **Tadeáš Hájek z Hájku**
+(†1600), Praha, pól 50°, gregoriánský kalendář — což přesně potvrzuje nezávislý otisk u f55.
+- [ ] Ověřit na originále čtení letopočtu (1674/1684) a údaje „před LXVI (66) lety“ (drobné napětí
+      s Hájkovým úmrtím 1600 → pravděpodobně opis převzal i hlavičku staršího tištěného vydání).
+- [ ] Přepsat číselnou mřížku f3 (365 dní) a ověřit stejnou metodou jako f55 (`verify_computus.py`).
+- [ ] Případně dohledat Hájkovu tištěnou tabuli (minuce/efemeridy konce 16. stol., pól 50°).
+
+## (původně) Dohledání předlohy tabulky východu/délky dne (f55, sekce ~1641)
 Forenzně určeno (viz `tools/verify_computus.py` a poznámka u f55): **počítaná**, ne měřená;
 **pravé Slunce**; **bez refrakce** (slunovratová symetrie přesně 720 min); výška pólu **~50°**
 (fit 49,98° — spíš „kulatých“ 50° než pražských 50°5′ → naznačuje **přejatou generickou
