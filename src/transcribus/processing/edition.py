@@ -331,7 +331,17 @@ def _index_doc(
         "edice.</p>"
         '<p><b>Práva a licence:</b> skeny ani vyobrazení se zde nereprodukují — odkazy „sken" '
         "vedou do prohlížeče AHMP (práva k reprodukcím: Archiv hlavního města Prahy). "
-        "Text edice © David Knespl, licence CC&nbsp;BY&nbsp;4.0; software EUPL-1.2.</p></section>"
+        "Text edice © David Knespl, licence CC&nbsp;BY&nbsp;4.0; software EUPL-1.2.</p>"
+        "<p><b>Použité zdroje a poděkování.</b> Pramen a skeny: <b>Archiv hlavního města "
+        "Prahy</b>. Strojový přepis: <b>Transkribus</b> (READ-COOP), modely PyLaia 263129 a "
+        "27457. Kolace: edice originálu 1570 <b>Josefa Teigeho</b> (1901, public domain). "
+        "Přepis Astrolabia parvum (fol. 70–79) přejat z orloj.eu — přepis <b>Pavel Baudisch</b>, "
+        "poznámky a model <b>Petr Král</b> a kol. (Český spolek horologický); za orlojnické "
+        "konzultace patří dík <b>Petru Skálovi</b> (ČSH). Paleografický přepis německého Listu "
+        "purkmistra (fol. 51–52) byl pořízen na zakázku (autorka k doplnění); dobový český "
+        "překlad (fol. 53–54) poskytl D. Knespl. Norma transkripce: <b>Ivan Šťovíček a kol.</b> "
+        "Datace a badatelství: <b>Zdeněk Horský</b> (1988); opis objevil <b>Stanislav "
+        "Macháček</b> (1962). Rozpoznání tabulek: <b>Docling</b> (IBM).</p></section>"
     )
     blocks = []
     for _kind, lo, hi, label in sections:
