@@ -124,7 +124,8 @@ def verify_sunrise() -> bool:
     The seasonal SHAPE is what validates the transcription: with an accurate
     declination the residual is flat across all 12 months (no month-dependent drift),
     which rules out a transcription / latitude error. The only offset is definitional:
-    this (mid-17th-c., c. 1641) table reckons sunrise as the Sun's *centre* on the *geometric* horizon
+    this (c. 1641, mid-17th-c.) table reckons sunrise as the Sun's *centre* on the
+    *geometric* horizon
     (h0 = 0 deg, no refraction — refraction was not yet tabulated), whereas the modern
     convention uses the upper limb at the apparent horizon (h0 = -0.833 deg), ~7 min
     earlier. At h0 = 0 the residual is ~0.
