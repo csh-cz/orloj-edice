@@ -245,7 +245,13 @@ def _page_doc(
             )
             marginalia = _marginalia_html(marg_lines, page_nr)
         elif tables:
-            body_regions = "".join(_table_html(t) for t in tables)
+            cap = _TABLE_CAPTIONS.get(page_nr)
+            head = (
+                f'<p class="table-cap"><b>{_esc(cap)}</b> <span class="table-note">— přepis '
+                "z rukopisu; ojediněle ±1 min, spodní řádky méně jisté; k ověření.</span></p>"
+                if cap else ""
+            )
+            body_regions = head + "".join(_table_html(t) for t in tables)
         elif table_page:
             link = (
                 f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP</a>'
@@ -326,7 +332,7 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "done", "f54: pokrač. něm. návod"),
     ("f55–f69", "komputistické/astron. tabulky + próza (f65)", "partial",
-     "popsány; data k přepisu; próza f65"),
+     "f55 přepsána; ostatní popsány, data k přepisu"),
     ("f70–f79", "Astrolabium parvum", "done", "—"),
     ("f80", "latinsko-český epigram (Pythagoras)", "todo", "přepis"),
     ("f81", "předsádka", "na", "—"),
@@ -475,6 +481,8 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .table-todo{font-family:system-ui,sans-serif;font-size:.85rem;color:#6b6256;background:#f6f1e4;
   border:1px dashed #cdbf9f;border-radius:4px;padding:.7rem .9rem}
 .table-todo a{color:#7a5c2e}
+.table-cap{font-family:system-ui,sans-serif;font-size:.85rem;margin:.2rem 0 .5rem}
+.table-cap .table-note{color:#8a7d63;font-weight:normal;font-size:.78rem}
 .page-table{border-collapse:collapse;margin:.6rem 0;font-family:system-ui,sans-serif;font-size:.85rem}
 .page-table td{border:1px solid #cdbf9f;padding:.15rem .4rem;text-align:center;min-width:1.6rem}
 .clean-flag{display:inline-block;background:#3f6b3f;color:#fff;font-family:system-ui,sans-serif;
