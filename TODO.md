@@ -32,8 +32,9 @@ SPDX-License-Identifier: EUPL-1.2
   - Doporučení: dotáhnout přes tabulkový HTR model nebo cílenou kontrolu, ne odhadem.
 - [ ] **f54** — za českým překladem Listu purkmistra pokračuje **německý komputistický
       návod** (přepočet východu/západu mezi německými a českými hodinami) — nepřepsáno.
-- [ ] **f4** — latinský verš („Praga…") — přepis.
-- [ ] **f80** — latinsko-český epigram (Pythagoras) — přepis.
+- [x] **f4** — latinský epigram o sedmi pražských pahorcích („Praha jako nový Řím") — přepsáno + překlad.
+- [x] **f80** — dva latinské epigramy (Pythagoras: hekatomba; Archimedes: „pohnu zemí") + nákres
+      pravoúhlého trojúhelníku — přepsáno + překlad. (Pozn.: NE latinsko-český, jak dříve uvedeno.)
 
 ## ✅ Zdroj slunečních tabulek NALEZEN — v samotném rukopise (záhlaví f3)
 Záhlaví f3 přímo jmenuje původ: tabule délky dne/východu/poledne/západu je „**od někdy

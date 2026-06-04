@@ -562,7 +562,8 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "f2 nevyplněná předtištěná tabule; f3 = perpetuální tabule po krocích délky dne (zdroj: "
      "Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — záhlaví + struktura přepsány, spojnice "
      "délka dne→datum ověřena výpočtem pro Prahu; úplný přepis ~50 kroků zbývá"),
-    ("f4", "latinský verš", "todo", "přepis"),
+    ("f4", "latinský epigram (sedm pahorků pražských)", "done",
+     "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
     ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie ověřeny ze skenu (f13 nejisté)"),
     ("f31–f42", "Táborský: kap. XIII–XVIII", "partial",
@@ -578,7 +579,8 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
      "prózy f62–65, 67, 68; zbývají husté mřížky f58/59 (festa mob.), f61 (intervallum greg.), f66"),
     ("f70–f79", "Astrolabium parvum", "done", "—"),
-    ("f80", "latinsko-český epigram (Pythagoras)", "todo", "přepis"),
+    ("f80", "dva latinské epigramy (Pythagoras, Archimedes) + nákres trojúhelníku", "done",
+     "přepsáno + překlad (hekatomba; „pohnu zemí“)"),
     ("f81", "předsádka", "na", "—"),
 ]
 _STATUS_BADGE = {
@@ -600,11 +602,10 @@ def _status_html() -> str:
         "<thead><tr><th>folia</th><th>část knihy</th><th>stav</th><th>zbývá</th></tr></thead>"
         f"<tbody>{rows}</tbody></table>"
         '<p class="status-note"><b>Co v knize ještě chybí:</b> f3 (úplný přepis ~50 kroků '
-        "Hájkovy tabule délky dne — struktura a původ hotové), f4 (latinský verš), f31–42 "
-        "(diplomatická kontrola Táborského po řádcích), f54 (německý komputistický návod), "
-        "f58/59 (Tabula festorum mobilium), f61 (Tabula intervalli gregoriánská — lze dekódovat "
-        "klíčem z f60), f66 (epakty po dnech), f80 (latinsko-český epigram). Prázdné/předsádky: "
-        "f1, f2, f81.</p>"
+        "Hájkovy tabule délky dne — struktura a původ hotové), f31–42 (diplomatická kontrola "
+        "Táborského po řádcích), f54 (německý komputistický návod), f58/59 (Tabula festorum "
+        "mobilium), f61 (Tabula intervalli gregoriánská — lze dekódovat klíčem z f60), f66 "
+        "(epakty po dnech). Prázdné/předsádky: f1, f2, f81.</p>"
     )
 
 
