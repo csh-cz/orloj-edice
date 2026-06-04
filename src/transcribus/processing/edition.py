@@ -431,6 +431,23 @@ def _index_doc(
         "vyžaduje korekturu; část přípisků na okraji (fol. 13–30) není ověřena proti skenu; oddíl "
         "fol. 31–42 je čtecí oporou ukotven na Teigem. Zatím neslouží jako citovatelná kritická "
         "edice.</p>"
+        '<p class="verify"><b>Ověření tabulek výpočtem.</b> Číselné komputistické a astronomické '
+        "tabulky byly přepsány ručně (strojové rozpoznání rukopisných číslic selhává) a poté "
+        "<b>deterministicky ověřeny nezávislým výpočtem</b> (skript <code>tools/verify_computus.py</code> "
+        "v repozitáři; všechny kontroly procházejí): "
+        "<b>fol. 50 a 56</b> (<i>Tabula Litera dominicalis</i>, „N. I“) — juliánská i gregoriánská "
+        "nedělní písmena souhlasí s výpočtem pro všech 28 let slunečního cyklu; gregoriánský sloupec "
+        "platí pro 17. století (1583–1699), což zároveň datuje použitelnost tabulky. "
+        "<b>fol. 57</b> (<i>Tabula Epactarum</i>, „N. 2“) — všechny tři gregoriánské sloupce epakt "
+        "souhlasí s výpočtem (velikonoční úplněk dle J. Meeuse) pro 19 zlatých počtů ve více "
+        "obdobích; juliánský sloupec = gregoriánský + 10 (10denní rozdíl kalendářů), hranice "
+        "období odpovídají gregoriánským korekcím. "
+        "<b>fol. 55</b> (východ Slunce) — časy odpovídají astronomickému výpočtu pro Prahu "
+        "(φ ≈ 50,09°) s rozdílem do ~7 minut (systematický posun dobové konvence). "
+        "<b>fol. 69</b> (násobilka) — součiny souhlasí. "
+        "Naproti tomu <b>fol. 60</b> (<i>Tabula intervalli in Calendario Juliano</i>) se ověřit "
+        "<b>zatím nepodařilo</b>: dvojčíslí v buňkách se nepodařilo dekódovat ani ztotožnit "
+        "s vypočteným juliánským datem Velikonoc — proto je v edici označeno jako neověřené.</p>"
         '<p><b>Práva a licence:</b> skeny ani vyobrazení se zde nereprodukují — odkazy „sken" '
         "vedou do prohlížeče AHMP (práva k reprodukcím: Archiv hlavního města Prahy). "
         "Text edice © David Knespl, licence CC&nbsp;BY&nbsp;4.0; software EUPL-1.2.</p>"
@@ -543,6 +560,8 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .tiraz p{margin:.4rem 0}
 .tiraz .warn{background:#fbeed6;border-left:3px solid #b8860b;padding:.4rem .6rem;border-radius:3px}
 .tiraz .teige{background:#eef1f6;border-left:3px solid #5a6b8c;padding:.4rem .6rem;border-radius:3px}
+.tiraz .verify{background:#eaf3ec;border-left:3px solid #2f6b3a;padding:.4rem .6rem;border-radius:3px}
+.tiraz .verify code{font-size:.82em;background:#dce8df;padding:0 .2em;border-radius:2px}
 .tiraz a{color:#7a5c2e}
 .status{font-family:system-ui,sans-serif;font-size:.82rem;border-collapse:collapse;width:100%;margin:0 0 1.4rem}
 .status caption{text-align:left;font-weight:bold;font-size:1rem;margin-bottom:.4rem;color:#3a342a}
