@@ -332,7 +332,7 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "done", "f54: pokrač. něm. návod"),
     ("f55–f69", "komputistické/astron. tabulky + próza (f65)", "partial",
-     "f55 přepsána; ostatní popsány, data k přepisu"),
+     "přepsáno f55 + prózy f62/63/65/67/68; číselné tabulky popsány, data k přepisu"),
     ("f70–f79", "Astrolabium parvum", "done", "—"),
     ("f80", "latinsko-český epigram (Pythagoras)", "todo", "přepis"),
     ("f81", "předsádka", "na", "—"),
