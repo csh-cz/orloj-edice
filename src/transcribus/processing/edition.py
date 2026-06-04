@@ -571,7 +571,8 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f50", "Tabula Litera dominicalis (N. I)", "done",
      "cyklus solaris → nedělní písmeno (jul./greg.), 28 řádků, ověřeno vzorcem"),
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
-    ("f53–f54", "List purkmistra — dobový český překlad", "done", "f54: pokrač. něm. návod"),
+    ("f53–f54", "List purkmistra — dobový český překlad", "partial",
+     "český překlad hotov; na f54 pokračuje německý komputistický návod (přepočet hodin) — nepřepsán"),
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641)", "partial",
      "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera), "
      "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
@@ -598,6 +599,12 @@ def _status_html() -> str:
         '<table class="status"><caption>Stav zpracování (průběžně aktualizováno)</caption>'
         "<thead><tr><th>folia</th><th>část knihy</th><th>stav</th><th>zbývá</th></tr></thead>"
         f"<tbody>{rows}</tbody></table>"
+        '<p class="status-note"><b>Co v knize ještě chybí:</b> f3 (úplný přepis ~50 kroků '
+        "Hájkovy tabule délky dne — struktura a původ hotové), f4 (latinský verš), f31–42 "
+        "(diplomatická kontrola Táborského po řádcích), f54 (německý komputistický návod), "
+        "f58/59 (Tabula festorum mobilium), f61 (Tabula intervalli gregoriánská — lze dekódovat "
+        "klíčem z f60), f66 (epakty po dnech), f80 (latinsko-český epigram). Prázdné/předsádky: "
+        "f1, f2, f81.</p>"
     )
 
 
@@ -810,6 +817,8 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .status .b-partial{color:#b8860b;font-weight:bold;white-space:nowrap}
 .status .b-todo{color:#a3332b;font-weight:bold;white-space:nowrap}
 .status .b-na{color:#999;white-space:nowrap}
+.status-note{font-family:system-ui,sans-serif;font-size:.8rem;line-height:1.5;color:#6b6256;
+  background:#f6f1e4;border-left:3px solid #b8860b;padding:.5rem .7rem;border-radius:3px;margin:-.8rem 0 1.4rem}
 .toc-section h2{font-size:1rem;border-bottom:1px solid #cdbf9f;padding-bottom:.2rem;margin:1.4rem 0 .4rem}
 .toc-section h2 .range{font-weight:normal;color:#8a8071;font-size:.85rem}
 .note{font-family:system-ui,sans-serif;font-size:.85rem;color:#5a5446;background:var(--paper);
