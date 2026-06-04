@@ -609,7 +609,8 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "cyklus solaris → nedělní písmeno (jul./greg.), 28 řádků, ověřeno vzorcem"),
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "partial",
-     "český překlad hotov; na f54 pokračuje německý komputistický návod (přepočet hodin) — nepřepsán"),
+     "český překlad hotov; německý návod na f54 (přepočet německé↔orlojní hodiny) — český souhrn "
+     "doplněn, strojový DE základ (PyLaia) mimo edici, plný diplomatický DE přepis čeká na Titan"),
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641)", "partial",
      "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera), "
      "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
