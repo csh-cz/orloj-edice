@@ -253,17 +253,37 @@ def _index_doc(
     )
     tiraz = (
         '<section class="tiraz"><h2>O edici</h2>'
-        "<p><b>Pramen:</b> Jan Táborský z Klokotské Hory, <i>Zpráva o orloji pražském</i> — "
-        "opis z roku 1587 (konvolut písemností k orloji, 1587–1642). Archiv hlavního města "
-        "Prahy, Sbírka rukopisů (inv. č. 7916). Opis pořídil staroměstský písař "
-        f"<b>Matouš Carchesius Jablonský</b> (kolofon fol. 47). {ahmp_a}</p>"
-        "<p><b>Metoda:</b> text rozpoznán HTR (Transkribus, PyLaia 263129) a normalizován do "
-        "diakritického pravopisu podle normy Ivan Šťovíček a kol. (heuristicky, s ruční "
-        "korekturou). Jako čtecí kolace slouží edice originálu 1570 (J. Teige, 1901, public "
-        "domain). Zobrazení ve třech režimech: diplomatický / normalizovaný / Teige.</p>"
-        '<p class="warn"><b>Stav: rozpracovaná pracovní edice.</b> Normalizace je heuristická '
-        "a vyžaduje korekturu; část přípisků na okraji (fol. 13–30) není ověřena proti skenu; "
-        "oddíl fol. 31–42 je ukotven na Teigem. Zatím neslouží jako citovatelná kritická edice.</p>"
+        "<p><b>Pramen — orlojní kniha (konvolut 1587–1642).</b> Archiv hlavního města Prahy, "
+        f"Sbírka rukopisů, inv. č. 7916. {ahmp_a}. Kniha není jediný text — má několik částí: "
+        "(1) <b>opis Táborského <i>Zprávy o orloji pražském</i></b> (fol. 5–49), který roku "
+        "1587 pořídil staroměstský písař <b>Matouš Carchesius Jablonský</b> (kolofon fol. 47); "
+        "(2) <b>opis privilegia z r. 1410</b> pro hodináře Mikuláše z Kadaně — německy "
+        "(fol. 51–52, opsáno 1628) i v dobovém českém překladu (fol. 53–54); (3) "
+        "<b>komputistické a astronomické tabulky</b> (fol. 2, 50, 55–69 — Littera dominicalis, "
+        "zlaté číslo, epakta, východ slunce, polouorlojní počet); (4) <b>Astrolabium parvum</b> "
+        "(fol. 70–79); a (5) <b>pozdější přípisky správců orloje</b> (16.–17. stol.) — právě ty "
+        "pomohly Z. Horskému přeřadit vznik orloje k r. 1410. Edice zatím zpracovává především "
+        "část (1) a (2).</p>"
+        "<p><b>Metoda — syntetická edice.</b> Text vzniká <b>kombinací zdrojů</b>, ne pouhým "
+        "strojovým přepisem: strojové rozpoznání rukopisu (HTR, Transkribus PyLaia — čeština "
+        "263129, německý Kurrent 27457; dva nezávislé běhy), ruční korektura čtením skenu, "
+        "rozpoznání tabulek (Docling TableFormer) a externí opory — edice originálu 1570 "
+        "(J. Teige, 1901), paleografický přepis privilegia a přepis Astrolabia (orloj.eu). "
+        "Výsledek je tedy <b>syntéza</b> více pramenů. Česky psaný text lze zobrazit ve třech "
+        "režimech: diplomatický / normalizovaný (diakritický, dle normy Ivan Šťovíček a kol.) / "
+        "Teige.</p>"
+        '<p class="teige"><b>Pozor na Teigeho — předloha ≠ opis.</b> Teigeho edice (1901) vydává '
+        "<b>předlohu, totiž originál Táborského zprávy z r. 1570</b>. Zde se ale zpracovává její "
+        "<b>opis Jablonského z r. 1587</b> — <b>jiný svědek</b>, který se od originálu místy liší "
+        "(varianty písaře i pozdější přídavky: např. přestavba měsícového soukolí, kolofon "
+        "opisovače 1587, „přídavek na spheru“, poznámky správců odkazující na privilegium 1410). "
+        "Proto se text <b>neopravuje podle Teigeho</b>: Teige slouží jen jako <b>čtecí opora a "
+        "kolace</b> a <b>odlišnosti opisu se záměrně zachovávají</b> (a značí), nikoli zarovnávají "
+        "na originál.</p>"
+        '<p class="warn"><b>Stav: rozpracovaná pracovní edice.</b> Normalizace je heuristická a '
+        "vyžaduje korekturu; část přípisků na okraji (fol. 13–30) není ověřena proti skenu; oddíl "
+        "fol. 31–42 je čtecí oporou ukotven na Teigem. Zatím neslouží jako citovatelná kritická "
+        "edice.</p>"
         '<p><b>Práva a licence:</b> skeny ani vyobrazení se zde nereprodukují — odkazy „sken" '
         "vedou do prohlížeče AHMP (práva k reprodukcím: Archiv hlavního města Prahy). "
         "Text edice © David Knespl, licence CC&nbsp;BY&nbsp;4.0; software EUPL-1.2.</p></section>"
@@ -350,6 +370,7 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .tiraz h2{font-size:1rem;margin:.1rem 0 .5rem;border:0}
 .tiraz p{margin:.4rem 0}
 .tiraz .warn{background:#fbeed6;border-left:3px solid #b8860b;padding:.4rem .6rem;border-radius:3px}
+.tiraz .teige{background:#eef1f6;border-left:3px solid #5a6b8c;padding:.4rem .6rem;border-radius:3px}
 .tiraz a{color:#7a5c2e}
 .toc-section h2{font-size:1rem;border-bottom:1px solid #cdbf9f;padding-bottom:.2rem;margin:1.4rem 0 .4rem}
 .toc-section h2 .range{font-weight:normal;color:#8a8071;font-size:.85rem}
