@@ -20,7 +20,7 @@ import json
 from pathlib import Path
 
 from transcribus.processing.normalize import normalize_text
-from transcribus.processing.page_xml import Table, TextRegion, parse_page_xml, parse_tables
+from transcribus.processing.page_xml import Table, TextRegion, parse_page_xml
 from transcribus.processing.teige import TeigeIndex, fold
 
 _MARGINALIA = {"marginalia", "margin-text", "margin"}
@@ -172,11 +172,12 @@ def _page_doc(
     ahmp_url: str | None, teige_passage: str | None, section_label: str = "",
     tables: list[Table] | None = None, figures: list[str] | None = None,
     clean_lines: list[str] | None = None, embed_scan: bool = False,
+    table_page: bool = False,
 ) -> str:
     tables = tables or []
     figures = figures or []
     has_text = any(r.lines and any(line.strip() for line in r.lines) for r in regions)
-    has_content = has_text or bool(tables) or bool(figures) or bool(clean_lines)
+    has_content = has_text or bool(tables) or bool(figures) or bool(clean_lines) or table_page
     # AHMP rules: any internet publication of a reproduction needs an agreement +
     # <=500px + watermark. Until that is in place, NOTHING is republished — figures are
     # only referenced with an out-link to the AHMP viewer.
@@ -222,6 +223,15 @@ def _page_doc(
             marginalia = _marginalia_html(marg_lines, page_nr)
         elif tables:
             body_regions = "".join(_table_html(t) for t in tables)
+        elif table_page:
+            link = (
+                f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP</a>'
+                if ahmp_url else "sken v AHMP"
+            )
+            body_regions = (
+                '<div class="table-todo">Komputistická / astronomická <b>tabulka</b> — '
+                f"zatím nepřepsána (strojové rozpoznání u ručně psaných tabulek selhává). Viz {link}.</div>"
+            )
         else:
             body_regions = "\n".join(_region_html(r) for r in regions)
         page_folded = {
@@ -438,8 +448,9 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 @media(max-width:640px){.marginalia{float:none;width:auto;margin:.4rem 0}}
 .ln{display:block;line-height:1.6}
 .heading{font-size:1.05rem;font-weight:bold}
-.marginalia{float:right;width:32%;margin:0 0 .4rem 1rem;padding-left:.6rem;border-left:2px solid #cdbf9f;
-  color:#5a5446;font-size:.9em;font-style:italic}
+.table-todo{font-family:system-ui,sans-serif;font-size:.85rem;color:#6b6256;background:#f6f1e4;
+  border:1px dashed #cdbf9f;border-radius:4px;padding:.7rem .9rem}
+.table-todo a{color:#7a5c2e}
 .page-table{border-collapse:collapse;margin:.6rem 0;font-family:system-ui,sans-serif;font-size:.85rem}
 .page-table td{border:1px solid #cdbf9f;padding:.15rem .4rem;text-align:center;min-width:1.6rem}
 .clean-flag{display:inline-block;background:#3f6b3f;color:#fff;font-family:system-ui,sans-serif;
@@ -558,23 +569,24 @@ def build_edition(
     total = len(xml_files)
     # Pass 1: parse pages, tables, and compute Teige matches.
     entries: list[
-        tuple[int, list[TextRegion], list[Table], str, str | None, list[str], list[str]]
+        tuple[int, list[TextRegion], list[Table], str, str | None, list[str], list[str], bool]
     ] = []
-    tables_dir = work_dir / "tables"
+    tables_dir = work_dir / "tables"            # raw Docling — only flags a table page
+    tables_clean_dir = work_dir / "tables_clean"  # verified, rendered as a grid
     figures_dir = work_dir / "figures"
     for xf in xml_files:
         page_nr = int(xf.stem)
         xml = xf.read_text(encoding="utf-8")
         regions = parse_page_xml(xml)
-        tables = parse_tables(xml)
-        # Docling table sidecar (TableFormer) takes precedence when present.
-        sidecar = tables_dir / f"{page_nr:04d}.json"
-        if sidecar.exists():
+        # Only verified tables (tables_clean/) are rendered; raw Docling OCR of handwritten
+        # table cells is unreliable, so it is NOT shown — it just marks a table page.
+        tables: list[Table] = []
+        clean_tbl = tables_clean_dir / f"{page_nr:04d}.json"
+        if clean_tbl.exists():
             from transcribus.processing.docling_tables import tables_from_json
 
-            docling_tables = tables_from_json(sidecar.read_text(encoding="utf-8"))
-            if docling_tables:
-                tables = docling_tables
+            tables = tables_from_json(clean_tbl.read_text(encoding="utf-8")) or []
+        is_table_page = bool(tables) or (tables_dir / f"{page_nr:04d}.json").exists()
         fig_sidecar = figures_dir / f"{page_nr:04d}.json"
         fig_names = json.loads(fig_sidecar.read_text()) if fig_sidecar.exists() else []
         clean_file = work_dir / "clean" / f"{page_nr:04d}.txt"
@@ -584,7 +596,9 @@ def build_edition(
         )
         plain = " ".join(line for r in regions for line in r.lines if line.strip())
         passage = teige_index.align(plain) if (teige_index and plain) else None
-        entries.append((page_nr, regions, tables, plain, passage, fig_names, clean_lines))
+        entries.append(
+            (page_nr, regions, tables, plain, passage, fig_names, clean_lines, is_table_page)
+        )
 
     matched = {e[0] for e in entries if e[4]}
     sections = derive_sections(matched, total)
@@ -596,16 +610,16 @@ def build_edition(
 
     # Pass 2: write per-folio pages + index.
     toc: dict[int, tuple[str, bool]] = {}
-    for page_nr, regions, tables, plain, passage, fig_names, clean_lines in entries:
+    for page_nr, regions, tables, plain, passage, fig_names, clean_lines, is_tbl in entries:
         doc = _page_doc(
             title=title, page_nr=page_nr, total=total, regions=regions,
             ahmp_url=_folio_ahmp_url(ahmp_permalink, page_nr), teige_passage=passage,
             section_label=folio_section.get(page_nr, ""), tables=tables, figures=fig_names,
-            clean_lines=clean_lines, embed_scan=embed_scan,
+            clean_lines=clean_lines, embed_scan=embed_scan, table_page=is_tbl,
         )
         (out_dir / f"p{page_nr:04d}.html").write_text(doc, encoding="utf-8")
         snip = (plain[:80] + "…") if plain else (
-            "[tabulka]" if tables else ("[vyobrazení]" if fig_names else "[prázdná]")
+            "[tabulka]" if (tables or is_tbl) else ("[vyobrazení]" if fig_names else "[prázdná]")
         )
         toc[page_nr] = (snip, passage is not None)
 
