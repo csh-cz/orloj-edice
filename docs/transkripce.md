@@ -28,8 +28,46 @@ HTR výstupu do `clean/`. Stručně:
 
 ## Stav přepisu (work/orloj1587)
 
-- **f70–79 (Astrolabium parvum)** — čistá diakritická transkripce hotová; reference
-  téhož svědka: přepis na orloj.eu/cs/astrolabium_parvum.htm.
-- **f5–30, 43–49 (opis Táborského zprávy)** — zatím HTR draft; přepsat věrně z obrazu
-  + kolace variant proti Teigemu (data `data/teige_taborsky.txt`).
-- Ostatní (němčina, kalendářní tabulky, poznámky) — HTR / Docling tabulky.
+- **f5–49 (opis Táborského „Zprávy o orloji Pražském")** — čistá diakritická transkripce
+  **hotová** (kap. I–XVIII + biografický závěr, Endecasyllabon, kolofon 1570 a **kolofon
+  opisovače Matouše Carchesia Jablonského, písaře pražské kanceláře, 1587** — datace ze
+  skenu potvrzuje rok 1587). Metoda: starší HTR doc 1173147 (tatáž archiválie, jiný HTR běh) jako
+  základ opisu + Teigeho edice 1570 (`data/teige_taborsky.txt`) jako čtecí opora; varianty
+  a přídavky opisu (přestavba měsícového soukolí, „přídavek na spheru", mistr z Norimberka)
+  zachovány, ne kolacovány pryč. Pro f31–42 selhalo automatické zarovnání (zkomolený HTR,
+  bez Teigeho prahu shod) → Teigeho pasáže dohledány ručně (kap. XIII závěr → XVIII).
+- **f70–79 (Astrolabium parvum)** — čistá diakritická transkripce hotová; reference téhož
+  svědka: přepis na orloj.eu/cs/astrolabium_parvum.htm.
+- **f2, f50–69 (komputistické/astronomické tabulky)** — Littera dominicalis, epakta, zlaté
+  číslo, vejchod/západ slunce, polouorlojní počet; modalita = Docling TableFormer, ne
+  prozaický přepis. Mezi nimi i česká návodná próza (f65 ukazatel novoluní) k doplnění.
+- **f80 (latinsko-český epigram, Pythagoras), f1/f81 (prázdné)** — drobnosti.
+
+### Ediční pozn. ke svědkovi
+Starší dokument v Transkribu (1173147) **není jiný opis** — je to tatáž archiválie (opis
+1587), jen jiný HTR běh; používá se proto volně jako lepší slovní základ. Teige 1901 edituje
+**originál 1570** (jiný svědek), slouží jen jako čtecí kontrola; copy-specific odchylky opisu
+se značí, nemažou.
+
+### Opisovač (kolofon f. 47)
+Opis pořídil roku **1587** (v úterý na den sv. panny Kateřiny = 25. 11. 1587, což skutečně
+připadlo na úterý) **Matouš Carchesius z Jablonného** („Jablonský"), písař staroměstské
+městské kanceláře — viz kolofon na f. 47: *„Přepsán ode mne Matouše Carchesia Jablonského,
+písaře kanceláře pražské, z poručení pana purgkmistra a pánuov Starého Města pražského…"*
+
+Patrně člen rodiny staroměstských písařů **Carchesiů alias Kraus(ů) z Krausenthalu**
+(*carchesium* = lat. „číše", počeštění něm. *Kraus*), doložené nezávisle na orloji:
+- J. Teige, *Základy starého místopisu pražského*, Staré Město — staroměstské **kšafty,
+  rkp. č. 2205**: k r. **1583** „Martin Carchesius, písař radní"; k r. **1598** „Matouš
+  Carchesius jinak Krausz z Krausnthalu, písař přísežný v dolejší kancelláři" (= nejspíš náš
+  opisovač);
+- J. Malý, *Vlastenský slovník historický* (1877), heslo **Carchesius** — o příbuzném
+  spisovateli **Martinu Carchesiovi** (Kraus z Krausenthalu, úředník SMP 1564–1602; *Bič
+  židovský* 1604, *Zrcadlo židovské*, *Historie o doktorovi Faustovi* 1611).
+
+Identita opisovače je tedy **věc známá** (jmenuje ho Z. Horský, *Pražský orloj*, 1988 → orloj.eu),
+ne nový objev. Otevřený zůstává jen **rozpor predikátu** *z Jablonného/Jablonský* (kolofon +
+orlojní literatura) × *z Krausenthalu/Kraus* (místopis + slovník) — k ověření v archivu
+(AHMP, Sbírka rukopisů: opis orloje **inv. č. 7916**; kniha kšaftů **č. 2205**). Pro edici je
+**závazný kolofon opisu** (Carchesius Jablonský), totožnost s písařem „Kraus z Krausenthalu"
+se uvádí jako hypotéza.

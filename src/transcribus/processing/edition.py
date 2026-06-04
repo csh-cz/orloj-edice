@@ -137,27 +137,42 @@ def _page_doc(
     *, title: str, page_nr: int, total: int, regions: list[TextRegion],
     ahmp_url: str | None, teige_passage: str | None, section_label: str = "",
     tables: list[Table] | None = None, figures: list[str] | None = None,
-    clean_lines: list[str] | None = None,
+    clean_lines: list[str] | None = None, embed_scan: bool = False,
 ) -> str:
     tables = tables or []
     figures = figures or []
     has_text = any(r.lines and any(line.strip() for line in r.lines) for r in regions)
     has_content = has_text or bool(tables) or bool(figures) or bool(clean_lines)
-    cap_link = (
-        f' · <a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken</a>'
-        if ahmp_url else ""
+    # AHMP rules: any internet publication of a reproduction needs an agreement +
+    # <=500px + watermark. Until that is in place, NOTHING is republished — figures are
+    # only referenced with an out-link to the AHMP viewer.
+    fig_link = (
+        f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP</a>'
+        if ahmp_url else "sken v AHMP"
     )
-    fig_note = "".join(
-        f'<figure class="fig"><img src="figures/{_esc(name)}" loading="lazy" '
-        f'alt="vyobrazení fol. {page_nr:04d}">'
-        f"<figcaption>Vyobrazení — Archiv hl. m. Prahy{cap_link}</figcaption></figure>"
-        for name in figures
+    fig_note = (
+        f'<figure class="fig fig-ref"><figcaption>Na tomto foliu je vyobrazení '
+        f"(zde nereprodukováno — viz {fig_link}).</figcaption></figure>"
+        if figures else ""
     )
     prev_link = f"p{page_nr-1:04d}.html" if page_nr > 1 else ""
     next_link = f"p{page_nr+1:04d}.html" if page_nr < total else ""
     ahmp = (
         f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">↗ sken v AHMP</a>'
         if ahmp_url else ""
+    )
+    # Optional embedded AHMP viewer (iframe = linking, not republication). Collapsed by
+    # default; the scan is served & watermarked by AHMP. Toggle via --embed-scan.
+    scan_embed = (
+        '<details class="scan-embed"><summary>▣ Zobrazit sken folia z AHMP</summary>'
+        f'<iframe src="{_esc(ahmp_url)}" loading="lazy" '
+        f'title="Sken fol. {page_nr:04d} — Archiv hl. m. Prahy" '
+        'referrerpolicy="no-referrer-when-downgrade"></iframe>'
+        '<p class="scan-note">Sken hostuje a vodoznakem značí Archiv hlavního města Prahy. '
+        'Nenačte-li se náhled (blokované cookies třetích stran), použij odkaz '
+        f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">↗ otevřít v AHMP</a>.</p>'
+        "</details>"
+        if (embed_scan and ahmp_url) else ""
     )
 
     if has_content:
@@ -204,9 +219,10 @@ def _page_doc(
   <a class="next" href="{next_link}"{'' if next_link else ' hidden'}>další →</a>
 </nav>
 <div class="section-label">{_esc(section_label)}</div>
-<main>{body}</main>
+<main>{body}{scan_embed}</main>
 <footer>Diplomatický přepis (Transkribus HTR, model 263129). Normalizace heuristická — nutná korektura.
-Teige: edice 1901, public domain. Skeny: Archiv hlavního města Prahy.</footer>
+Teige: edice 1901, public domain. Vyobrazení ani skeny se zde nereprodukují — odkazy „sken"
+vedou do prohlížeče Archivu hlavního města Prahy (katalog.ahmp.cz).</footer>
 <script src="assets/edition.js"></script>
 </body></html>"""
 
@@ -285,6 +301,11 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .fig img{max-width:100%;height:auto;border:1px solid #cdbf9f;border-radius:3px}
 .fig figcaption{font-family:system-ui,sans-serif;font-size:.75rem;color:#6b6256;margin-top:.3rem}
 .fig figcaption a{color:#7a5c2e}
+.scan-embed{max-width:62rem;margin:1.5rem auto;font-family:system-ui,sans-serif;font-size:.8rem}
+.scan-embed summary{cursor:pointer;color:#7a5c2e;padding:.4rem .6rem;background:#f3ecdb;
+  border:1px solid #cdbf9f;border-radius:4px;user-select:none}
+.scan-embed iframe{width:100%;height:80vh;margin-top:.6rem;border:1px solid #cdbf9f;border-radius:3px}
+.scan-embed .scan-note{color:#6b6256;font-size:.72rem;margin:.4rem 0 0}
 .empty{color:#a99;font-style:italic;font-family:system-ui,sans-serif;padding:1rem}
 /* mode switching */
 .norm{display:none}
@@ -333,9 +354,22 @@ _JS = """
 """
 
 
+def _folio_ahmp_url(permalink: str | None, page_nr: int) -> str | None:
+    """Per-folio stable link to the scan in the AHMP viewer.
+
+    Appends ``scanIndex=<folio>`` to the document permalink. The bare permalink always
+    opens the correct unit in the AHMP viewer; the viewer may deep-link to the folio
+    via scanIndex (client-side). Scans are not republished here.
+    """
+    if not permalink:
+        return None
+    sep = "&" if "?" in permalink else "?"
+    return f"{permalink}{sep}scanIndex={page_nr}"
+
+
 def build_edition(
     work_dir: Path, *, title: str, ahmp_permalink: str | None = None,
-    teige_path: Path | None = None,
+    teige_path: Path | None = None, embed_scan: bool = False,
 ) -> Path:
     work_dir = Path(work_dir)
     xml_files = sorted((work_dir / "page_xml").glob("*.xml"))
@@ -393,23 +427,18 @@ def build_edition(
     sections = derive_sections(matched, total)
     folio_section = {n: label for _k, lo, hi, label in sections for n in range(lo, hi + 1)}
 
-    # Copy figure crops into the edition so it stays self-contained.
-    if any(e[5] for e in entries):
-        (out_dir / "figures").mkdir(parents=True, exist_ok=True)
-        for e in entries:
-            for name in e[5]:
-                src = figures_dir / name
-                if src.exists():
-                    (out_dir / "figures" / name).write_bytes(src.read_bytes())
+    # NOTE: no AHMP reproduction is republished (figures or whole pages) — each folio
+    # only links out to the AHMP viewer. Embedding would require an AHMP agreement
+    # (<=500px longer side + watermark + "internet" purpose stated in the contract).
 
     # Pass 2: write per-folio pages + index.
     toc: dict[int, tuple[str, bool]] = {}
     for page_nr, regions, tables, plain, passage, fig_names, clean_lines in entries:
         doc = _page_doc(
             title=title, page_nr=page_nr, total=total, regions=regions,
-            ahmp_url=ahmp_permalink, teige_passage=passage,
+            ahmp_url=_folio_ahmp_url(ahmp_permalink, page_nr), teige_passage=passage,
             section_label=folio_section.get(page_nr, ""), tables=tables, figures=fig_names,
-            clean_lines=clean_lines,
+            clean_lines=clean_lines, embed_scan=embed_scan,
         )
         (out_dir / f"p{page_nr:04d}.html").write_text(doc, encoding="utf-8")
         snip = (plain[:80] + "…") if plain else (

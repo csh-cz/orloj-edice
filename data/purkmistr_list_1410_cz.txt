@@ -1,0 +1,43 @@
+# Littera Maior — DOBOVÝ ČESKÝ PŘEKLAD privilegia z r. 1410 (Mikuláš z Kadaně),
+# obsažený v opisu Táborského zprávy na foliích f53 (strana 1) a f54 (strana 2),
+# bezprostředně za německým zněním (f51–52).
+#
+# Zdroj: čtení/překlad poskytnutý D. Knesplem jako podklad pro edici; slouží jako
+# autoritativní oprava HTR výstupu f53–f54. Závorka „(v německém textu: …)" = ediční
+# poznámka srovnávající s německou předlohou.
+# ---------------------------------------------------------------------------------------
+
+My, purkmistr a rada velikého města Prahy, známo činíme tímto listem vůbec přede všemi, kdež
+čten, slyšán a viděn bude. Poněvadž Bůh všemohoucí vedle své nestihlé moudrosti všechno
+stvoření obdařuje dary rozličnými — některé obdaří urozeností, jiné bohatstvím, jiné pokorou,
+jiné uměním a vnuknutím vysokých smyslův — a tak podle své vůle jednomu každému ne bez
+zvláštní příčiny dary své uděluje, aby lidé vespolek sobě pomáhali a v pravé lásce jeden
+druhého břímě nésti se snažili. A jakož jest slovutný mistr Mikuláš z Kadaně, přísežný mistr
+orloje našeho, kteréhož jsme přijali k dobrému vší obce, aby náš orloj lépěji spravil, než
+jest mistr Albrecht to před ním učinil, za což jemu deset kop grošů ročního platu z Rathauzu
+našeho dávati máme, polovici na den sv. Havla a druhou polovici na sv. Jiří, jakož jsme to
+tolikéž mistru Albrechtovi dávali.
+
+Obzvláště pak, že jest dotčený mistr Mikuláš vedle svého mistrovství a smyslu přirozeného
+tomuto městu a vší obci ku poctivosti udělal astrolabium, v němž Slunce svůj pravý běh
+vykonává (v německém textu: v němž Slunce vykonává svůj pravý běh v zodiaku ve dvanácti
+znameních, v devatenácti letech svůj běh dokončuje jako na nebi) jako na obloze nebeské;
+přitom se spatřuje, jak Slunce každého dne vychází a zapadá, ukazujíc poledne i půlnoc s
+rovnými i nerovnými hodinami. Přitom jest také sféra, kteráž ukazuje každodenně, na kterém
+znamení zlým nebo dobrým jest, jako i kdy Měsíc přibejvá nebo ubejvá každé čtyři neděle, jako
+na nebi; tolikéž kdy Měsíc nový neb na plně jest. Nadto napsáni jsou všickni svátkové přes
+celý rok na předním kole. Kterážto kola s jejich hnutím mají třiceti kol s třimi tryby,
+kteréž davši k tomu své železo na svůj náklad a vedle smyslu svého s velikou prací udělal. K
+tomu i udělal nová kola k velikému orloji v straně bicí s svým vlastním nákladem.
+
+Kteréžto takové jeho náklady a těžké práce, kteréž městu tomuto k poctivosti činil a dále
+činiti bude, při sobě považivše — poněvadž každý dělník, aby mu mzda jeho dána byla, hoden
+jest — protož jsme s dobrým rozmyslem naším svrchu psanému mistru Mikulášovi a dědicům jeho
+za odměnu učiniti a jemu dům dali vedle brány městské, kdež se do Nového Města na Koňský trh
+jde, po příkopích městských, blíže našich chlebných kotcův, kterýž on rozšířil a na svůj
+náklad vystavěl. K tomu zapisujeme jemu a dědicům jeho na témž domě a místě padesát kop grošů
+hotových peněz, kteréž na něm míti má, na tento způsob: pokudž bychom my aneb budoucí naši
+správcové města Prahy týž dům zbořiti aneb jináč k potřebě města obrátiti chtěli, tehdy máme
+my aneb kdokoliv jiný jemu hotových padesát kop grošů dáti a téhož domu se ujíti. A vedle
+svrchu psaného práva může dotčený mistr Mikuláš za zdravého života svého aneb na smrtelné
+posteli své o tom o všem říditi bez překážky všeliké.

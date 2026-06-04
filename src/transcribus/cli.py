@@ -287,6 +287,10 @@ def edition(
     title: str = typer.Option("Edice", "--title"),
     ahmp_permalink: str | None = typer.Option(None, "--ahmp-permalink", help="AHMP viewer link"),
     teige: Path | None = typer.Option(None, "--teige", help="Teige reference text for collation"),
+    embed_scan: bool = typer.Option(
+        False, "--embed-scan/--no-embed-scan",
+        help="Embed per-folio AHMP viewer in a collapsible iframe (preview; not republication)",
+    ),
 ) -> None:
     """Generate a static HTML edition (diplomatic/normalized/Teige modes) from PAGE XML."""
     from transcribus.processing.edition import build_edition
@@ -294,7 +298,10 @@ def edition(
     if teige is None:
         default = Path("data/teige_taborsky.txt")
         teige = default if default.exists() else None
-    result = build_edition(Path(out), title=title, ahmp_permalink=ahmp_permalink, teige_path=teige)
+    result = build_edition(
+        Path(out), title=title, ahmp_permalink=ahmp_permalink, teige_path=teige,
+        embed_scan=embed_scan,
+    )
     typer.echo(f"Edition: {result}")
 
 
