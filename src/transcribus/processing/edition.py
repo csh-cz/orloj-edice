@@ -72,11 +72,17 @@ def _esc(s: str) -> str:
     return html.escape(s, quote=False)
 
 
-def _line_html(line: str) -> str:
+# Folia, jejichž jazyk NENÍ čeština (latina, němčina) — česká normalizace by je zkomolila
+# (g→j apod.), takže se u nich „normalizovaný" pohled rovná diplomatickému.
+_NO_NORMALIZE: frozenset[int] = frozenset({4, 51, 52, 80})
+
+
+def _line_html(line: str, *, normalize: bool = True) -> str:
+    norm = normalize_text(line) if normalize else line
     return (
         '<span class="ln">'
         f'<span class="dipl">{_esc(line)}</span>'
-        f'<span class="norm">{_esc(normalize_text(line))}</span>'
+        f'<span class="norm">{_esc(norm)}</span>'
         "</span>"
     )
 
@@ -457,9 +463,10 @@ def _page_doc(
         # Precedence: corrected clean text > Docling table grid > raw per-line HTR.
         if clean_lines:
             main_lines, marg_lines = _split_marginalia(clean_lines)
+            do_norm = page_nr not in _NO_NORMALIZE
             body_regions = (
                 '<span class="clean-flag">opravený přepis</span><p class="region paragraph">'
-                + "\n".join(_line_html(line) for line in main_lines if line)
+                + "\n".join(_line_html(line, normalize=do_norm) for line in main_lines if line)
                 + "</p>"
             )
             marginalia = _marginalia_html(marg_lines, page_nr)
