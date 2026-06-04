@@ -894,17 +894,36 @@ _JS = """
 """
 
 
-def _folio_ahmp_url(permalink: str | None, page_nr: int) -> str | None:
-    """Per-folio stable link to the scan in the AHMP viewer.
+# AHMP image viewer (Bach/Zoomify). The bare ``permalink?xid=…`` landing page IGNORES
+# scanIndex; the actual per-scan deep-link is the ``Zoomify.action`` viewer, which honours
+# scanIndex and works cold (no jsessionid needed — the server creates a session). scanIndex
+# is our folio number (verified: scanIndex=3 → fol. 3 day-length table; scanIndex=70 → fol. 70).
+# entityType/entityRef are constants of this archiválie (inv. č. 7916, internal id 143558).
+_AHMP_VIEWER = "https://katalog.ahmp.cz/pragapublica/Zoomify.action"
+_AHMP_ENTITY_TYPE = "10092"
+_AHMP_ENTITY_REF = "%28%5En%29%28%28%28localArchiv%2C%5En%2Chot_%29%28unidata%29%29%28143558%29%29"
 
-    Appends ``scanIndex=<folio>`` to the document permalink. The bare permalink always
-    opens the correct unit in the AHMP viewer; the viewer may deep-link to the folio
-    via scanIndex (client-side). Scans are not republished here.
-    """
-    if not permalink:
+
+def _ahmp_xid(permalink: str | None) -> str | None:
+    if not permalink or "xid=" not in permalink:
         return None
-    sep = "&" if "?" in permalink else "?"
-    return f"{permalink}{sep}scanIndex={page_nr}"
+    return permalink.split("xid=", 1)[1].split("&", 1)[0]
+
+
+def _folio_ahmp_url(permalink: str | None, page_nr: int) -> str | None:
+    """Per-folio deep-link to the scan in the AHMP Zoomify viewer (opens that folio).
+
+    Uses the ``Zoomify.action`` viewer with ``scanIndex=<folio>`` (= our page number),
+    which jumps straight to the folio. (The bare permalink landing page ignores
+    scanIndex.) Scans are not republished here — this only links out to AHMP.
+    """
+    xid = _ahmp_xid(permalink)
+    if not xid:
+        return None
+    return (
+        f"{_AHMP_VIEWER}?xid={xid}&entityType={_AHMP_ENTITY_TYPE}"
+        f"&entityRef={_AHMP_ENTITY_REF}&scanIndex={page_nr}"
+    )
 
 
 def build_edition(
