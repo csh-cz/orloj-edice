@@ -8,9 +8,19 @@ SPDX-License-Identifier: EUPL-1.2
 Živá edice: <https://csh-cz.github.io/orloj-edice/> · nasazení: `./deploy.sh`
 
 ## Přepis — zbývající části knihy
-- [ ] **Tabulky f2, f3, f50, f55–69** (komputistické/astronomické — Littera dominicalis,
-      zlaté číslo, epakta, východ/západ slunce, polouorlojní počet) → Docling TableFormer.
-- [ ] **f65** — česká návodná próza (ukazatel novoluní) uvnitř tabulkové sekce.
+- [x] **Tabulky přepsané ručně** (Docling na rukopisné číslice selhal): f50 + f56 (Litera
+      dominicalis N. I, jul./greg., ověřeno vzorcem Greg = Jul + 3), f57 (Tabula Epactarum
+      N. 2, ověřeno epaktovým vzorcem 11·g mod 30), f55 (východ Slunce), f60 (Tabula
+      intervalli Juliana, zlatý počet × litera), f69 (násobilka). Próza f62–65, 67, 68.
+- [ ] **Zbývající husté mřížky** (popsány captiony + odkaz na sken; nepřepsány — vysoké
+      riziko chyb při ručním čtení, bez ověřovacího invariantu):
+  - [ ] **f58 + f59** — Tabula Festorum Mobilium (pohyblivé svátky, mnoho sloupců dat).
+  - [ ] **f61** — Tabula intervalli Gregoriana (epakta × litera; pozn. gregoriánská
+        epakta 25/XXV způsobuje ±1řádkovou nejistotu v ose epakt → nutná pečlivá kontrola).
+  - [ ] **f66** — epakty/novoluní po dnech roku (hustá číselná tabule, měsíce v záhlaví).
+  - [ ] **f3** — délka dne/noci + východ/poledne/západ pro každý den (hustá tabule).
+  - [ ] **f2** — předtištěná, z větší části **nevyplněná** tabule (jen hlavička).
+  - Doporučení: dotáhnout přes tabulkový HTR model nebo cílenou kontrolu, ne odhadem.
 - [ ] **f54** — za českým překladem Listu purkmistra pokračuje **německý komputistický
       návod** (přepočet východu/západu mezi německými a českými hodinami) — nepřepsáno.
 - [ ] **f4** — latinský verš („Praga…") — přepis.
@@ -45,3 +55,5 @@ SPDX-License-Identifier: EUPL-1.2
 - ✅ Astrolabium parvum f70–79.
 - ✅ Marginálie f13–46 ověřené ze skenu; zobrazení jako sidenote (verso/recto parita).
 - ✅ Web edice (tiráž, metoda, práva, zdroje, tabulka stavu) na GitHub Pages.
+- ✅ Komputistické tabulky f50/f55/f56/f57/f60/f69 přepsány a (kde lze) ověřeny vzorcem;
+     próza komputu f62–65, 67, 68.

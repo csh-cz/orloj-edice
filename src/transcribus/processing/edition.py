@@ -135,24 +135,24 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
 
 # Popisky tabulkových folií (z hlaviček; data zatím nepřepsána). Komputistický aparát.
 _TABLE_CAPTIONS: dict[int, str] = {
-    2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — pro zpravování orloje celého i polovičního.",
-    3: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — z obojího (celého i polovičního) orloje (pokrač.).",
-    50: "Tabula, ex qua Littera Dominicalis desumitur — pro určení nedělní písmene.",
+    2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — předtištěná (z větší části nevyplněná) tabule pro zpravování orloje.",
+    3: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu Slunce — pro každý den roku (z celého i polovičního orloje).",
+    50: "Tabula, ex qua Litera Dominicalis desumitur in ingressu cum Cyclo Solari („N. I”) — nedělní písmeno pro každý rok 28letého slunečního cyklu, juliánské i gregoriánské.",
     55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
-    56: "Tabula, ex qua Littera Dominicalis desumitur — pro určení nedělní písmene.",
-    57: "Numerus (zlatý počet) — část komputistické tabulky.",
-    58: "Tabula festorum mobilium Calendarii [novi] — pohyblivé svátky (nového kalendáře).",
-    59: "Epacta[?] — tabulka epakt.",
-    60: "Littera dominicalis — tabulka nedělních písmen.",
-    61: "Littera dominicalis — tabulka nedělních písmen (pokrač.).",
+    56: "Tabula, ex qua Litera Dominicalis desumitur („N. I”) — duplikát tabule z fol. 50 (nedělní písmeno, juliánské i gregoriánské).",
+    57: "Tabula Epactarum („N. 2”) — epakta pro každý zlatý počet (1–19), juliánská a gregoriánská (období ad 1700 / 1700–1900 / 1900–2200).",
+    58: "Tabula Festorum Mobilium Calendarii [novi] — pohyblivé svátky (Septuagesima, Popeleční středa, Velikonoce, Rogationes, Nanebevstoupení, Letnice, Boží tělo, Advent).",
+    59: "Tabula Festorum Mobilium (pokrač.) — pohyblivé svátky.",
+    60: "Tabula Intervalli [Paschae] in Calendario Juliano — datum velikonočního úplňku/Velikonoc podle zlatého počtu (1–19) a nedělního písmene (A–G).",
+    61: "Tabula Intervalli [Paschae] in Calendario Gregoriano — totéž podle epakty a nedělního písmene; dole „Dies concurrentes” (0–6). Pozn.: gregoriánská epakta 25/XXV.",
     62: "O slunečném cyklu (28letém), aneb jak najít nedělní písmeno pro každý rok.",
     63: "Výpočet v obojím — starém i novém — kalendáři (pokrač.).",
     64: "O zlatém počtu — cyklus decennovenalis (19letý lunární), měsíčný cyklus.",
     65: "Ukazatel nového měsíce — návodná próza (česky) k výpočtu novoluní.",
-    66: "Tabulka epakt / zlatého počtu (číselné hodnoty).",
-    67: "Komputus na prstech — výpočet měsíce/data na ruce (odkaz fol. 487).",
-    68: "Nalezení nového a plného měsíce pro každý měsíc — výpočet.",
-    69: "Tabule dlúhosti dne s nedělními písmeny[?].",
+    66: "Tabule k nalezení epakt / novoluní po dnech roku — hustá číselná tabulka (měsíce v záhlaví).",
+    67: "Komputus na prstech — výpočet, který měsíc má 31/30/29 dní (Ex Gustavi Selen Cryptographia, fol. 487).",
+    68: "Nalezení nového a plného měsíce pro každý měsíc — výpočet z epakt.",
+    69: "Malá násobilka (pythagorejská tabule) — trojúhelníková, součiny 2×2 až 10×10.",
 }
 
 
@@ -248,7 +248,7 @@ def _page_doc(
             cap = _TABLE_CAPTIONS.get(page_nr)
             head = (
                 f'<p class="table-cap"><b>{_esc(cap)}</b> <span class="table-note">— přepis '
-                "z rukopisu; ojediněle ±1 min, spodní řádky méně jisté; k ověření.</span></p>"
+                "z rukopisu; číselné hodnoty ke kontrole proti skenu.</span></p>"
                 if cap else ""
             )
             body_regions = head + "".join(_table_html(t) for t in tables)
@@ -321,18 +321,22 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 # klíč stavu: done = hotový čistý přepis · partial = rozpracováno · todo = chybí · na = prázdná
 _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
-    ("f2–f3", "úvodní astronomické tabulky", "partial", "popsány; data k přepisu"),
+    ("f2–f3", "úvodní astronomické tabulky", "partial",
+     "f2 nevyplněná předtištěná tabule; f3 hustá tabule délky dne — popsána, data k přepisu"),
     ("f4", "latinský verš", "todo", "přepis"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
     ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie ověřeny ze skenu (f13 nejisté)"),
     ("f31–f42", "Táborský: kap. XIII–XVIII", "partial",
      "Teige-ukotveno; diplomatická kontrola po řádcích"),
     ("f43–f49", "Táborský: biografický závěr, verše, kolofony 1570 + 1587", "done", "—"),
-    ("f50", "komputistická tabulka (Littera dominicalis)", "partial", "popsána; data k přepisu"),
+    ("f50", "Tabula Litera dominicalis (N. I)", "done",
+     "cyklus solaris → nedělní písmeno (jul./greg.), 28 řádků, ověřeno vzorcem"),
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "done", "f54: pokrač. něm. návod"),
-    ("f55–f69", "komputistické/astron. tabulky + próza (f65)", "partial",
-     "přepsáno f55 + prózy f62/63/65/67/68; číselné tabulky popsány, data k přepisu"),
+    ("f55–f69", "komputistické/astron. tabulky + próza", "partial",
+     "přepsáno: f55 (vejchod), f56 (=N.I), f57 (epakty, ověř.), f60 (intervallum jul.), "
+     "f69 (násobilka) + prózy f62–65, 67, 68; zbývají husté mřížky f58/59 (festa mob.), "
+     "f61 (intervallum greg.), f66 (epakty po dnech) — popsány, data k přepisu"),
     ("f70–f79", "Astrolabium parvum", "done", "—"),
     ("f80", "latinsko-český epigram (Pythagoras)", "todo", "přepis"),
     ("f81", "předsádka", "na", "—"),
