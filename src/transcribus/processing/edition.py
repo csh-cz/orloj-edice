@@ -28,7 +28,7 @@ _HEADING = {"heading", "header", "title", "caption"}
 
 _SECTION_LABEL = {
     "taborsky": "Opis Táborského zprávy o orloji",
-    "jine": "Další písemnosti konvolutu (bez referenční edice)",
+    "jine": "Další části knihy (bez referenční edice)",
 }
 _ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
 
@@ -122,7 +122,7 @@ def _table_html(table: Table) -> str:
 def _teige_html(passage: str | None, page_folded: set[str]) -> str:
     if not passage:
         return (
-            '<div class="teige-empty">Mimo Táborského zprávu — tato část konvolutu '
+            '<div class="teige-empty">Mimo Táborského zprávu — tato část knihy '
             "nemá referenční edici (Teige vydal pouze Táborského text).</div>"
         )
     out = []
@@ -253,8 +253,11 @@ def _index_doc(
     )
     tiraz = (
         '<section class="tiraz"><h2>O edici</h2>'
-        "<p><b>Pramen — orlojní kniha (konvolut 1587–1642).</b> Archiv hlavního města Prahy, "
-        f"Sbírka rukopisů, inv. č. 7916. {ahmp_a}. Kniha není jediný text — má několik částí: "
+        "<p><b>Pramen — jedna svázaná orlojní kniha (zápisy z let 1587–1642).</b> Archiv "
+        f"hlavního města Prahy, Sbírka rukopisů, inv. č. 7916. {ahmp_a}. Nejde o soubor volně "
+        "vložených listů: ohledáním archiválie bylo ověřeno, že je to <b>jediný svázaný celek</b> "
+        "a že zápisy vznikaly postupně na <b>předem svázané archy</b> — pořadí zápisů tedy odpovídá "
+        "chronologii. Kniha má několik částí: "
         "(1) <b>opis Táborského <i>Zprávy o orloji pražském</i></b> (fol. 5–49), který roku "
         "1587 pořídil staroměstský písař <b>Matouš Carchesius Jablonský</b> (kolofon fol. 47); "
         "(2) <b>opis Listu purkmistra z r. 1410</b> (de facto smlouva Starého Města s hodinářem "
@@ -308,7 +311,7 @@ def _index_doc(
 <header><h1>{_esc(title)}</h1></header>
 <main>
 {tiraz}
-<p class="note">Vícedílný konvolut. <span class="teige-badge">T</span> = folia s opisem
+<p class="note">Jedna svázaná kniha (více částí, jeden celek). <span class="teige-badge">T</span> = folia s opisem
 Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní oddíly referenci nemají.
 Označeno {n_teige} z {len(pages)} folií. Hranice oddílů jsou odvozené automaticky (heuristika).</p>
 {"".join(blocks)}</main>
