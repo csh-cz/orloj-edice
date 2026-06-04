@@ -194,6 +194,56 @@ def _cells(page: int):
     return json.loads((WORK / f"{page:04d}.json").read_text(encoding="utf-8"))
 
 
+def verify_f60_easter() -> bool:
+    """f60 (Tabula intervalli, Julian): first number = week of the Julian Easter.
+
+    Decode: for each (golden number, dominical letter) the cell's FIRST number equals
+    floor((Julian-Easter day-of-year-from-March-1 + 16) / 7) — the week index of Easter.
+    The second number is its complement (34 or 35 minus the first). Verify the first
+    number against an independent Julian Easter computation for all 19x7 cells.
+    """
+    let = "ABCDEFG"
+
+    def jdn_jul(y, m, d):
+        a = (14 - m) // 12
+        yy = y + 4800 - a
+        mm = m + 12 * a - 3
+        return d + (153 * mm + 2) // 5 + 365 * yy + yy // 4 - 32083
+
+    def dom_jul(y):  # Mar-Dec dominical letter
+        w = jdn_jul(y, 1, 1) % 7
+        sd = (6 - w) % 7
+        return let[(sd - 1) % 7] if y % 4 == 0 else let[sd]
+
+    def jul_easter_doy(y):  # day-of-year from March 1 (March 1 = 1)
+        a, b, c = y % 4, y % 7, y % 19
+        d = (19 * c + 15) % 30
+        e = (2 * a + 4 * b - d + 34) % 7
+        f = d + e + 114
+        m, day = f // 31, f % 31 + 1
+        return day if m == 3 else 31 + day
+
+    easter = {}
+    for y in range(1064, 1064 + 532):
+        easter[((y % 19) + 1, dom_jul(y))] = jul_easter_doy(y)
+
+    cells = {(c["row"], c["col"]): c["text"] for c in _cells(60)[0]["cells"]}
+    gnrow = {int(cells[(r, 0)]): r for r in range(1, 20)}
+    ok = tot = 0
+    for gn in range(1, 20):
+        for ci, dl in enumerate(let, start=1):
+            try:
+                x = int(cells[(gnrow[gn], ci)].split()[0])
+            except (KeyError, ValueError):
+                continue
+            tot += 1
+            ok += ((easter[(gn, dl)] + 16) // 7 == x)
+    good = ok == tot and tot == 133
+    print(f"f60 Tabula intervalli (Julian): first number = Easter week, matches "
+          f"{ok}/{tot} cells -> {'OK' if good else 'FAIL'}")
+    return good
+
+
 def verify_f3_daylength() -> bool:
     """f3 (Hájek, pole 50 deg, new calendar): day-length-step -> date matches Prague model.
 
@@ -220,7 +270,7 @@ def verify_f3_daylength() -> bool:
 
 
 if __name__ == "__main__":
-    results = [verify_dominical(), verify_epacts(), verify_sunrise(), verify_f3_daylength()]
-    print("\nf60 Tabula intervalli: NOT verified — number pairs do not decode to Julian Easter.")
+    results = [verify_dominical(), verify_epacts(), verify_sunrise(),
+               verify_f60_easter(), verify_f3_daylength()]
     print("f69 násobilka: products verified by construction.")
     print("\nALL CHECKS PASS" if all(results) else "\nSOME CHECKS FAILED")

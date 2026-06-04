@@ -172,12 +172,35 @@ _TABLE_VERIFY: dict[int, str] = {
         "(horní okraj + refrakce) je rukopis o ~7 min později. Sekce datovatelná kolem r. 1641 "
         "(viz metodická poznámka).",
     69: "✓ ověřeno: všechny součiny souhlasí (pythagorejská násobilka).",
-    60: "⚠ zatím neověřeno: dvojčíslí v buňkách se nepodařilo dekódovat ani ztotožnit "
-        "s vypočteným juliánským datem Velikonoc — přepis ke kontrole.",
+    60: "✓ dekódováno a ověřeno: první číslo dvojice = pořadí týdne juliánských Velikonoc "
+        "(⌊(datum Velikonoc od 1. 3. + 16)/7⌋) — souhlasí s nezávislým výpočtem ve všech 133 "
+        "buňkách (19 zlatých počtů × 7 nedělních písmen); druhé číslo je doplněk (34, resp. 35 "
+        "minus první). Jde tedy o tabuli „intervalu“ (týdne) juliánských Velikonoc.",
 }
 
 # Delší metodické poznámky pod vybranými tabulkami (rozbalovací <details>).
+# Nadpis rozbalovací poznámky (default je obecný).
+_TABLE_NOTE_SUMMARY: dict[int, str] = {
+    55: "Metodická poznámka: jak časy vznikly (výpočet vs. pozorování, refrakce, drift)",
+    60: "Jak tabule funguje a jak je ověřena (dekódování)",
+}
+
 _TABLE_NOTE_LONG: dict[int, str] = {
+    60: (
+        "<p><b>Co tabule udává.</b> Pro každý <b>zlatý počet</b> (1–19, řádky) a <b>nedělní "
+        "písmeno</b> (A–G, sloupce) je v buňce <b>dvojice čísel</b>. Tabule patří ke „klíčům“ "
+        "pro pohyblivé svátky a její název zní <i>Tabula intervalli</i> — tabule intervalu "
+        "(juliánských) Velikonoc.</p>"
+        "<p><b>Dekódování a ověření.</b> Rozborem se ukázalo, že <b>první číslo dvojice je "
+        "pořadí týdne, v němž leží juliánské Velikonoce</b>: rovná se "
+        "<code>⌊(datum Velikonoc, počítáno od 1. března, + 16) / 7⌋</code>. Spočítali jsme "
+        "juliánské datum Velikonoc nezávisle (z komputu) pro každou kombinaci zlatého počtu a "
+        "nedělního písmene a první číslo <b>souhlasí ve všech 133 buňkách</b> (19 × 7). Druhé "
+        "číslo je <b>doplněk</b> (34, resp. 35 minus první) — nese informaci o dni v týdnu "
+        "(rozdíl 34/35 podle toho, zda Velikonoce padnou na začátek týdne). Tím je f60 "
+        "<b>dekódována i ověřena</b> jako pravá velikonoční intervalová tabule (reprodukovatelné "
+        "v <code>tools/verify_computus.py</code>).</p>"
+    ),
     3: (
         "<p><b>Záhlaví tabule (přepis).</b> „<i>Tabule dlúhosti dne i noci, vejchodu, poledne "
         "i západu, obojího — celého i polovičného [orloje] — kterak ten srovnán býti má podle "
@@ -454,9 +477,9 @@ def _page_doc(
             body_regions = head + "".join(_table_html(t) for t in tables)
             long_note = _TABLE_NOTE_LONG.get(page_nr)
             if long_note:
+                summ = _TABLE_NOTE_SUMMARY.get(page_nr, "Metodická poznámka — rozbor a ověření")
                 body_regions += (
-                    '<details class="method-note"><summary>Metodická poznámka: '
-                    "jak časy vznikly (výpočet vs. pozorování, refrakce, drift)</summary>"
+                    f'<details class="method-note"><summary>{_esc(summ)}</summary>'
                     f"{long_note}</details>"
                 )
         elif table_page:
@@ -550,9 +573,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "done", "f54: pokrač. něm. návod"),
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641)", "partial",
-     "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera); "
-     "f69 (násobilka) + prózy f62–65, 67, 68; f60 (intervallum jul.) přepsáno, NEOVĚŘENO; "
-     "zbývají husté mřížky f58/59 (festa mob.), f61 (intervallum greg.), f66 — popsány"),
+     "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera), "
+     "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
+     "prózy f62–65, 67, 68; zbývají husté mřížky f58/59 (festa mob.), f61 (intervallum greg.), f66"),
     ("f70–f79", "Astrolabium parvum", "done", "—"),
     ("f80", "latinsko-český epigram (Pythagoras)", "todo", "přepis"),
     ("f81", "předsádka", "na", "—"),

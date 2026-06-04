@@ -17,9 +17,10 @@ SPDX-License-Identifier: EUPL-1.2
   - f55 (východ Slunce) — astronomicky, Praha φ ≈ 50,09°, rozdíl ≤ 7 min.
   - f69 (násobilka) — součiny.
   - Próza f62–65, 67, 68.
-- [ ] **f60 (Tabula intervalli Juliana)** — přepsáno, ale **NEOVĚŘENO**: dvojčíslí v buňkách
-      se nepodařilo dekódovat ani ztotožnit s vypočteným juliánským datem Velikonoc. Buď
-      jiná sémantika (interval, ne datum), nebo chyba čtení → dekódovat / překontrolovat.
+- [x] **f60 (Tabula intervalli Juliana)** — **DEKÓDOVÁNO A OVĚŘENO**: první číslo dvojice =
+      pořadí týdne juliánských Velikonoc ⌊(datum Velikonoc od 1.3. + 16)/7⌋, souhlasí ve všech
+      **133/133** buňkách (19 zlatých počtů × 7 nedělních písmen); druhé číslo = doplněk (34/35 − X).
+      Reprodukovatelné ve `verify_computus.py` (verify_f60_easter).
 - [ ] **Zbývající husté mřížky** (popsány captiony + odkaz na sken; nepřepsány — vysoké
       riziko chyb při ručním čtení, bez ověřovacího invariantu):
   - [ ] **f58 + f59** — Tabula Festorum Mobilium (pohyblivé svátky, mnoho sloupců dat).
