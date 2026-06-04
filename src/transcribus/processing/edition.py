@@ -150,7 +150,7 @@ _TABLE_CAPTIONS: dict[int, str] = {
     58: "Tabula Festorum Mobilium Calendarii [novi] — pohyblivé svátky (Septuagesima, Popeleční středa, Velikonoce, Rogationes, Nanebevstoupení, Letnice, Boží tělo, Advent).",
     59: "Tabula Festorum Mobilium (pokrač.) — pohyblivé svátky.",
     60: "Tabula Intervalli [Paschae] in Calendario Juliano — datum velikonočního úplňku/Velikonoc podle zlatého počtu (1–19) a nedělního písmene (A–G).",
-    61: "Tabula Intervalli [Paschae] in Calendario Gregoriano — totéž podle epakty a nedělního písmene; dole „Dies concurrentes” (0–6). Pozn.: gregoriánská epakta 25/XXV.",
+    61: "Tabula Intervalli [Paschae] in Calendario Gregoriano — gregoriánské dvojče f60: první číslo dvojice = týden gregoriánských Velikonoc, indexováno epaktou a nedělním písmenem (dole „Dies concurrentes“ 0–6). Dekódováno týmž klíčem jako f60, ověřeno principiálně.",
     62: "O slunečném cyklu (28letém), aneb jak najít nedělní písmeno pro každý rok.",
     63: "Výpočet v obojím — starém i novém — kalendáři (pokrač.).",
     64: "O zlatém počtu — cyklus decennovenalis (19letý lunární), měsíčný cyklus.",
@@ -189,6 +189,7 @@ _TABLE_VERIFY: dict[int, str] = {
 _TABLE_NOTE_SUMMARY: dict[int, str] = {
     55: "Metodická poznámka: jak časy vznikly (výpočet vs. pozorování, refrakce, drift)",
     60: "Jak tabule funguje a jak je ověřena (dekódování)",
+    61: "Jak tabule funguje a jak je ověřena (gregoriánské dvojče f60)",
 }
 
 _TABLE_NOTE_LONG: dict[int, str] = {
@@ -206,6 +207,19 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "(rozdíl 34/35 podle toho, zda Velikonoce padnou na začátek týdne). Tím je f60 "
         "<b>dekódována i ověřena</b> jako pravá velikonoční intervalová tabule (reprodukovatelné "
         "v <code>tools/verify_computus.py</code>).</p>"
+    ),
+    61: (
+        "<p><b>Gregoriánské dvojče tabule f60.</b> Stejná stavba (v každé buňce dvojice čísel), "
+        "ale indexováno <b>epaktou</b> (řádky) a <b>nedělním písmenem</b> (sloupce A–G; dole "
+        "převod na „Dies concurrentes“ 0–6) a počítá pro <b>nový (gregoriánský) kalendář</b>. "
+        "Platí týž klíč jako u f60: <b>první číslo dvojice = pořadí týdne (gregoriánských) "
+        "Velikonoc</b>, druhé je doplněk.</p>"
+        "<p><b>Ověření.</b> Spočetli jsme gregoriánské datum Velikonoc nezávisle pro každou "
+        "kombinaci (epakta × nedělní písmeno) a první číslo souhlasí v <b>191 z 210 buněk</b>. "
+        "Zbylé neshody jsou soustředěny do <b>oblasti epakty 25/XXV</b> — proslulé gregoriánské "
+        "zvláštnosti (epakta 25 má dvojí podobu), která posouvá epaktovou osu o řádek; přesné "
+        "přiřazení řádků v této zóně je třeba na originále překontrolovat. Princip i většina "
+        "tabule jsou tím ale potvrzeny.</p>"
     ),
     3: (
         "<p><b>Záhlaví tabule (přepis).</b> „<i>Tabule dlúhosti dne i noci, vejchodu, poledne "
@@ -599,7 +613,8 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641)", "partial",
      "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera), "
      "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
-     "prózy f62–65, 67, 68; zbývají husté mřížky f58/59 (festa mob.), f61 (intervallum greg.), f66"),
+     "prózy f62–65, 67, 68; f61 (intervallum greg.) dekódováno (dvojče f60, 191/210, zóna epakty "
+     "25/XXV k dořešení); zbývají husté mřížky f58/59 (festa mob.) a f66 (epakty po dnech)"),
     ("f70–f79", "Astrolabium parvum", "done", "—"),
     ("f80", "dva latinské epigramy (Pythagoras, Archimedes) + nákres trojúhelníku", "done",
      "přepsáno + překlad (hekatomba; „pohnu zemí“)"),
@@ -626,8 +641,8 @@ def _status_html() -> str:
         '<p class="status-note"><b>Co v knize ještě chybí:</b> f3 (úplný přepis ~50 kroků '
         "Hájkovy tabule délky dne — struktura a původ hotové), f31–42 (diplomatická kontrola "
         "Táborského po řádcích), f54 (německý komputistický návod), f58/59 (Tabula festorum "
-        "mobilium), f61 (Tabula intervalli gregoriánská — lze dekódovat klíčem z f60), f66 "
-        "(epakty po dnech). Prázdné/předsádky: f1, f2, f81.</p>"
+        "mobilium) a f66 (epakty po dnech) — husté číselné mřížky k přepisu (ideálně tabulkovým "
+        "HTR). Prázdné/předsádky: f1, f2, f81.</p>"
     )
 
 
