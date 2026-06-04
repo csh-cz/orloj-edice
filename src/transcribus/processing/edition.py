@@ -415,6 +415,41 @@ def _marginalia_html(marg_lines: list[str], page_nr: int) -> str:
     )
 
 
+# Editorská překreslení nákresů (vlastní rekonstrukce, NE reprodukce skenu).
+_F80_TRIANGLE_SVG = (
+    '<svg viewBox="0 0 270 330" xmlns="http://www.w3.org/2000/svg" width="240" role="img" '
+    'aria-label="Pravoúhlý trojúhelník, odvěsny 3 a 3, přepona dělená na 4 díly">'
+    '<g stroke="#2a2a2a" stroke-width="1.1">'
+    '<polygon points="40,290 220,290 220,110" fill="none" stroke="#2a2a2a" stroke-width="1.6"/>'
+    '<path d="M 208,290 v -12 h 12" fill="none" stroke="#2a2a2a" stroke-width="1.2"/>'
+    '<line x1="100" y1="284" x2="100" y2="296"/><line x1="160" y1="284" x2="160" y2="296"/>'
+    '<line x1="220" y1="284" x2="220" y2="296"/>'
+    '<line x1="226" y1="230" x2="214" y2="230"/><line x1="226" y1="170" x2="214" y2="170"/>'
+    '<line x1="226" y1="110" x2="214" y2="110"/>'
+    '<line x1="78.2" y1="243.3" x2="86.7" y2="251.8"/><line x1="120.6" y1="200.9" x2="129.1" y2="209.4"/>'
+    '<line x1="163" y1="158.5" x2="171.5" y2="167"/><line x1="205.5" y1="116.1" x2="213.9" y2="124.5"/>'
+    "</g>"
+    '<g font-family="Georgia,serif" font-size="15" fill="#2a2a2a" font-style="italic">'
+    '<text x="70" y="310" text-anchor="middle">1</text>'
+    '<text x="130" y="310" text-anchor="middle">2</text>'
+    '<text x="190" y="310" text-anchor="middle">3</text>'
+    '<text x="232" y="264">1</text><text x="232" y="204">2</text><text x="232" y="144">3</text>'
+    '<text x="49" y="265" text-anchor="middle">1</text>'
+    '<text x="92" y="222" text-anchor="middle">2</text>'
+    '<text x="134" y="180" text-anchor="middle">3</text>'
+    '<text x="176" y="138" text-anchor="middle">4</text>'
+    "</g></svg>"
+)
+_FIGURE_SVG: dict[int, str] = {
+    80: (
+        '<figure class="fig-svg">' + _F80_TRIANGLE_SVG
+        + "<figcaption>Pravoúhlý trojúhelník z fol. 80 — překreslení nákresu (editorská "
+        "rekonstrukce, ne reprodukce skenu). Obě odvěsny po 3 dílcích, přepona dělená na 4."
+        "</figcaption></figure>"
+    ),
+}
+
+
 def _page_doc(
     *, title: str, page_nr: int, total: int, regions: list[TextRegion],
     ahmp_url: str | None, teige_passage: str | None, section_label: str = "",
@@ -508,6 +543,7 @@ def _page_doc(
                 )
         else:
             body_regions = "\n".join(_region_html(r) for r in regions)
+        body_regions += _FIGURE_SVG.get(page_nr, "")
         page_folded = {
             fold(w) for r in regions for line in r.lines for w in line.split() if len(fold(w)) >= 4
         }
@@ -781,6 +817,9 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .method-note code{font-size:.82em;background:#dce8df;padding:0 .2em;border-radius:2px}
 .page-table{border-collapse:collapse;margin:.6rem 0;font-family:system-ui,sans-serif;font-size:.85rem}
 .page-table td{border:1px solid #cdbf9f;padding:.15rem .4rem;text-align:center;min-width:1.6rem}
+.fig-svg{margin:1rem 0;text-align:center}
+.fig-svg svg{max-width:240px;height:auto;background:#fffdf8;border:1px solid #e6ddc7;border-radius:4px;padding:.4rem}
+.fig-svg figcaption{font-family:system-ui,sans-serif;font-size:.78rem;color:#8a7d63;margin-top:.35rem}
 .clean-flag{display:inline-block;background:#3f6b3f;color:#fff;font-family:system-ui,sans-serif;
   font-size:.65rem;border-radius:3px;padding:0 .35rem;margin-bottom:.4rem}
 .fig{margin:0 0 1rem;text-align:center}
