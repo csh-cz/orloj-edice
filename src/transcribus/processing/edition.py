@@ -284,7 +284,7 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f2–f3", "úvodní astronomické tabulky", "todo", "tabulky (Docling)"),
     ("f4", "latinský verš", "todo", "přepis"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
-    ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie neověřené ze skenu"),
+    ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie ověřeny ze skenu (f13 nejisté)"),
     ("f31–f42", "Táborský: kap. XIII–XVIII", "partial",
      "Teige-ukotveno; diplomatická kontrola po řádcích"),
     ("f43–f49", "Táborský: biografický závěr, verše, kolofony 1570 + 1587", "done", "—"),
