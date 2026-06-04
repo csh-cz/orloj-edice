@@ -133,6 +133,40 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
     return '<div class="teige-text">' + " ".join(out) + "</div>"
 
 
+def _split_marginalia(lines: list[str]) -> tuple[list[str], list[str]]:
+    """Split clean lines into (main text, marginalia block).
+
+    The marginalia block begins at the first line carrying the ``... na okraji:]`` marker
+    and runs to the end (incl. any following later-hand / editorial-note lines). Earlier
+    later-hand BODY additions (``[přípis pozdější rukau:] …``) stay in the main text.
+    """
+    for i, ln in enumerate(lines):
+        if "okraji:]" in ln:
+            return lines[:i], lines[i:]
+    return lines, []
+
+
+def _marginalia_html(marg_lines: list[str], page_nr: int) -> str:
+    """Render the marginalia as a side note on the codicologically correct margin.
+
+    verso (even folio) → left margin, recto (odd) → right margin. Later-hand keepers'
+    notes (``[Pozdější rukou …]``) keep their editorial markers and get a distinct style.
+    """
+    if not marg_lines:
+        return ""
+    text = " ".join(ln.strip() for ln in marg_lines).strip()
+    if "okraji:]" in text:
+        text = text.split("okraji:]", 1)[1].strip()
+    side = "side-left" if page_nr % 2 == 0 else "side-right"
+    later = " ".join(marg_lines)
+    cls = "marginalia later-present" if ("Pozdější ruk" in later or "pozdější ruk" in later) else "marginalia"
+    return (
+        f'<aside class="{cls} {side}">'
+        '<span class="mlabel">Přípisky na okraji</span>'
+        f"<p>{_esc(text)}</p></aside>"
+    )
+
+
 def _page_doc(
     *, title: str, page_nr: int, total: int, regions: list[TextRegion],
     ahmp_url: str | None, teige_passage: str | None, section_label: str = "",
@@ -175,14 +209,17 @@ def _page_doc(
         if (embed_scan and ahmp_url) else ""
     )
 
+    marginalia = ""
     if has_content:
         # Precedence: corrected clean text > Docling table grid > raw per-line HTR.
         if clean_lines:
+            main_lines, marg_lines = _split_marginalia(clean_lines)
             body_regions = (
                 '<span class="clean-flag">opravený přepis</span><p class="region paragraph">'
-                + "\n".join(_line_html(line) for line in clean_lines if line)
+                + "\n".join(_line_html(line) for line in main_lines if line)
                 + "</p>"
             )
+            marginalia = _marginalia_html(marg_lines, page_nr)
         elif tables:
             body_regions = "".join(_table_html(t) for t in tables)
         else:
@@ -192,7 +229,7 @@ def _page_doc(
         }
         teige = _teige_html(teige_passage, page_folded)
         body = (
-            f'<div class="folio">{fig_note}{body_regions}</div>'
+            f'<div class="folio">{marginalia}{fig_note}{body_regions}</div>'
             f'<div class="teige-pane"><div class="teige-label">Teige (1570), přibližné zarovnání</div>{teige}</div>'
         )
     else:
@@ -389,6 +426,16 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .folio{background:var(--paper);border:1px solid #cdbf9f;border-radius:4px;padding:1.2rem 1.6rem;
   box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .region{margin:0 0 .6rem}
+.marginalia{font-family:system-ui,sans-serif;font-size:.78rem;line-height:1.45;color:#5a5046;
+  background:#f5efe0;border:1px solid #d8ccae;border-radius:4px;
+  padding:.45rem .65rem;width:31%;margin:.15rem 0 .7rem}
+.marginalia.side-right{float:right;margin-left:1.1rem;clear:right}
+.marginalia.side-left{float:left;margin-right:1.1rem;clear:left}
+.marginalia .mlabel{display:block;font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;
+  color:#9a8d70;margin-bottom:.2rem}
+.marginalia p{margin:0}
+.marginalia.later-present{border-left:3px solid #5a6b8c}
+@media(max-width:640px){.marginalia{float:none;width:auto;margin:.4rem 0}}
 .ln{display:block;line-height:1.6}
 .heading{font-size:1.05rem;font-weight:bold}
 .marginalia{float:right;width:32%;margin:0 0 .4rem 1rem;padding-left:.6rem;border-left:2px solid #cdbf9f;
