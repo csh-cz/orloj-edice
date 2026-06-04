@@ -9,10 +9,24 @@ Automatizovaná pipeline pro zpracování archiválií: **stažení skenů z arc
 upload na Transkribus → HTR → stažení a vyčištění přepisu → (později) překlad**.
 
 První podporovaný archiv je **AHMP** (Archiv hlavního města Prahy, katalog na
-Bach VadeMeCum se Zoomify prohlížečem). HTR běží přes **Transkribus Metagrapho
-API** (`processing/v1`): obrázek dovnitř (base64) → PAGE XML ven, bez správy
-kolekcí/dokumentů. API kredity stojí o ~50 % méně než UI kredity. Přihlášení je
-přes readcoop SSO (OAuth2, Bearer token). Žádný scraping prohlížeče není potřeba.
+Bach VadeMeCum se Zoomify prohlížečem). HTR běží přes **Transkribus TrpServer REST**
+(PyLaia modely, např. 263129 pro češtinu): layout → HTR → export PAGE XML. Přihlášení
+je přes readcoop SSO (OAuth2, Bearer token; auto-refresh). Žádný scraping prohlížeče
+není potřeba.
+
+## Webová edice — Pražský orloj
+
+**Živá edice: <https://csh-cz.github.io/orloj-edice/>**
+
+Digitální edice opisu spisu **Jana Táborského z Klokotské Hory** *Zpráva o orloji
+pražském* (opis **1587**, opisovač **Matouš Carchesius Jablonský**; Archiv hlavního
+města Prahy, Sbírka rukopisů, inv. č. 7916). Diplomatický přepis (Transkribus HTR)
++ heuristická normalizace podle normy Šťovíček + kolace proti edici originálu 1570
+(J. Teige, 1901). **Rozpracovaná pracovní edice** — podrobnosti v tiráži na úvodní stránce.
+
+Skeny ani vyobrazení se nereprodukují (práva k reprodukcím: AHMP) — edice na ně
+odkazuje per folio do prohlížeče AHMP. Nasazení edice: **`./deploy.sh`** (regenerace
+bez vložených skenů → publikace na větvi `gh-pages`).
 
 ## Pipeline
 

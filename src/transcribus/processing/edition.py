@@ -244,7 +244,30 @@ def _index_doc(
     title: str,
     sections: list[tuple[str, int, int, str]],
     pages: dict[int, tuple[str, bool]],
+    ahmp_permalink: str | None = None,
 ) -> str:
+    ahmp_a = (
+        f'<a href="{_esc(ahmp_permalink)}" target="_blank" rel="noopener">'
+        "záznam a skeny v katalogu AHMP ↗</a>"
+        if ahmp_permalink else "katalog AHMP"
+    )
+    tiraz = (
+        '<section class="tiraz"><h2>O edici</h2>'
+        "<p><b>Pramen:</b> Jan Táborský z Klokotské Hory, <i>Zpráva o orloji pražském</i> — "
+        "opis z roku 1587 (konvolut písemností k orloji, 1587–1642). Archiv hlavního města "
+        "Prahy, Sbírka rukopisů (inv. č. 7916). Opis pořídil staroměstský písař "
+        f"<b>Matouš Carchesius Jablonský</b> (kolofon fol. 47). {ahmp_a}</p>"
+        "<p><b>Metoda:</b> text rozpoznán HTR (Transkribus, PyLaia 263129) a normalizován do "
+        "diakritického pravopisu podle normy Ivan Šťovíček a kol. (heuristicky, s ruční "
+        "korekturou). Jako čtecí kolace slouží edice originálu 1570 (J. Teige, 1901, public "
+        "domain). Zobrazení ve třech režimech: diplomatický / normalizovaný / Teige.</p>"
+        '<p class="warn"><b>Stav: rozpracovaná pracovní edice.</b> Normalizace je heuristická '
+        "a vyžaduje korekturu; část přípisků na okraji (fol. 13–30) není ověřena proti skenu; "
+        "oddíl fol. 31–42 je ukotven na Teigem. Zatím neslouží jako citovatelná kritická edice.</p>"
+        '<p><b>Práva a licence:</b> skeny ani vyobrazení se zde nereprodukují — odkazy „sken" '
+        "vedou do prohlížeče AHMP (práva k reprodukcím: Archiv hlavního města Prahy). "
+        "Text edice © David Knespl, licence CC&nbsp;BY&nbsp;4.0; software EUPL-1.2.</p></section>"
+    )
     blocks = []
     for _kind, lo, hi, label in sections:
         items = "\n".join(
@@ -263,6 +286,7 @@ def _index_doc(
 <body class="mode-dipl">
 <header><h1>{_esc(title)}</h1></header>
 <main>
+{tiraz}
 <p class="note">Vícedílný konvolut. <span class="teige-badge">T</span> = folia s opisem
 Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní oddíly referenci nemají.
 Označeno {n_teige} z {len(pages)} folií. Hranice oddílů jsou odvozené automaticky (heuristika).</p>
@@ -321,6 +345,12 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .teige-empty{color:#a99;font-style:italic}
 .section-label{max-width:62rem;margin:.3rem auto 0;padding:0 1rem;font-family:system-ui,sans-serif;
   font-size:.78rem;color:#7a5c2e;text-transform:uppercase;letter-spacing:.04em}
+.tiraz{font-family:system-ui,sans-serif;font-size:.85rem;line-height:1.5;background:#f6f1e4;
+  border:1px solid #cdbf9f;border-radius:5px;padding:.8rem 1.1rem;margin:0 0 1.4rem}
+.tiraz h2{font-size:1rem;margin:.1rem 0 .5rem;border:0}
+.tiraz p{margin:.4rem 0}
+.tiraz .warn{background:#fbeed6;border-left:3px solid #b8860b;padding:.4rem .6rem;border-radius:3px}
+.tiraz a{color:#7a5c2e}
 .toc-section h2{font-size:1rem;border-bottom:1px solid #cdbf9f;padding-bottom:.2rem;margin:1.4rem 0 .4rem}
 .toc-section h2 .range{font-weight:normal;color:#8a8071;font-size:.85rem}
 .note{font-family:system-ui,sans-serif;font-size:.85rem;color:#5a5446;background:var(--paper);
@@ -447,5 +477,5 @@ def build_edition(
         toc[page_nr] = (snip, passage is not None)
 
     index = out_dir / "index.html"
-    index.write_text(_index_doc(title, sections, toc), encoding="utf-8")
+    index.write_text(_index_doc(title, sections, toc, ahmp_permalink), encoding="utf-8")
     return index
