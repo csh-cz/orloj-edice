@@ -417,35 +417,14 @@ def _marginalia_html(marg_lines: list[str], page_nr: int) -> str:
 
 # Editorská překreslení nákresů (vlastní rekonstrukce, NE reprodukce skenu).
 _F80_TRIANGLE_SVG = (
-    '<svg viewBox="0 0 270 330" xmlns="http://www.w3.org/2000/svg" width="240" role="img" '
-    'aria-label="Pravoúhlý trojúhelník, odvěsny 3 a 3, přepona dělená na 4 díly">'
-    '<g stroke="#2a2a2a" stroke-width="1.1">'
-    '<polygon points="40,290 220,290 220,110" fill="none" stroke="#2a2a2a" stroke-width="1.6"/>'
-    '<path d="M 208,290 v -12 h 12" fill="none" stroke="#2a2a2a" stroke-width="1.2"/>'
-    '<line x1="100" y1="284" x2="100" y2="296"/><line x1="160" y1="284" x2="160" y2="296"/>'
-    '<line x1="220" y1="284" x2="220" y2="296"/>'
-    '<line x1="226" y1="230" x2="214" y2="230"/><line x1="226" y1="170" x2="214" y2="170"/>'
-    '<line x1="226" y1="110" x2="214" y2="110"/>'
-    '<line x1="78.2" y1="243.3" x2="86.7" y2="251.8"/><line x1="120.6" y1="200.9" x2="129.1" y2="209.4"/>'
-    '<line x1="163" y1="158.5" x2="171.5" y2="167"/><line x1="205.5" y1="116.1" x2="213.9" y2="124.5"/>'
-    "</g>"
-    '<g font-family="Georgia,serif" font-size="15" fill="#2a2a2a" font-style="italic">'
-    '<text x="70" y="310" text-anchor="middle">1</text>'
-    '<text x="130" y="310" text-anchor="middle">2</text>'
-    '<text x="190" y="310" text-anchor="middle">3</text>'
-    '<text x="232" y="264">1</text><text x="232" y="204">2</text><text x="232" y="144">3</text>'
-    '<text x="49" y="265" text-anchor="middle">1</text>'
-    '<text x="92" y="222" text-anchor="middle">2</text>'
-    '<text x="134" y="180" text-anchor="middle">3</text>'
-    '<text x="176" y="138" text-anchor="middle">4</text>'
-    "</g></svg>"
+    '<svg viewBox="0 0 230 330" xmlns="http://www.w3.org/2000/svg" width="220" role="img" aria-label="Pravoúhlý trojúhelník 3-4-5 (3 na 4 = 5)"><g stroke="#2a2a2a" stroke-width="1.1"><polygon points="40,290 190,290 190,90" fill="none" stroke="#2a2a2a" stroke-width="1.6"/><path d="M 178,290 v -12 h 12" fill="none" stroke="#2a2a2a" stroke-width="1.2"/><line x1="90.0" y1="284.0" x2="90.0" y2="296.0"/><line x1="140.0" y1="284.0" x2="140.0" y2="296.0"/><line x1="190.0" y1="284.0" x2="190.0" y2="296.0"/><line x1="196.0" y1="240.0" x2="184.0" y2="240.0"/><line x1="196.0" y1="190.0" x2="184.0" y2="190.0"/><line x1="196.0" y1="140.0" x2="184.0" y2="140.0"/><line x1="196.0" y1="90.0" x2="184.0" y2="90.0"/><line x1="65.2" y1="246.4" x2="74.8" y2="253.6"/><line x1="95.2" y1="206.4" x2="104.8" y2="213.6"/><line x1="125.2" y1="166.4" x2="134.8" y2="173.6"/><line x1="155.2" y1="126.4" x2="164.8" y2="133.6"/></g><g font-family="Georgia,serif" font-size="14" fill="#2a2a2a" font-style="italic"><text x="65" y="310" text-anchor="middle">1</text><text x="115" y="310" text-anchor="middle">2</text><text x="165" y="310" text-anchor="middle">3</text><text x="201" y="269">1</text><text x="201" y="219">2</text><text x="201" y="169">3</text><text x="201" y="119">4</text><text x="42" y="267" text-anchor="middle">1</text><text x="72" y="227" text-anchor="middle">2</text><text x="102" y="187" text-anchor="middle">3</text><text x="132" y="147" text-anchor="middle">4</text><text x="162" y="107" text-anchor="middle">5</text></g></svg>'
 )
 _FIGURE_SVG: dict[int, str] = {
     80: (
         '<figure class="fig-svg">' + _F80_TRIANGLE_SVG
-        + "<figcaption>Pravoúhlý trojúhelník z fol. 80 — překreslení nákresu (editorská "
-        "rekonstrukce, ne reprodukce skenu). Obě odvěsny po 3 dílcích, přepona dělená na 4."
-        "</figcaption></figure>"
+        + "<figcaption>Pravoúhlý trojúhelník 3 : 4 : 5 z fol. 80 — překreslení nákresu "
+        "(editorská rekonstrukce, ne reprodukce skenu). Odvěsny 3 a 4, přepona 5 "
+        "(3² + 4² = 5², tj. 9 + 16 = 25) — ilustrace Pythagorovy věty.</figcaption></figure>"
     ),
 }
 
