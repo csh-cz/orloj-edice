@@ -136,7 +136,7 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
 # Popisky tabulkových folií (z hlaviček; data zatím nepřepsána). Komputistický aparát.
 _TABLE_CAPTIONS: dict[int, str] = {
     2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — předtištěná (z větší části nevyplněná) tabule pro zpravování orloje.",
-    3: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu Slunce — pro každý den roku (z celého i polovičního orloje). Dle záhlaví od Tadeáše Hájka z Hájku, pro výšku pólu 50° (Praha), upravená na nový kalendář (opis ≈ 1684).",
+    3: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu Slunce (z celého i polovičního orloje) — kompaktní perpetuální tabule po krocích délky dne á 10 min (zima→léto). Dle záhlaví od Tadeáše Hájka z Hájku, pro výšku pólu 50° (Praha), nový kalendář (opis ≈ 1684); spojnice délka dne→datum ověřena geometrickým výpočtem pro Prahu.",
     50: "Tabula, ex qua Litera Dominicalis desumitur in ingressu cum Cyclo Solari („N. I”) — nedělní písmeno pro každý rok 28letého slunečního cyklu, juliánské i gregoriánské.",
     55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
     56: "Tabula, ex qua Litera Dominicalis desumitur („N. I”) — duplikát tabule z fol. 50 (nedělní písmeno, juliánské i gregoriánské).",
@@ -206,8 +206,24 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "později</b> než hlavní sekvence — běžný jev, který chronologii hlavního korpusu "
         "neruší. Rozhodující ověření (čeká na ohledání originálu): zda je <b>ruka a inkoust "
         "fol. 3 odlišná</b> od datovaných vrstev (Táborský 1587, komputus ~1641). Původní "
-        "Hájkův výpočet tak jako tak spadá do konce 16. století. Číselná mřížka (365 dní × "
-        "délka dne/noci, východ, poledne, západ) zatím není přepsána.</p>"
+        "Hájkův výpočet tak jako tak spadá do konce 16. století.</p>"
+        "<p><b>Struktura — kompaktní perpetuální tabule po krocích délky dne.</b> Tabule není "
+        "řazená po všech 365 dnech, nýbrž po <b>krocích délky dne á 10 minut</b>: každý řádek "
+        "udává jednu délku dne (7:50 v zimě, 8:00, 8:10 … až 16:10 v létě) a <b>datum, kdy té "
+        "délky Praha dosáhne</b>, spolu s délkou noci, východem, polednem a západem Slunce — "
+        "v <b>orlojních (českých, od západu) i obecných hodinách</b> — a se starým i novým "
+        "kalendářním datem a svátky. Proto jsou rozestupy dat nepravidelné (u slunovratu se den "
+        "mění pomalu, ke konci rychleji). Folio 3 pokrývá rostoucí půlrok (zima → léto), "
+        "~50 řádků.</p>"
+        "<p><b>Ověření výpočtem.</b> Spojnice „délka dne → datum“ přesně sedí na geometrický "
+        "model pro <b>Prahu (φ = 50°) v novém kalendáři</b>: délka dne 7:50 ↔ rukopis 23. XII "
+        "(zimní slunovrat, výpočet 21. 12.); 8:00 ↔ 4. I (výp. 4. 1.); 8:10 ↔ 11. I (výp. "
+        "10. 1.); 8:20 ↔ 16. I (výp. 14. 1.); 8:30 ↔ 19. I (výp. 19. 1.). Odchylky 1–2 dny "
+        "odpovídají rozlišení 10minutového kroku. Den + noc = 24:00; o zimním slunovratu délka "
+        "dne 7:50, noci 16:10, východ 8:05 — přesně vypočtené hodnoty pro Prahu. <b>Hájkova "
+        "tabule je tím potvrzena jako geometrický výpočet pro Prahu</b> (shodně s otiskem u "
+        "fol. 55). Úplný přepis všech ~50 kroků (a zrcadlové druhé půle roku) je připraven jako "
+        "navazující krok.</p>"
     ),
     55: (
         "<p>Porovnali jsme tuto tabuli s nezávislým astronomickým výpočtem východu Slunce "
@@ -519,9 +535,10 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 # klíč stavu: done = hotový čistý přepis · partial = rozpracováno · todo = chybí · na = prázdná
 _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
-    ("f2–f3", "úvodní astronomické tabulky (přední list, opis ≈ 1684)", "partial",
-     "f2 nevyplněná předtištěná tabule; f3 hustá tabule délky dne/východu/poledne/západu — "
-     "záhlaví přepsáno (zdroj: Tadeáš Hájek z Hájku, pól 50°, nový kalendář), číselná data k přepisu"),
+    ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)", "partial",
+     "f2 nevyplněná předtištěná tabule; f3 = perpetuální tabule po krocích délky dne (zdroj: "
+     "Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — záhlaví + struktura přepsány, spojnice "
+     "délka dne→datum ověřena výpočtem pro Prahu; úplný přepis ~50 kroků zbývá"),
     ("f4", "latinský verš", "todo", "přepis"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
     ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie ověřeny ze skenu (f13 nejisté)"),

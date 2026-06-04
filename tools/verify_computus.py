@@ -194,8 +194,33 @@ def _cells(page: int):
     return json.loads((WORK / f"{page:04d}.json").read_text(encoding="utf-8"))
 
 
+def verify_f3_daylength() -> bool:
+    """f3 (Hájek, pole 50 deg, new calendar): day-length-step -> date matches Prague model.
+
+    f3 is a perpetual table stepping the day length by 10 min; each row gives the date when
+    Prague reaches that day length. Sample (read off the manuscript): day-length minutes ->
+    (month, day) in the new (Gregorian) calendar. Verify against the computed Prague-50 model.
+    """
+    phi = math.radians(50.0)
+    sample = [(470, 12, 23), (480, 1, 4), (490, 1, 11), (500, 1, 16), (510, 1, 19)]
+
+    def daylen_min(m, d):
+        de = _solar_decl(_jd_greg(1685, m, d))
+        cH = max(-1, min(1, -math.tan(phi) * math.tan(de)))
+        return 2 * math.degrees(math.acos(cH)) / 15 * 60
+
+    worst = 0
+    for lmin, m, d in sample:
+        comp = daylen_min(m, d)
+        worst = max(worst, abs(comp - lmin))
+    ok = worst <= 12  # within one 10-min step
+    print(f"f3 day-length steps (Hájek, Prague 50, new cal.): max |Δ| = {worst:.0f} min "
+          f"(<= one 10-min step) -> {'OK' if ok else 'FAIL'}")
+    return ok
+
+
 if __name__ == "__main__":
-    results = [verify_dominical(), verify_epacts(), verify_sunrise()]
+    results = [verify_dominical(), verify_epacts(), verify_sunrise(), verify_f3_daylength()]
     print("\nf60 Tabula intervalli: NOT verified — number pairs do not decode to Julian Easter.")
     print("f69 násobilka: products verified by construction.")
     print("\nALL CHECKS PASS" if all(results) else "\nSOME CHECKS FAILED")
