@@ -131,28 +131,42 @@ def verify_sunrise() -> bool:
     """
     phi = math.radians(50.087)
     cells = {(c["row"], c["col"]): c["text"] for c in _cells(55)[0]["cells"]}
-    row15 = next(r for r in range(1, 40) if cells.get((r, 0)) == "15")
+    # all (month, day, manuscript-minutes) data points
+    pts = []
+    for r in range(1, 40):
+        lab = cells.get((r, 0), "")
+        if not lab.isdigit():
+            continue
+        for ci in range(1, 13):
+            v = cells.get((r, ci), "")
+            if ":" in v or "." in v:
+                mh, mm = v.replace(".", ":").split(":")
+                pts.append((ci, int(lab), int(mh) * 60 + int(mm)))
 
     def resid(h0_deg: float) -> list[int]:
         out = []
-        for ci in range(1, 13):
-            d = _solar_decl(_jd_greg(2000, ci, 15))  # idealised seasonal frame (equinox ~21.3)
-            cosH = (math.sin(math.radians(h0_deg)) - math.sin(phi) * math.sin(d)) / (
-                math.cos(phi) * math.cos(d)
+        for m, d, ms in pts:
+            dec = _solar_decl(_jd_greg(2000, m, d))  # idealised seasonal frame (equinox ~21.3)
+            cosH = (math.sin(math.radians(h0_deg)) - math.sin(phi) * math.sin(dec)) / (
+                math.cos(phi) * math.cos(dec)
             )
             sr = 12 - math.degrees(math.acos(max(-1, min(1, cosH)))) / 15.0
-            mh, mm = cells[(row15, ci)].replace(".", ":").split(":")
-            out.append(round(sr * 60) - (int(mh) * 60 + int(mm)))
+            out.append(round(sr * 60) - ms)
         return out
 
-    r_period = resid(0.0)        # period definition: geometric centre
+    def rms(r: list[float]) -> float:
+        mean = sum(r) / len(r)
+        return (sum((x - mean) ** 2 for x in r) / len(r)) ** 0.5
+
+    r_period = resid(0.0)        # period definition: geometric centre, no refraction
     r_modern = resid(-0.833)     # modern definition: upper limb + refraction
-    spread = max(r_modern) - min(r_modern)
-    worst_period = max(abs(x) for x in r_period)
-    ok = worst_period <= 3 and spread <= 3   # flat shape + tight at the period definition
-    print(f"f55 sunrise (Prague, day 15): residual flat to {spread} min; "
-          f"geometric-centre (period) max |Δ| = {worst_period} min; "
-          f"vs modern upper-limb ≈ {round(sum(r_modern)/12)} min -> {'OK' if ok else 'FAIL'}")
+    rms_p = rms(r_period)
+    mean_p, mean_m = sum(r_period) / len(pts), sum(r_modern) / len(pts)
+    # computed (not observed): scatter is at the rounding level (RMS < 1 min) over the whole year
+    ok = rms_p < 1.0 and abs(mean_p) < 1.5
+    print(f"f55 sunrise (Prague, {len(pts)} days): RMS scatter {rms_p:.2f} min (= rounding level "
+          f"-> COMPUTED, not observed); geometric-centre mean {mean_p:+.1f} min; "
+          f"vs modern upper-limb {mean_m:+.1f} min -> {'OK' if ok else 'FAIL'}")
     return ok
 
 

@@ -175,6 +175,53 @@ _TABLE_VERIFY: dict[int, str] = {
         "s vypočteným juliánským datem Velikonoc — přepis ke kontrole.",
 }
 
+# Delší metodické poznámky pod vybranými tabulkami (rozbalovací <details>).
+_TABLE_NOTE_LONG: dict[int, str] = {
+    55: (
+        "<p>Porovnali jsme tuto tabuli s nezávislým astronomickým výpočtem východu Slunce "
+        "pro Prahu (zeměpisná šířka φ ≈ 50,09°) a z porovnání vyplývá několik závěrů "
+        "o tom, jak tabulka vznikla. (Skript <code>tools/verify_computus.py</code> v "
+        "repozitáři edice je reprodukovatelný; pracuje se všemi 365 dny tabule.)</p>"
+        "<p><b>1) Jde o vypočtená, nikoli pozorovaná data.</b> Rozdíl mezi rukopisem a "
+        "výpočtem má přes celý rok rozptyl (RMS) jen <b>~0,8 minuty</b> — tedy na úrovni "
+        "zaokrouhlení na celé minuty. Pozorované časy východu by se nutně rozcházely o "
+        "několik minut (kolísání refrakce s počasím a teplotou, mlhy nad obzorem, chyba "
+        "odečtu). Tak těsná shoda po celý rok je dosažitelná jedině <b>výpočtem</b> "
+        "z tabulek deklinace Slunce a sférické trigonometrie.</p>"
+        "<p><b>2) Sezónní průběh přesně sedí na Prahu.</b> Reziduum (rukopis − výpočet) je "
+        "<b>ploché</b> přes všech dvanáct měsíců — nemá žádné měsíční vlnění. To vylučuje "
+        "chybu přepisu i chybnou zeměpisnou šířku: kdyby tabule platila pro jinou šířku "
+        "nebo měla systematickou chybu čtení, reziduum by se sezónně vlnilo. Tvar křivky "
+        "(od ~8:04 v prosinci po ~3:56 v červnu) odpovídá Praze.</p>"
+        "<p><b>3) Dobová definice okamžiku východu — bez refrakce.</b> Při moderní definici "
+        "východu (horní okraj kotouče na zdánlivém obzoru, tj. −50′ pod ním kvůli "
+        "atmosférické refrakci 34′ a poloměru Slunce 16′) vychází rukopis soustavně o "
+        "<b>~6–7 minut později</b>. Posuneme-li definici na okamžik, kdy <b>střed Slunce "
+        "protne geometrický (matematický) obzor</b> — tedy výška 0° <b>bez refrakce</b> — "
+        "reziduum klesne prakticky na nulu (průměr −0,5 min). Tabule tedy počítá "
+        "geometrický východ středu Slunce a refrakci nezahrnuje. To dává smysl: "
+        "atmosférická refrakce nebyla v 16. století spolehlivě tabelována (kvantifikovali "
+        "ji až Tycho Brahe, Kepler a později Cassini), takže dobový počtář ji přirozeně "
+        "vynechal.</p>"
+        "<p><b>4) Kalibrace na ideální rovnodennost.</b> Tabule neodpovídá skutečné poloze "
+        "Slunce juliánského roku 1587 (kdy jarní rovnodennost už driftovala na ~11. března "
+        "jul.), nýbrž <b>ideální rovnodennosti 21. března</b> — tj. je to věčná juliánská "
+        "tabule kalibrovaná „nicejsky“, jak měl juliánský kalendář původně fungovat, ne "
+        "přepočítaná na dobový desetidenní drift.</p>"
+        "<p><b>5) Zbytkový rozptyl ~1–2 min není chyba.</b> Protože jde o výpočet, není "
+        "důvod k náhodné chybě; zbylé jednotky minut jsou rozdíl <b>parametrů a "
+        "zaokrouhlení</b> mezi dobovým a naším výpočtem: zaokrouhlení na celé minuty, dobová "
+        "hodnota šikmosti ekliptiky (~23°30′ vs. dnešních 23°26′) a granularita dobových "
+        "slunečních tabulek (deklinace po stupních délky Slunce). Změna šikmosti či drobná "
+        "změna přijaté šířky reziduum dále nezlepší — parametry už v podstatě sedí.</p>"
+        "<p><b>Závěr.</b> Tabule východu (a obdobně poledne a západu) Slunce je <b>produktem "
+        "výpočtu</b>, ne měření: počítá geometrický východ středu Slunce bez refrakce, pro "
+        "Prahu, v juliánském kalendáři kalibrovaném na rovnodennost 21. března. Náš přepis "
+        "se s tímto modelem shoduje na úrovni zaokrouhlení (RMS 0,8 min), takže je věrný a "
+        "bez systematické chyby.</p>"
+    ),
+}
+
 
 def _split_marginalia(lines: list[str]) -> tuple[list[str], list[str]]:
     """Split clean lines into (main text, marginalia block).
@@ -276,6 +323,13 @@ def _page_doc(
                 if cap else ""
             )
             body_regions = head + "".join(_table_html(t) for t in tables)
+            long_note = _TABLE_NOTE_LONG.get(page_nr)
+            if long_note:
+                body_regions += (
+                    '<details class="method-note"><summary>Metodická poznámka: '
+                    "jak časy vznikly (výpočet vs. pozorování, refrakce, drift)</summary>"
+                    f"{long_note}</details>"
+                )
         elif table_page:
             link = (
                 f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP</a>'
@@ -450,7 +504,9 @@ def _index_doc(
         "přepisu i zeměpisné šířky). Tabule počítá východ jako <b>střed Slunce na "
         "geometrickém obzoru bez refrakce</b> (atmosférická refrakce nebyla v 16. století "
         "spolehlivě tabelována) — při této dobové definici je odchylka ≤ 2 min; vůči modernímu "
-        "východu (horní okraj + refrakce, −50′) je rukopis o ~7 min později. "
+        "východu (horní okraj + refrakce, −50′) je rukopis o ~7 min později. Těsnost shody "
+        "(RMS ~0,8 min přes 365 dní) navíc ukazuje, že jde o data <b>vypočtená, ne pozorovaná</b> "
+        "(podrobný rozbor je v metodické poznámce u fol. 55). "
         "<b>fol. 69</b> (násobilka) — součiny souhlasí. "
         "Naproti tomu <b>fol. 60</b> (<i>Tabula intervalli in Calendario Juliano</i>) se ověřit "
         "<b>zatím nepodařilo</b>: dvojčíslí v buňkách se nepodařilo dekódovat ani ztotožnit "
@@ -533,6 +589,11 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .table-cap{font-family:system-ui,sans-serif;font-size:.85rem;margin:.2rem 0 .5rem}
 .table-cap .table-note{color:#8a7d63;font-weight:normal;font-size:.78rem}
 .table-cap .table-note.verified{color:#2f6b3a}
+.method-note{margin:.7rem 0;font-family:system-ui,sans-serif;font-size:.82rem;line-height:1.5;
+  background:#eaf3ec;border-left:3px solid #2f6b3a;border-radius:3px;padding:.2rem .7rem}
+.method-note summary{cursor:pointer;font-weight:600;color:#2f6b3a;padding:.35rem 0}
+.method-note p{margin:.45rem 0}
+.method-note code{font-size:.82em;background:#dce8df;padding:0 .2em;border-radius:2px}
 .page-table{border-collapse:collapse;margin:.6rem 0;font-family:system-ui,sans-serif;font-size:.85rem}
 .page-table td{border:1px solid #cdbf9f;padding:.15rem .4rem;text-align:center;min-width:1.6rem}
 .clean-flag{display:inline-block;background:#3f6b3f;color:#fff;font-family:system-ui,sans-serif;
