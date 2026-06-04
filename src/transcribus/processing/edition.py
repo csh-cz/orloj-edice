@@ -156,6 +156,23 @@ _TABLE_CAPTIONS: dict[int, str] = {
 }
 
 
+# Deterministic verification (external computation / astronomy). See tools/verify_computus.py.
+_TABLE_VERIFY: dict[int, str] = {
+    50: "✓ ověřeno výpočtem: juliánská i gregoriánská nedělní písmena souhlasí s nezávislým "
+        "výpočtem pro všech 28 let slunečního cyklu; gregoriánský sloupec platí pro 17. stol. "
+        "(1583–1699), což zároveň datuje použitelnost tabulky.",
+    56: "✓ ověřeno výpočtem (duplikát fol. 50): nedělní písmena souhlasí pro všech 28 let.",
+    57: "✓ ověřeno výpočtem: všechny tři gregoriánské sloupce epakt souhlasí s nezávislým "
+        "výpočtem (Meeus) pro 19 zlatých počtů ve více obdobích; juliánský sloupec = "
+        "gregoriánský + 10 (10denní rozdíl kalendářů). Hranice období = gregoriánské korekce.",
+    55: "✓ ověřeno astronomicky: časy východu Slunce odpovídají výpočtu pro Prahu "
+        "(φ ≈ 50,09°) s rozdílem ~2–7 min (systematický posun dobové konvence).",
+    69: "✓ ověřeno: všechny součiny souhlasí (pythagorejská násobilka).",
+    60: "⚠ zatím neověřeno: dvojčíslí v buňkách se nepodařilo dekódovat ani ztotožnit "
+        "s vypočteným juliánským datem Velikonoc — přepis ke kontrole.",
+}
+
+
 def _split_marginalia(lines: list[str]) -> tuple[list[str], list[str]]:
     """Split clean lines into (main text, marginalia block).
 
@@ -246,9 +263,13 @@ def _page_doc(
             marginalia = _marginalia_html(marg_lines, page_nr)
         elif tables:
             cap = _TABLE_CAPTIONS.get(page_nr)
+            note = _TABLE_VERIFY.get(
+                page_nr, "přepis z rukopisu; číselné hodnoty ke kontrole proti skenu."
+            )
+            vcls = "table-note verified" if note.startswith("✓") else "table-note"
             head = (
-                f'<p class="table-cap"><b>{_esc(cap)}</b> <span class="table-note">— přepis '
-                "z rukopisu; číselné hodnoty ke kontrole proti skenu.</span></p>"
+                f'<p class="table-cap"><b>{_esc(cap)}</b> '
+                f'<span class="{vcls}">— {_esc(note)}</span></p>'
                 if cap else ""
             )
             body_regions = head + "".join(_table_html(t) for t in tables)
@@ -334,9 +355,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "done", "f54: pokrač. něm. návod"),
     ("f55–f69", "komputistické/astron. tabulky + próza", "partial",
-     "přepsáno: f55 (vejchod), f56 (=N.I), f57 (epakty, ověř.), f60 (intervallum jul.), "
-     "f69 (násobilka) + prózy f62–65, 67, 68; zbývají husté mřížky f58/59 (festa mob.), "
-     "f61 (intervallum greg.), f66 (epakty po dnech) — popsány, data k přepisu"),
+     "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera); "
+     "f69 (násobilka) + prózy f62–65, 67, 68; f60 (intervallum jul.) přepsáno, NEOVĚŘENO; "
+     "zbývají husté mřížky f58/59 (festa mob.), f61 (intervallum greg.), f66 — popsány"),
     ("f70–f79", "Astrolabium parvum", "done", "—"),
     ("f80", "latinsko-český epigram (Pythagoras)", "todo", "přepis"),
     ("f81", "předsádka", "na", "—"),
@@ -487,6 +508,7 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .table-todo a{color:#7a5c2e}
 .table-cap{font-family:system-ui,sans-serif;font-size:.85rem;margin:.2rem 0 .5rem}
 .table-cap .table-note{color:#8a7d63;font-weight:normal;font-size:.78rem}
+.table-cap .table-note.verified{color:#2f6b3a}
 .page-table{border-collapse:collapse;margin:.6rem 0;font-family:system-ui,sans-serif;font-size:.85rem}
 .page-table td{border:1px solid #cdbf9f;padding:.15rem .4rem;text-align:center;min-width:1.6rem}
 .clean-flag{display:inline-block;background:#3f6b3f;color:#fff;font-family:system-ui,sans-serif;

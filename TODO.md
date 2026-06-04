@@ -8,10 +8,18 @@ SPDX-License-Identifier: EUPL-1.2
 Živá edice: <https://csh-cz.github.io/orloj-edice/> · nasazení: `./deploy.sh`
 
 ## Přepis — zbývající části knihy
-- [x] **Tabulky přepsané ručně** (Docling na rukopisné číslice selhal): f50 + f56 (Litera
-      dominicalis N. I, jul./greg., ověřeno vzorcem Greg = Jul + 3), f57 (Tabula Epactarum
-      N. 2, ověřeno epaktovým vzorcem 11·g mod 30), f55 (východ Slunce), f60 (Tabula
-      intervalli Juliana, zlatý počet × litera), f69 (násobilka). Próza f62–65, 67, 68.
+- [x] **Tabulky přepsané ručně** (Docling na rukopisné číslice selhal) — **ověřeno
+      deterministicky** (`tools/verify_computus.py`, všechny kontroly OK):
+  - f50 + f56 (Litera dominicalis N. I) — jul. i greg. nedělní písmena = nezávislý výpočet
+    pro všech 28 let; greg. sloupec platí pro 17. stol. (1583–1699).
+  - f57 (Tabula Epactarum N. 2) — všechny 3 greg. sloupce epakt = výpočet (Meeus) pro 19
+    zlatých počtů; jul. sloupec = greg. + 10.
+  - f55 (východ Slunce) — astronomicky, Praha φ ≈ 50,09°, rozdíl ≤ 7 min.
+  - f69 (násobilka) — součiny.
+  - Próza f62–65, 67, 68.
+- [ ] **f60 (Tabula intervalli Juliana)** — přepsáno, ale **NEOVĚŘENO**: dvojčíslí v buňkách
+      se nepodařilo dekódovat ani ztotožnit s vypočteným juliánským datem Velikonoc. Buď
+      jiná sémantika (interval, ne datum), nebo chyba čtení → dekódovat / překontrolovat.
 - [ ] **Zbývající husté mřížky** (popsány captiony + odkaz na sken; nepřepsány — vysoké
       riziko chyb při ručním čtení, bez ověřovacího invariantu):
   - [ ] **f58 + f59** — Tabula Festorum Mobilium (pohyblivé svátky, mnoho sloupců dat).
