@@ -51,6 +51,12 @@ spravena, **Léta M.DC.LXXXIV [≈ 1684]**“ (vydaná „před 66 lety“). Tj.
   - Hájek byl přímo zapojen do **gregoriánské reformy** (studie Hladký–Šolc) → nová-kalendářní
     tabule od něj je velmi pravděpodobná.
   - Pozor: minuce jsou na konkrétní rok; naše tabule je **perpetuální** (možná samostatný tisk).
+  - **Ověřeno přímo (Google Books, vid=NKP:1002291334 = minuce 1565, id YMVhAAAAcAAJ):** Hájkova
+    roční minuce má kalendář s astrosymboly (znamení, aspekty), **NE** sloupec východu/délky dne
+    na minuty. Tj. f3-tabule není v (této) minuci → hledat **samostatnou perpetuální tabuli** nebo
+    Hájkovu kalendářně-reformní práci (~1584, nový kalendář). Google Books stránky umím číst přímo
+    (reader API click3 → obrázky); Manuscriptorium hub je JS-only, Google Books API má denní limit.
+  - Handoff: dej `vid`/`id` Google Books, nebo Manuscriptorium „pid"/IIIF, nebo screenshot tabule.
 
 ## (původně) Dohledání předlohy tabulky východu/délky dne (f55, sekce ~1641)
 Forenzně určeno (viz `tools/verify_computus.py` a poznámka u f55): **počítaná**, ne měřená;
