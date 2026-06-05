@@ -723,23 +723,38 @@ def _marginalia_doc(title: str, items: list[dict]) -> str:
 <header><a class="home" href="index.html">≡</a><h1>Rozbor marginálií</h1></header>
 <main>
 <section class="tiraz">
-<p><b>Co jsou marginálie.</b> Na okrajích folií <b>13–46</b> (Táborského Zpráva) je
-{sum(len(it['notes']) for it in items)} okrajových přípisků na {len(items)} foliích —
-krátká hesla, jež <b>indexují přilehlý text</b>: české tematické značky, latinské odborné
-termíny a poznámky k dějinám orloje a jeho správců. Klasifikace: {summary}.</p>
-<p><b>Pisatel.</b> Přípisky přisuzujeme <b>téže ruce jako hlavní text — ruka A</b>
-(Matouš Carchesius Jablonský, opis <b>1587</b>): tatáž česká novogotická kurzíva a duktus,
-totéž mísení češtiny a latiny, a obsah <b>shrnuje vyprávění</b> (včetně výčtu orlojníků:
-Václav Zvůnek, Jan Táborský, Tobiáš, Jakub Špaček) — jde tedy o <b>autorský/písařský
-rejstřík</b>, ne o cizí čtenářskou ruku; jen ojedinělé „NB" mohou být pozdějšího čtenáře.</p>
-<p><b>Odstín inkoustu.</b> Měřením tahů proti hlavnímu textu (fol. 20 a 43) vycházejí
-marginálie <b>nepatrně světlejší a méně teplé</b> (Δ jasu +13–15, Δ „tepla" R−B −18 až −34
-z 256); rozdíl je však <b>zčásti artefaktem tenčího tahu</b> — jde o týž železo-duběnkový
-hnědý inkoust, psaný jemnějším perem, slučitelné se vznikem současně s opisem (1587).
-(Paleografie i kolorimetrie ze skenu = pracovní hypotéza, ne znalecký posudek.)</p>
-<p class="warn"><b>Výřezy:</b> drobné studijní výřezy ze skenů <b>Archivu hlavního města
-Prahy</b> (Sbírka rukopisů, inv. č. 7916). Reprodukováno pro vědecký rozbor; souhlas archivu
-s reprodukcí v jednání.</p>
+<p>Na okrajích folií <b>13–46</b> (Táborského Zpráva) je {sum(len(it['notes']) for it in items)}
+okrajových přípisků na {len(items)} foliích. Klasifikace: {summary}. Těžiště rozboru jsou
+<b>jejich přepisy a interpretace</b> (výřezy ze skenu jsou jen ilustrativní).</p>
+<p><b>Jakou informaci přinášejí.</b> Marginálie jsou <b>rejstříkový aparát</b> — krátká hesla,
+která <b>pojmenovávají, co už říká přilehlý text</b>: témata výkladu (české značky „O pušce“,
+„Srovnání obojí počtuov“), latinské odborné termíny (<i>Index Solis, declinatio solis, Linea
+oppositionis/coniunctionis, Solstitium, Tabula Horarum Planetarum</i>) a u závěru dějiny orloje
+a jeho správců. <b>Žádná z nich nepřidává údaj, který by nebyl v hlavním textu</b>: i „historický“
+shluk u fol. 38–46 — planetní hodiny a <i>Tabula Horarum Planetarum</i>, „nebožtík“ Tobiáš a jeho
+škody, učedník Jakub Špaček, obnovení orloje — <b>doslovně odpovídá tělu textu</b> (ověřeno proti
+přepisu týchž folií). Přínos marginálií je tedy <b>navigační</b> (rejstřík ke knize),
+<b>interpretační</b> (ukazují, co pisatel pokládal za podstatné: seřizování, kalendář, soukolí,
+posloupnost správců) a <b>terminologický</b> (latinská nomenklatura vedle českého výkladu) —
+nikoli faktografický.</p>
+<p><b>Písmo: jedna ruka, totožná s opisovačem.</b> Rejstříkové i „historické“ glosy jsou
+<b>jednou rukou</b> — touž českou novogotickou kurzívou, týmž duktem a inkoustem jako hlavní text
+(srovnání „Tobiáš umřel“ / „Jakub Špaček“ / „Index Slunce“ navzájem i s tělem textu). Přisuzujeme
+je proto <b>ruce A — Matouši Carchesiovi Jablonskému, opisovači z r. 1587</b>; jde o
+<b>autorský/písařský rejstřík</b>, ne o cizí čtenářskou ruku. Odstín inkoustu vychází měřením
+proti tělu textu <b>nepatrně světlejší a méně teplý</b> (Δ jasu +13–15, Δ „tepla“ R−B −18 až −34
+z 256), což je však <b>zčásti artefakt tenčího tahu</b> — týž železo-duběnkový hnědý inkoust,
+psaný jemnějším perem.</p>
+<p><b>Ztotožnění s jinými písaři a datace.</b> Marginálie se <b>neshodují s žádnou z pozdějších
+rukou</b> knihy — německého Listu purkmistra (1628), komputistické sekce (~1641) ani přední
+Hájkovy tabule a přípisku (~1684); ty jsou jiným písmem a fyzicky v jiných částech. Protože
+marginálie indexují tělo textu a jsou rukou A, vznikly <b>současně s opisem, tj. r. 1587</b>
+(nebo těsně po něm) — tím je lze datovat, na rozdíl od pozdějších přípisků jinde v knize.
+Výjimkou mohou být ojedinělé „NB“, jež bývají rukou pozdějšího čtenáře. (Paleografie i
+kolorimetrie ze skenu = pracovní hypotéza, ne znalecký posudek; jistota střední.)</p>
+<p class="warn"><b>Výřezy</b> jsou drobné studijní reprodukce ze skenů <b>Archivu hlavního města
+Prahy</b> (Sbírka rukopisů, inv. č. 7916), uvedené pro ilustraci; souhlas archivu s reprodukcí
+v jednání. Závazný je <b>přepis</b>, ne obrázek.</p>
 </section>
 {"".join(secs)}
 </main>
@@ -1120,7 +1135,7 @@ def _index_doc(
 <header><h1>{_esc(title)}</h1></header>
 <main>
 {_status_html()}
-<p class="marg-link">▸ <a href="marginalia.html">Rozbor marginálií</a> — okrajové přípisky folií 13–46 (výřezy ze skenu, klasifikace, identifikace písaře).</p>
+<p class="marg-link">▸ <a href="marginalia.html">Rozbor marginálií</a> — přepisy okrajových přípisků folií 13–46, co přinášejí, identifikace písaře a datace.</p>
 {tiraz}
 <p class="note">Jedna svázaná kniha (více částí, jeden celek). <span class="teige-badge">T</span> = folia s opisem
 Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní oddíly referenci nemají.
@@ -1234,9 +1249,9 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .marg-item h3 a{font-size:.8rem;font-weight:normal;color:#7a5c2e}
 .marg-ctx,.mctx{color:#6b6256;font-weight:normal}
 .marg-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-start}
-.marg-figs{flex:0 0 320px;display:flex;flex-direction:column;gap:5px}
-.marg-figs img{max-width:320px;border:1px solid #d8cba8;background:#fff;border-radius:2px}
-.marg-notes{flex:1 1 320px;margin:0;padding-left:1.2rem;font-size:.92rem;line-height:1.6}
+.marg-figs{flex:0 0 210px;display:flex;flex-direction:column;gap:5px}
+.marg-figs img{max-width:210px;border:1px solid #d8cba8;background:#fff;border-radius:2px;opacity:.95}
+.marg-notes{flex:1 1 360px;margin:0;padding-left:1.2rem;font-size:.95rem;line-height:1.65}
 .marg-notes li{margin:.2rem 0}
 .mtag{display:inline-block;font-family:system-ui,sans-serif;font-size:.68rem;
   text-transform:uppercase;letter-spacing:.03em;padding:.05rem .35rem;border-radius:3px;
