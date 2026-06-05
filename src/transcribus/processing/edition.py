@@ -164,14 +164,17 @@ _TABLE_CAPTIONS: dict[int, str] = {
 
 # Deterministic verification (external computation / astronomy). See tools/verify_computus.py.
 _TABLE_VERIFY: dict[int, str] = {
-    3: "✓ datum čteno ze skenu (ne generováno): sloupec „Datum (rukopis)“ je přepsán z folia a "
-        "křížově ověřen jmény svatých (Jan Zlatoústý 27. 1., Valentin 14. 2., Tomáš Akv. 7. 3., "
-        "Benedikt 21. 3. = rovnodennost den = noc, Vojtěch 23. 4., Stanislav 8. 5.) i výpočtem "
-        "(sloupec „Datum (vyp.)“). Rukopis se od výpočtu liší o ±1–2 dny ve většině řádků — proto "
-        "se musí číst, ne generovat ze vzorce. Délka dne = pravidelné 10min kroky (7:50 zima → "
-        "16:10 léto, slunovrat 23. 6.); časy (východ/poledne/západ/noc) plynou z délky dne a "
-        "souhlasí s rukopisem (rovnodennost: východ 6:00). [?] = méně jisté čtení data. Rukopisné "
-        "orlojní (české) hodiny a poloha Slunce zde zatím nejsou.",
+    3: "✓ věrný přepis ze skenu. Tabule je <b>symetrická podle délky dne</b>: stejná délka dne "
+        "nastává na jaře i na podzim, proto má dva textové bloky — <b>vlevo jarní</b> (prosinec → "
+        "červen) a <b>vpravo podzimní</b> (červen → prosinec) — s měsícem, dnem a svátkem / vstupem "
+        "Slunce do znamení. Číselné sloupce uprostřed platí pro obě poloviny: <b>délka dne</b> "
+        "(čteno, pravidelné 10min kroky 7:50 zima → 16:10 léto), <b>délka noci</b>, <b>východ</b> "
+        "(obecné hod.), <b>poledne v českých /orlojních/ hodinách</b> (20:05 zima → 18:00 "
+        "rovnodennost → 15:55 léto) a <b>odpolední díl</b> (½ délky dne). Časové sloupce jsou v "
+        "rukopise výsledkem výpočtu z délky dne a do poslední minuty souhlasí s přepočtem "
+        "(rovnodennost: východ 6:00, den = noc = 12:00; ověřeno ve verify_computus). Svátky a "
+        "vstupy Slunce jsou čteny ze skenu, <b>[?] = méně jisté čtení</b>; v závorce je vlastní "
+        "den svátku. Rukopisný sloupec novoluní („Nové měsíce“) zde zatím není.",
     50: "✓ ověřeno výpočtem: juliánská i gregoriánská nedělní písmena souhlasí s nezávislým "
         "výpočtem pro všech 28 let slunečního cyklu; gregoriánský sloupec platí pro 17. stol. "
         "(1583–1699), což zároveň datuje použitelnost tabulky.",
@@ -259,14 +262,16 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "neruší. Rozhodující ověření (čeká na ohledání originálu): zda je <b>ruka a inkoust "
         "fol. 3 odlišná</b> od datovaných vrstev (Táborský 1587, komputus ~1641). Původní "
         "Hájkův výpočet tak jako tak spadá do konce 16. století.</p>"
-        "<p><b>Struktura — kompaktní perpetuální tabule po krocích délky dne.</b> Tabule není "
-        "řazená po všech 365 dnech, nýbrž po <b>krocích délky dne á 10 minut</b>: každý řádek "
-        "udává jednu délku dne (7:50 v zimě, 8:00, 8:10 … až 16:10 v létě) a <b>datum, kdy té "
-        "délky Praha dosáhne</b>, spolu s délkou noci, východem, polednem a západem Slunce — "
-        "v <b>orlojních (českých, od západu) i obecných hodinách</b> — a se starým i novým "
-        "kalendářním datem a svátky. Proto jsou rozestupy dat nepravidelné (u slunovratu se den "
-        "mění pomalu, ke konci rychleji). Folio 3 pokrývá rostoucí půlrok (zima → léto), "
-        "~50 řádků.</p>"
+        "<p><b>Struktura — kompaktní perpetuální tabule po krocích délky dne, symetrická.</b> "
+        "Tabule není řazená po všech 365 dnech, nýbrž po <b>krocích délky dne á 10 minut</b>: "
+        "každý řádek udává jednu délku dne (7:50 v zimě, 8:00, 8:10 … až 16:10 v létě) spolu s "
+        "délkou noci, východem, polednem (v <b>českých /orlojních/ hodinách</b>, počítaných od "
+        "západu) a odpoledním dílem. Protože <b>táž délka dne nastává dvakrát do roka</b>, má "
+        "tabule pro každý řádek <b>dvě data</b>: vlevo <b>jarní</b> (zima → léto, prosinec → "
+        "červen) a vpravo <b>podzimní</b> (léto → zima, červen → prosinec), každé s měsícem, dnem "
+        "a svátkem / vstupem Slunce do znamení. Tak v jednom listě drží celý rok. Rozestupy dat "
+        "jsou nepravidelné (u slunovratu se den mění pomalu, ke konci rychleji); vložené řádky "
+        "značí vstupy Slunce do zvířetníku a hlavní svátky.</p>"
         "<p><b>Ověření výpočtem.</b> Spojnice „délka dne → datum“ přesně sedí na geometrický "
         "model pro <b>Prahu (φ = 50°) v novém kalendáři</b>: délka dne 7:50 ↔ rukopis 23. XII "
         "(zimní slunovrat, výpočet 21. 12.); 8:00 ↔ 4. I (výp. 4. 1.); 8:10 ↔ 11. I (výp. "
@@ -274,14 +279,16 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "odpovídají rozlišení 10minutového kroku. Den + noc = 24:00; o zimním slunovratu délka "
         "dne 7:50, noci 16:10, východ 8:05 — přesně vypočtené hodnoty pro Prahu. <b>Hájkova "
         "tabule je tím potvrzena jako geometrický výpočet pro Prahu</b> (shodně s otiskem u "
-        "fol. 55). <b>Tabulka níže je čtený přepis ze skenu</b> — všech 51 kroků délky dne "
-        "(7:50 zima → 16:10 léto). <b>Datum je přepsané z rukopisu</b> (sloupec „Datum (rukopis)“) "
-        "a křížově ověřené jmény svatých a výpočtem (sloupec „Datum (vyp.)“) — a v 33 z 51 řádků "
-        "se rukopisné datum od výpočtu liší o ±1–2 dny, takže <b>nešlo generovat ze vzorce, muselo "
-        "se číst</b>. Délka dne a z ní plynoucí časy (východ/poledne/západ/noc) s rukopisem souhlasí. "
-        "Méně jisté čtení data je značeno [?]. Rukopisné <b>orlojní (české) hodiny, poloha Slunce a "
-        "plná jména svatých</b> po buňkách (a zrcadlová druhá půle roku) zatím chybí — ty čekají na "
-        "tabulkový HTR (Titan).</p>"
+        "fol. 55). <b>Tabulka níže je věrný přepis ze skenu</b> — všech 51 kroků délky dne "
+        "(7:50 zima → 16:10 léto) s oběma textovými bloky: <b>jarním</b> (vlevo) i <b>podzimním</b> "
+        "(vpravo). <b>Data, měsíce, svátky a vstupy Slunce</b> jsou čteny z rukopisu (jarní data se "
+        "v 33 z 51 řádků liší od výpočtu o ±1–2 dny, takže <b>nešlo generovat ze vzorce, muselo se "
+        "číst</b>; u svátku je v závorce jeho vlastní den). <b>Časové sloupce</b> (délka noci, "
+        "východ, české poledne, odpolední díl) jsou v rukopise výpočtem z délky dne a do minuty "
+        "souhlasí s přepočtem (rovnodennost: východ 6:00, den = noc = 12:00). Méně jisté čtení je "
+        "značeno <b>[?]</b>; podzimní svátky vpravo jsou přečteny po pásech a u méně zřetelných "
+        "buněk ponechány s [?] nebo prázdné. Rukopisný sloupec <b>novoluní</b> („Nové měsíce“) "
+        "zatím není přepsán — čeká na tabulkový HTR (Titan) nebo ohledání originálu.</p>"
     ),
     55: (
         "<p>Porovnali jsme tuto tabuli s nezávislým astronomickým výpočtem východu Slunce "
@@ -610,10 +617,10 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
     ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)", "partial",
-     "f2 nevyplněná předtištěná tabule; f3 = perpetuální tabule po krocích délky dne (Tadeáš "
-     "Hájek z Hájku, pól 50°, nový kalendář) — záhlaví, struktura i 51řádková mřížka přepsány; "
-     "datum čteno ze skenu a křížově ověřeno svátky + výpočtem (33/51 řádků se od výpočtu liší); "
-     "rukopisné orlojní hodiny + svátky po buňkách čekají na tabulkový HTR"),
+     "f2 nevyplněná předtištěná tabule; f3 = symetrická perpetuální tabule po krocích délky dne "
+     "(Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — přepsána věrně: jarní i podzimní blok "
+     "(měsíc, den, svátek, vstupy Slunce) čteny ze skenu, časy (délka dne/noci, východ, české "
+     "poledne, díl) ověřeny výpočtem; čeká jen rukopisný sloupec novoluní"),
     ("f4", "latinský epigram (sedm pahorků pražských)", "done",
      "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
@@ -657,9 +664,9 @@ def _status_html() -> str:
         f"<tbody>{rows}</tbody></table>"
         '<p class="status-note"><b>Co v knize ještě chybí:</b> f31–42 (diplomatická kontrola '
         "Táborského po řádcích), f54 (plný německý návod), f58/59 (Tabula festorum mobilium) a "
-        "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 má "
-        "datum čtené ze skenu a křížově ověřené; rukopisné orlojní hodiny + svátky po buňkách též "
-        "čekají na HTR.) Prázdné/předsádky: f1, f2, f81.</p>"
+        "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 je "
+        "přepsáno věrně včetně jarních i podzimních svátků a měsíců; čeká jen sloupec novoluní.) "
+        "Prázdné/předsádky: f1, f2, f81.</p>"
     )
 
 
