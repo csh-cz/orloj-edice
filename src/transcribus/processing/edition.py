@@ -1002,10 +1002,12 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
     ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)", "partial",
-     "f2 nevyplněná předtištěná tabule; f3 = symetrická perpetuální tabule po krocích délky dne "
-     "(Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — přepsána věrně a kompletně: jarní i "
-     "podzimní blok (měsíc, den, svátek, vstupy Slunce) čteny ze skenu, časy (délka dne/noci, "
-     "východ, české poledne, díl) ověřeny výpočtem; jen několik méně zřetelných jmen [?]"),
+     "f2 = táž tabule jen předkreslená a nevyplněná, ale s týmž záhlavím a <b>touž rukou jako "
+     "f3</b> (kopista r. 1684 list nadepsal a nalinkoval, vyplnil až f3); f3 = symetrická "
+     "perpetuální tabule po krocích délky dne (Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — "
+     "přepsána věrně a kompletně: jarní i podzimní blok (měsíc, den, svátek, vstupy Slunce) čteny "
+     "ze skenu, časy ověřeny výpočtem; německý návod k užití této tabule je dole na f54 (≈ 1684, "
+     "patrně táž ruka); jen několik méně zřetelných jmen [?]"),
     ("f4", "latinský epigram (sedm pahorků pražských)", "done",
      "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
