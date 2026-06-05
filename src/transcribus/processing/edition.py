@@ -72,6 +72,19 @@ def _esc(s: str) -> str:
     return html.escape(s, quote=False)
 
 
+_ZODIAC = "♈♉♊♋♌♍♎♏♐♑♒♓"
+
+
+def _zodiac_textstyle(s: str) -> str:
+    """Wrap zodiac signs so they render as monochrome text glyphs, not color emoji.
+
+    Adds the U+FE0E text-presentation selector and a .zod span (CSS forces text).
+    """
+    for ch in _ZODIAC:
+        s = s.replace(ch, f'<span class="zod">{ch}\ufe0e</span>')
+    return s
+
+
 # Folia, jejichž jazyk NENÍ čeština (latina, němčina) — česká normalizace by je zkomolila
 # (g→j apod.), takže se u nich „normalizovaný" pohled rovná diplomatickému.
 _NO_NORMALIZE: frozenset[int] = frozenset({4, 51, 52, 80})
@@ -615,6 +628,7 @@ def _page_doc(
     else:
         body = '<div class="empty">[prázdná strana / vazba]</div>'
 
+    body = _zodiac_textstyle(body)
     return f"""<!doctype html>
 <html lang="cs"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -876,6 +890,8 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .ms-heading{margin:.3rem 0 .6rem;padding:.5rem .7rem;border-left:3px solid #c9b88a;
   background:#f7f2e6;line-height:1.5}
 .ms-heading i{color:#3a342a}
+.zod{font-variant-emoji:text;font-family:"Segoe UI Symbol","Noto Sans Symbols2","DejaVu Sans",
+  "Apple Symbols",serif;color:#5a4a2a}
 .ms-heading-label{display:block;font-family:system-ui,sans-serif;font-size:.72rem;
   text-transform:uppercase;letter-spacing:.04em;color:#8a7d63;margin-bottom:.25rem}
 .method-note{margin:.7rem 0;font-family:system-ui,sans-serif;font-size:.82rem;line-height:1.5;
