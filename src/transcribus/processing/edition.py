@@ -618,8 +618,8 @@ def _page_doc(
     # <=500px + watermark. Until that is in place, NOTHING is republished — figures are
     # only referenced with an out-link to the AHMP viewer.
     fig_link = (
-        f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP</a>'
-        if ahmp_url else "sken v AHMP"
+        f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP (fol. {page_nr})</a>'
+        if ahmp_url else f"sken v AHMP (fol. {page_nr})"
     )
     fig_note = (
         f'<figure class="fig fig-ref"><figcaption>Na tomto foliu je vyobrazení '
@@ -629,7 +629,7 @@ def _page_doc(
     prev_link = f"p{page_nr-1:04d}.html" if page_nr > 1 else ""
     next_link = f"p{page_nr+1:04d}.html" if page_nr < total else ""
     ahmp = (
-        f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">↗ sken v AHMP</a>'
+        f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">↗ sken v AHMP (fol. {page_nr})</a>'
         if ahmp_url else ""
     )
     # Optional embedded AHMP viewer (iframe = linking, not republication). Collapsed by
@@ -685,8 +685,8 @@ def _page_doc(
                 )
         elif table_page:
             link = (
-                f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP</a>'
-                if ahmp_url else "sken v AHMP"
+                f'<a href="{_esc(ahmp_url)}" target="_blank" rel="noopener">sken v AHMP (fol. {page_nr})</a>'
+                if ahmp_url else f"sken v AHMP (fol. {page_nr})"
             )
             cap = _TABLE_CAPTIONS.get(page_nr, "Komputistická / astronomická tabulka")
             body_regions = (
@@ -739,7 +739,8 @@ def _page_doc(
 <main>{body}{scan_embed}</main>
 <footer>Diplomatický přepis (Transkribus HTR, model 263129). Normalizace heuristická — nutná korektura.
 Teige: edice 1901, public domain. Vyobrazení ani skeny se zde nereprodukují — odkazy „sken"
-vedou do prohlížeče Archivu hlavního města Prahy (katalog.ahmp.cz).</footer>
+vedou na stabilní permalink archiválie v Archivu hlavního města Prahy (katalog.ahmp.cz);
+ten otevře dokument, v prohlížeči pak přejděte na příslušné folio (skeny jsou číslovány shodně).</footer>
 <script src="assets/edition.js"></script>
 </body></html>"""
 
@@ -1067,14 +1068,14 @@ _JS = """
 """
 
 
-# AHMP image viewer (Bach/Zoomify). The bare ``permalink?xid=…`` landing page IGNORES
-# scanIndex; the actual per-scan deep-link is the ``Zoomify.action`` viewer, which honours
-# scanIndex and works cold (no jsessionid needed — the server creates a session). scanIndex
-# is our folio number (verified: scanIndex=3 → fol. 3 day-length table; scanIndex=70 → fol. 70).
-# entityType/entityRef are constants of this archiválie (inv. č. 7916, internal id 143558).
-_AHMP_VIEWER = "https://katalog.ahmp.cz/pragapublica/Zoomify.action"
-_AHMP_ENTITY_TYPE = "10092"
-_AHMP_ENTITY_REF = "%28%5En%29%28%28%28localArchiv%2C%5En%2Chot_%29%28unidata%29%29%28143558%29%29"
+# AHMP (Bach pragapublica) link policy. AHMP has NO stable per-scan URL:
+#  - ``permalink?xid=<XID>`` is the canonical, persistent link, but resolves to the
+#    document (scanIndex is ignored server-side — always the first scan);
+#  - the per-scan jump ``Zoomify.action…&scanIndex=N`` is a session-bound *action* URL
+#    that returns „Platnost stránky vypršela" when opened cold → not a stable citation.
+# We therefore link the stable permalink and carry the folio (= scan N) in the link text;
+# the reader opens scan N in the viewer. Scans are not republished here.
+_AHMP_PERMALINK = "https://katalog.ahmp.cz/pragapublica/permalink"
 
 
 def _ahmp_xid(permalink: str | None) -> str | None:
@@ -1084,19 +1085,16 @@ def _ahmp_xid(permalink: str | None) -> str | None:
 
 
 def _folio_ahmp_url(permalink: str | None, page_nr: int) -> str | None:
-    """Per-folio deep-link to the scan in the AHMP Zoomify viewer (opens that folio).
+    """Stable AHMP link for a folio = the canonical document permalink.
 
-    Uses the ``Zoomify.action`` viewer with ``scanIndex=<folio>`` (= our page number),
-    which jumps straight to the folio. (The bare permalink landing page ignores
-    scanIndex.) Scans are not republished here — this only links out to AHMP.
+    AHMP exposes no stable per-scan URL, so we return the persistent
+    ``permalink?xid=<XID>``; the target folio (scan number) is conveyed in the
+    link text instead. Scans are not republished — this only links out to AHMP.
     """
     xid = _ahmp_xid(permalink)
     if not xid:
         return None
-    return (
-        f"{_AHMP_VIEWER}?xid={xid}&entityType={_AHMP_ENTITY_TYPE}"
-        f"&entityRef={_AHMP_ENTITY_REF}&scanIndex={page_nr}"
-    )
+    return f"{_AHMP_PERMALINK}?xid={xid}"
 
 
 def build_edition(
