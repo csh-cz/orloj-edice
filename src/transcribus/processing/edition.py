@@ -616,6 +616,35 @@ def _marg_notes(marg_lines: list[str]) -> list[str]:
     return [p.strip(" .—") for p in parts if p.strip(" .—")]
 
 
+def _later_additions(clean_lines: list[str]) -> list[str]:
+    """Extract later-hand insertions (``[přípis pozdější rukau:] …`` / ``[Pozdější rukou …:]``).
+
+    These are substantial annotations by a later hand (a different layer than the
+    1587 copyist's index glosses); kept apart so the marginalia page can show them
+    as their own category. Editorial notes appended in [ … ] are cut off.
+    """
+    adds: list[str] = []
+    i, n = 0, len(clean_lines)
+    marker = re.compile(r"\[(?:přípis\s+)?pozdější\s+ruk[ao]u?[^\]]*\]\s*(.*)", re.I)
+    stop = re.compile(r"\[(?:přípis|pozdější|ediční)", re.I)
+    while i < n:
+        m = marker.match(clean_lines[i].lstrip())
+        if not m:
+            i += 1
+            continue
+        buf = [m.group(1)]
+        j = i + 1
+        while j < n and clean_lines[j].strip() and not stop.match(clean_lines[j].lstrip()):
+            buf.append(clean_lines[j])
+            j += 1
+        text = " ".join(b.strip() for b in buf).strip()
+        text = re.split(r"\s*—?\s*\[[Ee]diční pozn", text)[0].strip(" .—")
+        if text:
+            adds.append(text)
+        i = j
+    return adds
+
+
 def _marg_category(note: str) -> tuple[str, str]:
     """Classify a gloss → (tag, popis)."""
     low = note.lower()
@@ -700,22 +729,33 @@ def _marginalia_doc(title: str, items: list[dict]) -> str:
     summary = " · ".join(
         f"{_MARG_TAGNAMES[k]}: {cnt[k]}" for k in ("IDX", "LAT", "HIST", "NB") if cnt.get(k)
     )
+    n_add = sum(len(it.get("adds", [])) for it in items)
+    if n_add:
+        summary += f" · pozdější přípisky (jiná ruka): {n_add}"
     secs = []
     for it in items:
-        imgs = "".join(
+        figs = "".join(
             f'<img src="{_esc(p)}" alt="marginálie fol. {it["page"]}" loading="lazy">'
             for p in it["imgs"]
-        ) or "<i>[výřez nedostupný — viz sken v AHMP]</i>"
+        )
+        if not figs and it["notes"]:
+            figs = "<i>[výřez nedostupný — viz sken v AHMP]</i>"
         notes = "".join(
             f'<li><span class="mtag t-{tag}">{_MARG_TAGNAMES[tag]}</span> {_esc(txt)}</li>'
             for (txt, tag, _desc) in it["notes"]
+        )
+        body = f'<ol class="marg-notes">{notes}</ol>' if notes else ""
+        body += "".join(
+            '<p class="marg-add"><span class="mtag t-ADD">pozdější přípisek '
+            f'(jiná ruka)</span> {_esc(a)}</p>'
+            for a in it.get("adds", [])
         )
         label = f' — <span class="mctx">{_esc(it["label"])}</span>' if it.get("label") else ""
         secs.append(
             f'<section class="marg-item"><h3 id="f{it["page"]:04d}">fol. {it["page"]}{label} '
             f'· <a href="p{it["page"]:04d}.html">přepis folia →</a></h3>'
-            f'<div class="marg-row"><div class="marg-figs">{imgs}</div>'
-            f'<ol class="marg-notes">{notes}</ol></div></section>'
+            f'<div class="marg-row"><div class="marg-figs">{figs}</div>'
+            f'<div class="marg-body">{body}</div></div></section>'
         )
     return f"""<!doctype html>
 <html lang="cs"><head><meta charset="utf-8">
@@ -729,17 +769,31 @@ def _marginalia_doc(title: str, items: list[dict]) -> str:
 <p>Na okrajích folií <b>13–46</b> (Táborského Zpráva) je {sum(len(it['notes']) for it in items)}
 okrajových přípisků na {len(items)} foliích. Klasifikace: {summary}. Těžiště rozboru jsou
 <b>jejich přepisy a interpretace</b> (výřezy ze skenu jsou jen ilustrativní).</p>
-<p><b>Jakou informaci přinášejí.</b> Marginálie jsou <b>rejstříkový aparát</b> — krátká hesla,
-která <b>pojmenovávají, co už říká přilehlý text</b>: témata výkladu (české značky „O pušce“,
-„Srovnání obojí počtuov“), latinské odborné termíny (<i>Index Solis, declinatio solis, Linea
-oppositionis/coniunctionis, Solstitium, Tabula Horarum Planetarum</i>) a u závěru dějiny orloje
-a jeho správců. <b>Žádná z nich nepřidává údaj, který by nebyl v hlavním textu</b>: i „historický“
-shluk u fol. 38–46 — planetní hodiny a <i>Tabula Horarum Planetarum</i>, „nebožtík“ Tobiáš a jeho
-škody, učedník Jakub Špaček, obnovení orloje — <b>doslovně odpovídá tělu textu</b> (ověřeno proti
-přepisu týchž folií). Přínos marginálií je tedy <b>navigační</b> (rejstřík ke knize),
-<b>interpretační</b> (ukazují, co pisatel pokládal za podstatné: seřizování, kalendář, soukolí,
-posloupnost správců) a <b>terminologický</b> (latinská nomenklatura vedle českého výkladu) —
+<p><b>1) Rejstříkové glosy — bez nové informace.</b> Drobné okrajové glosy jsou
+<b>rejstříkový aparát</b>: krátká hesla, která <b>pojmenovávají, co už říká přilehlý text</b> —
+témata výkladu (české značky „O pušce“, „Srovnání obojí počtuov“), latinské odborné termíny
+(<i>Index Solis, declinatio solis, Linea oppositionis/coniunctionis, Solstitium, Tabula Horarum
+Planetarum</i>) a u závěru dějiny orloje a jeho správců. <b>Žádná z nich nepřidává údaj, který by
+nebyl v hlavním textu</b>: i „historický“ shluk u fol. 38–46 — planetní hodiny, „nebožtík“ Tobiáš
+a jeho škody, učedník Jakub Špaček, obnovení orloje — <b>doslovně odpovídá tělu textu</b> (ověřeno
+proti přepisu týchž folií). Jejich přínos je <b>navigační, interpretační a terminologický</b>,
 nikoli faktografický.</p>
+<p><b>2) Pozdější přípisky jinou rukou — tady je nová informace.</b> Kromě rejstříku jsou v knize
+<b>obsažnější vsuvky pozdější rukou</b> (jiná, mladší ruka než opisovač A), které <b>skutečně něco
+přidávají</b>:
+<br>• <b>fol. 22 — přestavba měsíční koule:</b> „<i>Nyní jest to jinače spraveno a lehčeji, neboť
+žádných koleček není, které by měsícem hýbali… nežli vnitř v tlustosti měsíce jest příprava dosti
+sprostá, však předce dosti trefně vymyšlená, tak že samým otočováním se měsíce po sféře v 24
+hodinách corpus lunae o 1 grad se pohne, a v 30 dnech celý se obrátí…</i>“ — pozdější správce zde
+dokládá, že <b>původní soukolíový pohon měsíce (popsaný Táborským) byl nahrazen jednodušším
+mechanismem uvnitř tělesa měsíce</b>. To je <b>doklad reálné konstrukční změny orloje</b>, jaký
+Táborského text nemá.
+<br>• <b>fol. 38 — autorství a List purkmistra:</b> „<i>… léta 1410 … ten orloj … dělal … vide
+list purkm[istra] … origl., sub figura 4</i>“ — pozdější čtenář proti Táborského dataci „mistr
+Hanuš okolo 1490“ <b>odkazuje na List purkmistra z r. 1410</b> (smlouva mistru Mikulášovi z Kadaně,
+opsaná v téže knize, fol. 51–54), a tím <b>klade zhotovení orloje k r. 1410 / Mikulášovi z Kadaně</b>,
+ne Hanušovi. (Doplnění k dřívějšímu: takový vnitřní odkaz na List purkmistra v knize <b>existuje</b>
+— právě tady, jako pozdější přípisek.)</p>
 <p><b>Písmo: jedna ruka, totožná s opisovačem.</b> Rejstříkové i „historické“ glosy jsou
 <b>jednou rukou</b> — touž českou novogotickou kurzívou, týmž duktem a inkoustem jako hlavní text
 (srovnání „Tobiáš umřel“ / „Jakub Špaček“ / „Index Slunce“ navzájem i s tělem textu). Přisuzujeme
@@ -1254,8 +1308,12 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .marg-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-start}
 .marg-figs{flex:0 0 210px;display:flex;flex-direction:column;gap:5px}
 .marg-figs img{max-width:210px;border:1px solid #d8cba8;background:#fff;border-radius:2px;opacity:.95}
-.marg-notes{flex:1 1 360px;margin:0;padding-left:1.2rem;font-size:.95rem;line-height:1.65}
+.marg-body{flex:1 1 360px}
+.marg-notes{margin:0 0 .5rem;padding-left:1.2rem;font-size:.95rem;line-height:1.65}
 .marg-notes li{margin:.2rem 0}
+.marg-add{font-size:.95rem;line-height:1.6;margin:.5rem 0;padding:.5rem .7rem;
+  background:#f3ece0;border-left:3px solid #9c6b3a;border-radius:3px}
+.t-ADD{background:#e6d3bf;color:#7a3b1e}
 .mtag{display:inline-block;font-family:system-ui,sans-serif;font-size:.68rem;
   text-transform:uppercase;letter-spacing:.03em;padding:.05rem .35rem;border-radius:3px;
   margin-right:.35rem;vertical-align:.08em}
@@ -1420,11 +1478,13 @@ def build_edition(
         toc[page_nr] = (snip, passage is not None)
         _main, marg_lines = _split_marginalia(clean_lines)
         notes = _marg_notes(marg_lines)
-        if notes:
+        adds = _later_additions(clean_lines)
+        if notes or adds:
             marg_items.append({
                 "page": page_nr, "label": _FOLIO_SNIP.get(page_nr, ""),
                 "notes": [(n, *_marg_category(n)) for n in notes],
-                "imgs": _marg_crops(work_dir, out_dir, page_nr),
+                "adds": adds,
+                "imgs": _marg_crops(work_dir, out_dir, page_nr) if notes else [],
             })
 
     if marg_items:
