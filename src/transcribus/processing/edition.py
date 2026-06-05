@@ -178,12 +178,11 @@ _TABLE_CAPTIONS: dict[int, str] = {
 # ediční doplňky v hranatých závorkách). Editorský popis patří do poznámky pod tabulkou.
 _TABLE_HEADING_TX: dict[int, str] = {
     3: (
-        '<div class="ms-heading"><span class="ms-heading-label">Záhlaví tabule — přepis</span>'
-        "<i>Tabule dlúhosti Dne i Noci, vejchodu i poledne i západu [Slunce], spravování "
-        "Orloje obojího — celého i polovičního — kterak ten srovnán býti má podle jeho hodin, "
-        "a to přes celý rok položená, [pro] České zemně a k vyvýšení Polum L [= 50] graduů, "
-        "od někdy D. Thadeáše Hájka z Hájku před CXVI [= 116] lety vydaná, a nyní dle Nového "
-        "kalendáře spravena. Léta M·DC·LXXXIV [= 1684].</i></div>"
+        '<p class="ms-heading">Tabule dlúhosti Dne i Noci, vejchodu i poledne i západu '
+        "[Slunce], spravování Orloje obojího — celého i polovičního — kterak ten srovnán býti "
+        "má podle jeho hodin, a to přes celý rok položená, [pro] České zemně a k vyvýšení Polum "
+        "L [= 50] graduů, od někdy D. Thadeáše Hájka z Hájku před CXVI [= 116] lety vydaná, "
+        "a nyní dle Nového kalendáře spravena. Léta M·DC·LXXXIV [= 1684].</p>"
     ),
 }
 
@@ -887,9 +886,7 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .table-cap{font-family:system-ui,sans-serif;font-size:.85rem;margin:.2rem 0 .5rem}
 .table-cap .table-note{color:#8a7d63;font-weight:normal;font-size:.78rem}
 .table-cap .table-note.verified{color:#2f6b3a}
-.ms-heading{margin:.3rem 0 .6rem;padding:.5rem .7rem;border-left:3px solid #c9b88a;
-  background:#f7f2e6;line-height:1.5}
-.ms-heading i{color:#3a342a}
+.ms-heading{margin:.3rem 0 .7rem;line-height:1.55}
 .zod{font-variant-emoji:text;font-family:"Segoe UI Symbol","Noto Sans Symbols2","DejaVu Sans",
   "Apple Symbols",serif;color:#5a4a2a}
 .ms-heading-label{display:block;font-family:system-ui,sans-serif;font-size:.72rem;
