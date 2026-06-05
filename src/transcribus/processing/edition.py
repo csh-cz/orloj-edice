@@ -164,6 +164,11 @@ _TABLE_CAPTIONS: dict[int, str] = {
 
 # Deterministic verification (external computation / astronomy). See tools/verify_computus.py.
 _TABLE_VERIFY: dict[int, str] = {
+    3: "✓ rekonstrukce z ověřeného modelu (NE přepis jednotlivých buněk): Hájkova tabule "
+        "přesně sleduje geometrický výpočet pro Prahu (φ = 50°, nový kalendář). Časy zde plynou "
+        "z délky dne (východ = 12:00 − ½ délky dne; den + noc = 24:00), datum je vypočtené "
+        "(kdy té délky Praha dosáhne) — rukopis se s ním shoduje na ±1–2 dny (ověřeno na vzorku, "
+        "viz poznámka). Rukopisné orlojní (české) hodiny a svátky zde nejsou — ty čekají na tabulkový HTR.",
     50: "✓ ověřeno výpočtem: juliánská i gregoriánská nedělní písmena souhlasí s nezávislým "
         "výpočtem pro všech 28 let slunečního cyklu; gregoriánský sloupec platí pro 17. stol. "
         "(1583–1699), což zároveň datuje použitelnost tabulky.",
@@ -190,6 +195,7 @@ _TABLE_NOTE_SUMMARY: dict[int, str] = {
     55: "Metodická poznámka: jak časy vznikly (výpočet vs. pozorování, refrakce, drift)",
     60: "Jak tabule funguje a jak je ověřena (dekódování)",
     61: "Jak tabule funguje a jak je ověřena (gregoriánské dvojče f60)",
+    3: "Záhlaví tabule, původ (Tadeáš Hájek z Hájku), struktura a ověření",
 }
 
 _TABLE_NOTE_LONG: dict[int, str] = {
@@ -265,8 +271,11 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "odpovídají rozlišení 10minutového kroku. Den + noc = 24:00; o zimním slunovratu délka "
         "dne 7:50, noci 16:10, východ 8:05 — přesně vypočtené hodnoty pro Prahu. <b>Hájkova "
         "tabule je tím potvrzena jako geometrický výpočet pro Prahu</b> (shodně s otiskem u "
-        "fol. 55). Úplný přepis všech ~50 kroků (a zrcadlové druhé půle roku) je připraven jako "
-        "navazující krok.</p>"
+        "fol. 55). <b>Tabulka níže je rekonstrukce tohoto ověřeného modelu</b> — všech 51 kroků "
+        "délky dne (zima → léto) s časy plynoucími přesně z délky dne a s vypočteným datem; "
+        "rukopis se s ním shoduje (datum ±1–2 dny, časy ±1 min). <b>Není to přepis jednotlivých "
+        "rukopisných buněk</b>: rukopisné orlojní (české) hodiny, kalendářní data a jména svatých "
+        "po buňkách (i zrcadlová druhá půle roku) čekají na tabulkový HTR (Titan).</p>"
     ),
     55: (
         "<p>Porovnali jsme tuto tabuli s nezávislým astronomickým výpočtem východu Slunce "
@@ -595,9 +604,10 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
     ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)", "partial",
-     "f2 nevyplněná předtištěná tabule; f3 = perpetuální tabule po krocích délky dne (zdroj: "
-     "Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — záhlaví + struktura přepsány, spojnice "
-     "délka dne→datum ověřena výpočtem pro Prahu; úplný přepis ~50 kroků zbývá"),
+     "f2 nevyplněná předtištěná tabule; f3 = perpetuální tabule po krocích délky dne (Tadeáš "
+     "Hájek z Hájku, pól 50°, nový kalendář) — záhlaví, struktura i 51řádková mřížka (délka "
+     "dne/noci, východ/poledne/západ + vyp. datum) renderovány jako rekonstrukce ověřeného "
+     "modelu; rukopisné orlojní hodiny + svátky po buňkách čekají na tabulkový HTR"),
     ("f4", "latinský epigram (sedm pahorků pražských)", "done",
      "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
@@ -639,11 +649,11 @@ def _status_html() -> str:
         '<table class="status"><caption>Stav zpracování (průběžně aktualizováno)</caption>'
         "<thead><tr><th>folia</th><th>část knihy</th><th>stav</th><th>zbývá</th></tr></thead>"
         f"<tbody>{rows}</tbody></table>"
-        '<p class="status-note"><b>Co v knize ještě chybí:</b> f3 (úplný přepis ~50 kroků '
-        "Hájkovy tabule délky dne — struktura a původ hotové), f31–42 (diplomatická kontrola "
-        "Táborského po řádcích), f54 (německý komputistický návod), f58/59 (Tabula festorum "
-        "mobilium) a f66 (epakty po dnech) — husté číselné mřížky k přepisu (ideálně tabulkovým "
-        "HTR). Prázdné/předsádky: f1, f2, f81.</p>"
+        '<p class="status-note"><b>Co v knize ještě chybí:</b> f31–42 (diplomatická kontrola '
+        "Táborského po řádcích), f54 (plný německý návod), f58/59 (Tabula festorum mobilium) a "
+        "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 má "
+        "renderovanou rekonstrukci ověřeného modelu; rukopisné orlojní hodiny + svátky též "
+        "čekají na HTR.) Prázdné/předsádky: f1, f2, f81.</p>"
     )
 
 
