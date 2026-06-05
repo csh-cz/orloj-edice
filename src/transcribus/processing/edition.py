@@ -1006,8 +1006,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "f3</b> (kopista r. 1684 list nadepsal a nalinkoval, vyplnil až f3); f3 = symetrická "
      "perpetuální tabule po krocích délky dne (Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — "
      "přepsána věrně a kompletně: jarní i podzimní blok (měsíc, den, svátek, vstupy Slunce) čteny "
-     "ze skenu, časy ověřeny výpočtem; německý návod k užití této tabule je dole na f54 (≈ 1684, "
-     "patrně táž ruka); jen několik méně zřetelných jmen [?]"),
+     "ze skenu, časy ověřeny výpočtem; německý návod k užití této tabule je dole na f54 (vznik "
+     "po r. 1684, ale jiná — německy píšící — ruka, ne český kopista tabule); jen několik méně "
+     "zřetelných jmen [?]"),
     ("f4", "latinský epigram (sedm pahorků pražských)", "done",
      "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
