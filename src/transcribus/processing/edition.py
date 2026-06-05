@@ -174,6 +174,46 @@ _TABLE_CAPTIONS: dict[int, str] = {
     69: "Malá násobilka (pythagorejská tabule) — trojúhelníková, součiny 2×2 až 10×10.",
 }
 
+# Stručné popisky do seznamu folií (úvodní strana). Mají přednost před incipitem ze
+# surového HTR, který u zpracovaných folií ukazoval staré chyby. Próza f5–49 zůstává
+# na incipitu (rozpoznaný text), strukturovaná folia dostávají kurátorský popis.
+_FOLIO_SNIP: dict[int, str] = {
+    2: "Předtištěná (z větší části nevyplněná) tabule pro zpravování orloje",
+    3: "Hájkova perpetuální tabule délky dne, východu, poledne a západu Slunce (jaro/podzim, nový kalendář)",
+    4: "Latinský epigram o sedmi pražských pahorcích („Praha jako nový Řím“)",
+    50: "Tabule nedělního písmene (Litera Dominicalis), 28letý sluneční cyklus",
+    51: "List purkmistrů 1410 — německy (opsáno 1628)",
+    52: "List purkmistrů 1410 — německy (pokrač.)",
+    53: "List purkmistrů 1410 — dobový český překlad",
+    54: "List purkmistrů — český překlad; německý návod přepočtu hodin",
+    55: "Tabule východu Slunce (obecné hodiny) pro každý den a měsíc",
+    56: "Tabule nedělního písmene — duplikát fol. 50",
+    57: "Tabule epakt (Tabula Epactarum) podle zlatého počtu",
+    58: "Tabule pohyblivých svátků (Festa mobilia), nový kalendář",
+    59: "Tabule pohyblivých svátků (pokrač.)",
+    60: "Tabule intervalu juliánských Velikonoc (zlatý počet × nedělní písmeno)",
+    61: "Tabule intervalu gregoriánských Velikonoc (dvojče fol. 60)",
+    62: "O slunečním cyklu (28letém) — jak najít nedělní písmeno",
+    63: "Výpočet ve starém i novém kalendáři (pokrač.)",
+    64: "O zlatém počtu — 19letý lunární cyklus",
+    65: "Ukazatel nového měsíce — návodná próza",
+    66: "Tabule epakt / novoluní po dnech roku",
+    67: "Komputus na prstech — délka měsíců (31/30/29 dní)",
+    68: "Nalezení nového a plného měsíce — výpočet z epakt",
+    69: "Malá násobilka (pythagorejská tabule)",
+    70: "Astrolabium parvum (Táborský, ~1570) — úvod a návod",
+    71: "Astrolabium parvum — návod (pokrač.)",
+    72: "Astrolabium parvum — návod (pokrač.)",
+    73: "Astrolabium parvum — návod (pokrač.)",
+    74: "Astrolabium parvum — návod (pokrač.)",
+    75: "Astrolabium parvum — návod (pokrač.)",
+    76: "Astrolabium parvum — návod (pokrač.)",
+    77: "Astrolabium parvum — návod (pokrač.)",
+    78: "Astrolabium parvum — návod (pokrač.)",
+    79: "Astrolabium parvum — návod (závěr)",
+    80: "Dva latinské epigramy (Pythagoras, Archimedes) + nákres pravoúhlého trojúhelníku",
+}
+
 # Věrný přepis rukopisného záhlaví tabule — renderuje se NAD tabulkou (HTML, kurzíva,
 # ediční doplňky v hranatých závorkách). Editorský popis patří do poznámky pod tabulkou.
 _TABLE_HEADING_TX: dict[int, str] = {
@@ -1089,9 +1129,14 @@ def build_edition(
             clean_lines=clean_lines, embed_scan=embed_scan, table_page=is_tbl,
         )
         (out_dir / f"p{page_nr:04d}.html").write_text(doc, encoding="utf-8")
-        snip = (plain[:80] + "…") if plain else (
-            "[tabulka]" if (tables or is_tbl) else ("[vyobrazení]" if fig_names else "[prázdná]")
-        )
+        snip = _FOLIO_SNIP.get(page_nr)
+        if not snip:
+            if tables or is_tbl:
+                snip = _TABLE_CAPTIONS.get(page_nr, "[tabulka]")
+            elif plain:
+                snip = plain[:80] + "…"
+            else:
+                snip = "[vyobrazení]" if fig_names else "[prázdná]"
         toc[page_nr] = (snip, passage is not None)
 
     index = out_dir / "index.html"
