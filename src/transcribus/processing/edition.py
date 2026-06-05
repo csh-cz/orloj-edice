@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from pathlib import Path
 
 from transcribus.processing.normalize import normalize_text
@@ -798,9 +799,17 @@ _STATUS_BADGE = {
 }
 
 
+def _status_first_page(fol: str) -> str:
+    """Page link for a status-row folio range, e.g. 'f5–f12' -> 'p0005.html'."""
+    m = re.search(r"\d+", fol)
+    return f"p{int(m.group()):04d}.html" if m else ""
+
+
 def _status_html() -> str:
     rows = "".join(
-        f"<tr><td>{_esc(fol)}</td><td>{_esc(part)}</td>"
+        f'<tr data-href="{_status_first_page(fol)}">'
+        f'<td><a href="{_status_first_page(fol)}">{_esc(fol)}</a></td>'
+        f"<td>{_esc(part)}</td>"
         f"<td>{_STATUS_BADGE.get(st, _esc(st))}</td><td>{_esc(rest)}</td></tr>"
         for fol, part, st, rest in _STATUS_ROWS
     )
@@ -935,6 +944,7 @@ Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní odd
 Označeno {n_teige} z {len(pages)} folií. Hranice oddílů jsou odvozené automaticky (heuristika).</p>
 {"".join(blocks)}</main>
 <footer>{len(pages)} folií. Diplomatická edice z Transkribus HTR.</footer>
+<script>document.querySelectorAll('.status tbody tr[data-href]').forEach(function(tr){{tr.addEventListener('click',function(e){{if(e.target.closest('a'))return;location.href=tr.dataset.href;}});}});</script>
 </body></html>"""
 
 
@@ -1029,6 +1039,10 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .status th,.status td{border:1px solid #cdbf9f;padding:.3rem .55rem;text-align:left;vertical-align:top}
 .status th{background:#efe7d3}
 .status tbody tr:nth-child(even){background:#faf6ec}
+.status tbody tr[data-href]{cursor:pointer}
+.status tbody tr[data-href]:hover{background:#f0e6c8}
+.status td a{color:#7a5c2e;text-decoration:none;font-weight:600}
+.status td a:hover{text-decoration:underline}
 .status .b-done{color:#2e7d32;font-weight:bold;white-space:nowrap}
 .status .b-partial{color:#b8860b;font-weight:bold;white-space:nowrap}
 .status .b-todo{color:#a3332b;font-weight:bold;white-space:nowrap}
