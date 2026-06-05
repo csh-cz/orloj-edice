@@ -29,8 +29,10 @@ SPDX-License-Identifier: EUPL-1.2
       přepis čeká na Titan / expertní čtení.
 - [ ] **Zbývající husté mřížky — k tabulkovému HTR (Titan), NE ruční odhad** (struktura i
       správnost ověřeny, ale jednotlivé buňky gotické mřížky nelze po oku číst publikovatelně):
-  - [ ] **f3** — úplný cell-grid (datum · délka dne/noci · východ/poledne/západ v orlojních
-        i obecných hodinách); struktura, původ (Hájek) i páteř ověřeny — chybí jen přepis buněk.
+  - [~] **f3** — délka dne/noci, východ/poledne/západ + **datum čtené ze skenu** (sloupec
+        „Datum (rukopis)“) křížově ověřené svátky a výpočtem (33/51 řádků se od výpočtu liší →
+        důkaz, že je čteno, ne generováno); [?] = nejisté čtení. **Chybí**: rukopisné orlojní
+        (české) hodiny, poloha Slunce a plná jména svatých po buňkách → tabulkový HTR (Titan).
   - [ ] **f58 + f59** — Tabula Festorum Mobilium (pohyblivé svátky; rekonstruovatelné z Velikonoc).
   - [ ] **f66** — epakty/novoluní po dnech roku.
   - [ ] **f61** — úplný cell-grid (princip dekódován; dořešit registraci epakty 25/XXV).
