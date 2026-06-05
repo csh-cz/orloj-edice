@@ -784,10 +784,14 @@ přidávají</b>:
 <br>• <b>fol. 22 — přestavba měsíční koule:</b> „<i>Nyní jest to jinače spraveno a lehčeji, neboť
 žádných koleček není, které by měsícem hýbali… nežli vnitř v tlustosti měsíce jest příprava dosti
 sprostá, však předce dosti trefně vymyšlená, tak že samým otočováním se měsíce po sféře v 24
-hodinách corpus lunae o 1 grad se pohne, a v 30 dnech celý se obrátí…</i>“ — pozdější správce zde
+hodinách corpus lunae o 1 grad se pohne, a v 30 dnech celý se obrátí…</i>“ — pisatel zde
 dokládá, že <b>původní soukolíový pohon měsíce (popsaný Táborským) byl nahrazen jednodušším
 mechanismem uvnitř tělesa měsíce</b>. To je <b>doklad reálné konstrukční změny orloje</b>, jaký
-Táborského text nemá.
+Táborského text nemá. <b>Písmo se shoduje s přípiskem na fol. 38</b> (týž smyčkový duktus, totéž
+mísení češtiny a latiny: <i>corpus lunae</i> × <i>vide … sub figura 4</i>) — jsou to <b>jediné dvě
+pozdější vsuvky v knize a táž ruka</b>, totiž <b>Mikuláš Petr (~1628)</b>. Slovem „<i>nyní</i>“ to
+<b>datuje přestavbu měsíce: byla hotová už k r. 1628</b> (proběhla tedy mezi Táborského popisem
+/~1570, opis 1587/ a r. 1628).
 <br>• <b>fol. 38 — autorství a List purkmistra:</b> „<i>… léta 1410 … ten orloj … dělal … vide
 list purkm[istra] … origl., sub figura 4</i>“ — proti Táborského dataci „mistr Hanuš okolo 1490“
 tu pisatel <b>odkazuje na List purkmistra</b> (Littera Maior), totiž na <b>opis z r. 1628 původní
