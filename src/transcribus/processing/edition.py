@@ -88,7 +88,7 @@ def _zodiac_textstyle(s: str) -> str:
 
 # Folia, jejichž jazyk NENÍ čeština (latina, němčina) — česká normalizace by je zkomolila
 # (g→j apod.), takže se u nich „normalizovaný" pohled rovná diplomatickému.
-_NO_NORMALIZE: frozenset[int] = frozenset({4, 51, 52, 80})
+_NO_NORMALIZE: frozenset[int] = frozenset({4, 51, 52, 54, 80})
 
 
 def _line_html(line: str, *, normalize: bool = True) -> str:
@@ -779,8 +779,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "cyklus solaris → nedělní písmeno (jul./greg.), 28 řádků, ověřeno vzorcem"),
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "partial",
-     "český překlad hotov; německý návod na f54 (přepočet německé↔orlojní hodiny) — český souhrn "
-     "doplněn, strojový DE základ (PyLaia) mimo edici, plný diplomatický DE přepis čeká na Titan"),
+     "český překlad hotov; německý návod na f54 (přepočet německé↔orlojní hodiny) přepsán "
+     "(čtení nejisté, ale čísla i strukturu potvrzuje příklad na 3. 5. shodný s f3) + český "
+     "překlad; přesné německé znění spojovacích vět čeká na expertní revizi"),
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641)", "partial",
      "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera), "
      "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
@@ -818,7 +819,7 @@ def _status_html() -> str:
         "<thead><tr><th>folia</th><th>část knihy</th><th>stav</th><th>zbývá</th></tr></thead>"
         f"<tbody>{rows}</tbody></table>"
         '<p class="status-note"><b>Co v knize ještě chybí:</b> f31–42 (diplomatická kontrola '
-        "Táborského po řádcích), f54 (plný německý návod), f58/59 (Tabula festorum mobilium) a "
+        "Táborského po řádcích), f58/59 (Tabula festorum mobilium) a "
         "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 je "
         "přepsáno věrně a kompletně včetně jarních i podzimních svátků a měsíců.) "
         "Prázdné/předsádky: f1, f2, f81.</p>"

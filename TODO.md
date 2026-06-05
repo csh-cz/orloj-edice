@@ -24,9 +24,11 @@ SPDX-License-Identifier: EUPL-1.2
 - [x] **f61 (Tabula intervalli Gregoriana)** — **DEKÓDOVÁNO** (gregoriánské dvojče f60): první
       číslo = týden gregoriánských Velikonoc, ověřeno 191/210 buněk; zbytek = zóna epakty 25/XXV
       (přesné přiřazení řádků k dořešení na originále).
-- [~] **f54** — německý komputistický návod (přepočet německé↔orlojní hodiny): **český souhrn
-      v edici**, strojový DE základ (PyLaia German Kurrent) mimo edici; plný diplomatický DE
-      přepis čeká na Titan / expertní čtení.
+- [~] **f54** — německý komputistický návod (přepočet německé↔orlojní hodiny): **přepsán
+      v edici** (čtení ze skenu + PyLaia German Kurrent jako základ) **i s českým překladem**;
+      strukturu i všechna čísla potvrzuje vložený příklad na 3. 5. (východ 4:48 → poledne české
+      16:48 → východ český 9:36 → délka dne 14:24), shodný s tabulí f3. Zbývá jen **expertní
+      revize přesného německého znění** spojovacích vět ([?]/[…]).
 - [ ] **Zbývající husté mřížky — k tabulkovému HTR (Titan), NE ruční odhad** (struktura i
       správnost ověřeny, ale jednotlivé buňky gotické mřížky nelze po oku číst publikovatelně):
   - [x] **f3** — přepsáno věrně a **kompletně** jako **symetrická tabule délky dne**: jarní blok
