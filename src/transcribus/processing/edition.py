@@ -670,6 +670,9 @@ def _marg_crops(work_dir: Path, out_dir: Path, page_nr: int) -> list[str]:
                 bands.append((s, y))
         else:
             y += 1
+    # Drop bands in the top margin: that is the later pencil foliation (leaf number),
+    # not a marginal gloss. Marginal notes align with the text block (starts ~y 420).
+    bands = [(a, b) for (a, b) in bands if y0 + a >= 410]
     d = out_dir / "img" / "marg"
     d.mkdir(parents=True, exist_ok=True)
     paths: list[str] = []
