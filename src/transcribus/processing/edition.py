@@ -161,6 +161,19 @@ _TABLE_CAPTIONS: dict[int, str] = {
     69: "Malá násobilka (pythagorejská tabule) — trojúhelníková, součiny 2×2 až 10×10.",
 }
 
+# Věrný přepis rukopisného záhlaví tabule — renderuje se NAD tabulkou (HTML, kurzíva,
+# ediční doplňky v hranatých závorkách). Editorský popis patří do poznámky pod tabulkou.
+_TABLE_HEADING_TX: dict[int, str] = {
+    3: (
+        '<div class="ms-heading"><span class="ms-heading-label">Záhlaví tabule — přepis</span>'
+        "<i>Tabule dlúhosti Dne i Noci, vejchodu i poledne i západu [Slunce], spravování "
+        "Orloje obojího — celého i polovičního — kterak ten srovnán býti má podle jeho hodin, "
+        "a to přes celý rok položená, [pro] České zemně a k vyvýšení Polum L [= 50] graduů, "
+        "od někdy D. Thadeáše Hájka z Hájku před CXVI [= 116] lety vydaná, a nyní dle Nového "
+        "kalendáře spravena. Léta M·DC·LXXXIV [= 1684].</i></div>"
+    ),
+}
+
 
 # Deterministic verification (external computation / astronomy). See tools/verify_computus.py.
 _TABLE_VERIFY: dict[int, str] = {
@@ -195,7 +208,7 @@ _TABLE_NOTE_SUMMARY: dict[int, str] = {
     55: "Metodická poznámka: jak časy vznikly (výpočet vs. pozorování, refrakce, drift)",
     60: "Jak tabule funguje a jak je ověřena (dekódování)",
     61: "Jak tabule funguje a jak je ověřena (gregoriánské dvojče f60)",
-    3: "Záhlaví tabule, původ (Tadeáš Hájek z Hájku), struktura a ověření",
+    3: "Rozbor tabule: původ (Tadeáš Hájek z Hájku), datace, význam sloupců a ověření",
 }
 
 _TABLE_NOTE_LONG: dict[int, str] = {
@@ -228,14 +241,8 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "tabule jsou tím ale potvrzeny.</p>"
     ),
     3: (
-        "<p><b>Záhlaví tabule — věrný přepis.</b> Přepisové znění je kurzívou, ediční doplňky "
-        "v hranatých závorkách: „<i>Tabule dlúhosti Dne i Noci, vejchodu i poledne i západu "
-        "[Slunce], spravování Orloje obojího — celého i polovičního — kterak ten srovnán býti "
-        "má podle jeho hodin, a to přes celý rok položená, [pro] České zemně [= Českou zemi] a "
-        "k vyvýšení Polum L [= 50] graduů, od někdy D. Thadeáše Hájka z Hájku před CXVI [= 116] "
-        "lety vydaná, a nyní dle Nového kalendáře spravena. Léta M·DC·LXXXIV [= 1684].</i>“ "
-        "(Jednotlivá slova zůstávají ke kontrole na originále.)</p>"
-        "<p><b>Co záhlaví říká.</b> „Orloj <b>celý i poloviční</b>“ jsou dvě počítání hodin, "
+        "<p><b>Co záhlaví říká</b> (jeho věrný přepis je nad tabulkou). „Orloj "
+        "<b>celý i poloviční</b>“ jsou dvě počítání hodin, "
         "jež tabule podává vedle sebe a jež nesou i nadpisy číselných sloupců: <b>celý orloj</b> "
         "= české (orlojní) hodiny počítané od západu Slunce přes celých 24 h, <b>poloviční</b> = "
         "obecné hodiny. „<i>Polum L graduů</i>“ = výška pólu 50° (Praha). Klíčové pro dataci: "
@@ -558,18 +565,24 @@ def _page_doc(
                 page_nr, "přepis z rukopisu; číselné hodnoty ke kontrole proti skenu."
             )
             vcls = "table-note verified" if note.startswith("✓") else "table-note"
-            head = (
+            heading_tx = _TABLE_HEADING_TX.get(page_nr)
+            editorial = (
                 f'<p class="table-cap"><b>{_esc(cap)}</b> '
                 f'<span class="{vcls}">— {_esc(note)}</span></p>'
                 if cap else ""
             )
+            if heading_tx:
+                # Přepis záhlaví NAD tabulku; editorský popis dolů do poznámky.
+                head, note_lead = heading_tx, editorial
+            else:
+                head, note_lead = editorial, ""
             body_regions = head + "".join(_table_html(t) for t in tables)
             long_note = _TABLE_NOTE_LONG.get(page_nr)
-            if long_note:
+            if long_note or note_lead:
                 summ = _TABLE_NOTE_SUMMARY.get(page_nr, "Metodická poznámka — rozbor a ověření")
                 body_regions += (
                     f'<details class="method-note"><summary>{_esc(summ)}</summary>'
-                    f"{long_note}</details>"
+                    f"{note_lead}{long_note or ''}</details>"
                 )
         elif table_page:
             link = (
@@ -860,6 +873,11 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .table-cap{font-family:system-ui,sans-serif;font-size:.85rem;margin:.2rem 0 .5rem}
 .table-cap .table-note{color:#8a7d63;font-weight:normal;font-size:.78rem}
 .table-cap .table-note.verified{color:#2f6b3a}
+.ms-heading{margin:.3rem 0 .6rem;padding:.5rem .7rem;border-left:3px solid #c9b88a;
+  background:#f7f2e6;line-height:1.5}
+.ms-heading i{color:#3a342a}
+.ms-heading-label{display:block;font-family:system-ui,sans-serif;font-size:.72rem;
+  text-transform:uppercase;letter-spacing:.04em;color:#8a7d63;margin-bottom:.25rem}
 .method-note{margin:.7rem 0;font-family:system-ui,sans-serif;font-size:.82rem;line-height:1.5;
   background:#eaf3ec;border-left:3px solid #2f6b3a;border-radius:3px;padding:.2rem .7rem}
 .method-note summary{cursor:pointer;font-weight:600;color:#2f6b3a;padding:.35rem 0}
