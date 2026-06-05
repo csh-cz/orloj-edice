@@ -1060,7 +1060,7 @@ def _status_html() -> str:
         "<thead><tr><th>folia</th><th>část knihy</th><th>stav</th><th>zbývá</th></tr></thead>"
         f"<tbody>{rows}</tbody></table>"
         '<p class="status-note"><b>Co v knize ještě chybí:</b> f31–42 (diplomatická kontrola '
-        "Táborského po řádcích), f58/59 (Tabula festorum mobilium) a "
+        "Táborského po řádcích), f58/59 (Tabula festorum mobilium), f61 (intervallum greg.) a "
         "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 je "
         "přepsáno věrně a kompletně včetně jarních i podzimních svátků a měsíců.) "
         "Prázdné/předsádky: f1, f2, f81.</p>"
