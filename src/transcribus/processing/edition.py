@@ -1006,9 +1006,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "f3</b> (kopista r. 1684 list nadepsal a nalinkoval, vyplnil až f3); f3 = symetrická "
      "perpetuální tabule po krocích délky dne (Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — "
      "přepsána věrně a kompletně: jarní i podzimní blok (měsíc, den, svátek, vstupy Slunce) čteny "
-     "ze skenu, časy ověřeny výpočtem; německý návod k užití této tabule je dole na f54 (vznik "
-     "po r. 1684, ale jiná — německy píšící — ruka, ne český kopista tabule); jen několik méně "
-     "zřetelných jmen [?]"),
+     "ze skenu, časy ověřeny výpočtem; německý návod, jak takovou tabuli užít, je dole na f54 — "
+     "ale ten platí pro f3 i f55 (tytéž hodnoty), vznikl až po tabuli (≥1641) a je rukou "
+     "pozdějšího, německy mluvícího orlojníka; jen několik méně zřetelných jmen [?]"),
     ("f4", "latinský epigram (sedm pahorků pražských)", "done",
      "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
@@ -1152,7 +1152,8 @@ def _index_doc(
         "opisem</b> (ruka <b>A</b> — Matouš Carchesius Jablonský, 1587: Táborského Zpráva fol. "
         "5–49 i Astrolabium parvum fol. 70–79); pozdější vrstvy přibývaly do volných míst jinými "
         "rukama (německý List purkmistra fol. 51–52, 1628; komputus fol. 50 a 55–69, ~1641; "
-        "přední Hájkova tabule fol. 3 a německý přípisek dole na fol. 54, ~1684; latinské "
+        "přední Hájkova tabule fol. 3 (1684) a německý návod k tabuli východu dole na fol. 54 "
+        "(pozdější, ≥1641); latinské "
         "epigramy fol. 4 a 80). <b>Glosy na okrajích fol. 13–46</b> (hesla „<i>Index Solis</i>“, "
         "„<i>declinatio solis</i>“, „<i>Linea oppositionis/coniunctionis</i>“, „Solstitium "
         "letní/zimní“, „O pušce“, „Srovnání obojí počtuov“ ad.) přisuzujeme <b>téže ruce A</b> — "
