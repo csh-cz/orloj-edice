@@ -142,7 +142,7 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
 # Popisky tabulkových folií (z hlaviček; data zatím nepřepsána). Komputistický aparát.
 _TABLE_CAPTIONS: dict[int, str] = {
     2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — předtištěná (z větší části nevyplněná) tabule pro zpravování orloje.",
-    3: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu Slunce (z celého i polovičního orloje) — kompaktní perpetuální tabule po krocích délky dne á 10 min (zima→léto). Dle záhlaví od Tadeáše Hájka z Hájku, pro výšku pólu 50° (Praha), nový kalendář (opis ≈ 1684); spojnice délka dne→datum ověřena geometrickým výpočtem pro Prahu.",
+    3: "Perpetuální tabule délky dne i noci, východu, poledne a západu Slunce v orlojních (českých) i obecných hodinách — po 10min krocích délky dne od zimního k letnímu slunovratu; symetrická (jaro vlevo, podzim vpravo). Podle záhlaví od Tadeáše Hájka z Hájku, výška pólu 50° (Praha), nový kalendář; opis ≈ 1684.",
     50: "Tabula, ex qua Litera Dominicalis desumitur in ingressu cum Cyclo Solari („N. I”) — nedělní písmeno pro každý rok 28letého slunečního cyklu, juliánské i gregoriánské.",
     55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
     56: "Tabula, ex qua Litera Dominicalis desumitur („N. I”) — duplikát tabule z fol. 50 (nedělní písmeno, juliánské i gregoriánské).",
@@ -164,17 +164,11 @@ _TABLE_CAPTIONS: dict[int, str] = {
 
 # Deterministic verification (external computation / astronomy). See tools/verify_computus.py.
 _TABLE_VERIFY: dict[int, str] = {
-    3: "✓ věrný přepis ze skenu včetně záhlaví. Sloupce nesou <b>rukopisné nadpisy</b>: „Dnové "
-        "měsíců“ (den), „Svátkové Posle kalendáře“ (svátek), „Dlúhost dne“, „Slunce celého "
-        "orloje“ a „Slunce na díl orloje“ (východ Slunce v českých /orlojních/ a v obecných "
-        "hodinách), „Poledne celého orloje“, „Západ celého orloje“ — vlevo pro jarní, vpravo pro "
-        "podzimní polovinu roku (táž délka dne nastává dvakrát). V buňkách je <b>jen přepis</b> "
-        "(jména svatých a zápis „Slunce na [znamení]“); ediční výklad — názvy znamení, "
-        "slunovraty/rovnodennosti, vysvětlení českých hodin — je oddělen v poznámce pod tabulkou. "
-        "Jména ověřena proti kalendáři (Anežka 21. 1., Benedikt 21. 3., Vojtěch 23. 4., Žikmund "
-        "2. 5., Václav 28. 9., Diviš 9. 10. …); <b>[?]</b> = nejisté čtení, jež se s žádným svatým "
-        "k danému dni neshoduje. Časové sloupce souhlasí s přepočtem do minuty (rovnodennost: "
-        "dlúhost dne 12:00, východ obecný 6:00, poledne české 18:00; ověřeno ve verify_computus).",
+    3: "✓ věrný přepis ze skenu včetně rukopisných nadpisů sloupců. V buňkách je jen přepis "
+        "(jména svatých v genitivu a zápis „Slunce na [znamení]“). Jména ověřena proti kalendáři; "
+        "[?] = nejisté čtení, jež se s žádným svatým k danému dni neshoduje. Časové sloupce "
+        "souhlasí s přepočtem do minuty. Plný přepis záhlaví, význam sloupců, legenda znamení a "
+        "vysvětlení českých hodin jsou v poznámce pod tabulkou.",
     50: "✓ ověřeno výpočtem: juliánská i gregoriánská nedělní písmena souhlasí s nezávislým "
         "výpočtem pro všech 28 let slunečního cyklu; gregoriánský sloupec platí pro 17. stol. "
         "(1583–1699), což zároveň datuje použitelnost tabulky.",
@@ -234,12 +228,21 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "tabule jsou tím ale potvrzeny.</p>"
     ),
     3: (
-        "<p><b>Záhlaví tabule (přepis).</b> „<i>Tabule dlúhosti dne i noci, vejchodu, poledne "
-        "i západu, obojího — celého i polovičného [orloje] — kterak ten srovnán býti má podle "
-        "spravování orloje a jeho hodin, a to přes celý rok položená, [pro českou(?)] zemi a "
-        "k vyvýšení Polum L [= 50] graduů, od někdy D. Tadeáše Hájka z Hájku před LXVI [= 66] "
-        "lety vydaná, a nyní dle nového kalendáře spravena. Léta M.DC.LXXXIV [≈ 1684].</i>“ "
-        "(Jednotlivá slova úvodu a čtení letopočtu jsou ke kontrole na originále.)</p>"
+        "<p><b>Záhlaví tabule — věrný přepis.</b> Přepisové znění je kurzívou, ediční doplňky "
+        "v hranatých závorkách: „<i>Tabule dlúhosti Dne i Noci, vejchodu i poledne i západu "
+        "[Slunce], spravování Orloje obojího — celého i polovičního — kterak ten srovnán býti "
+        "má podle jeho hodin, a to přes celý rok položená, [pro] České zemně [= Českou zemi] a "
+        "k vyvýšení Polum L [= 50] graduů, od někdy D. Thadeáše Hájka z Hájku před CXVI [= 116] "
+        "lety vydaná, a nyní dle Nového kalendáře spravena. Léta M·DC·LXXXIV [= 1684].</i>“ "
+        "(Jednotlivá slova zůstávají ke kontrole na originále.)</p>"
+        "<p><b>Co záhlaví říká.</b> „Orloj <b>celý i poloviční</b>“ jsou dvě počítání hodin, "
+        "jež tabule podává vedle sebe a jež nesou i nadpisy číselných sloupců: <b>celý orloj</b> "
+        "= české (orlojní) hodiny počítané od západu Slunce přes celých 24 h, <b>poloviční</b> = "
+        "obecné hodiny. „<i>Polum L graduů</i>“ = výška pólu 50° (Praha). Klíčové pro dataci: "
+        "„<b>před CXVI [116] lety vydaná</b> … Léta 1684“ → původní Hájkova tabule vyšla "
+        "<b>1684 − 116 = roku 1568</b>, tj. za Hájkova života (zemřel 1600) a v jeho době "
+        "vydávaných minucí; tento list je pozdější <b>opis z roku 1684</b>. (Dřívější čtení "
+        "„LXVI/66“ bylo mylné.)</p>"
         "<p><b>Tady rukopis sám jmenuje původ tabulky.</b> Tabule délky dne / východu / "
         "poledne / západu Slunce je <b>od „někdy“ (tj. nebožtíka) Dr. Tadeáše Hájka z Hájku</b> "
         "(<i>Thaddaeus Hagecius ab Hayek</i>, ~1525–1600, přední pražský astronom, lékař "
@@ -251,17 +254,15 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "Pozor však: fol. 55 je z <b>jiné, starší vrstvy (~1641)</b> než tento opis (~1684), "
         "takže pro fol. 55 jde o <b>slučitelnost a důvodný předpoklad</b>, ne o tutéž doloženou "
         "atribuci.</p>"
-        "<p><b>Datace a otevřená otázka chronologie.</b> Záhlaví klade vznik <b>po Hájkově "
-        "smrti (1600)</b>: označení „<i>od někdy</i>“ před jménem znamená „nebožtík“ (lat. "
-        "<i>quondam</i>), a „dle <i>nového</i> kalendáře“ pak po r. 1584. Letopočet se čte jako "
-        "„<i>M·DC·LXXXIV</i>“, tj. <b>≈ 1684</b> (čtení k ověření na originále). To je v "
-        "<b>napětí s předpokladem, že zápisy v orlojní knize jdou striktně chronologicky</b> "
-        "(f3 je přední list, fyzicky před Táborského opisem 1587). Nejpravděpodobnější smíření: "
-        "přední listy (fol. 2–3) jsou <b>referenční tabule dopsané na volné přední listy "
-        "později</b> než hlavní sekvence — běžný jev, který chronologii hlavního korpusu "
-        "neruší. Rozhodující ověření (čeká na ohledání originálu): zda je <b>ruka a inkoust "
-        "fol. 3 odlišná</b> od datovaných vrstev (Táborský 1587, komputus ~1641). Původní "
-        "Hájkův výpočet tak jako tak spadá do konce 16. století.</p>"
+        "<p><b>Datace.</b> Dvě vrstvy se nyní pěkně srovnají: <b>původní Hájkova tabule = 1568</b> "
+        "(1684 − 116), tedy za jeho života a v době jím vydávaných minucí; <b>tento list = opis "
+        "z roku 1684</b>. Tomu odpovídají i obraty v záhlaví: „<i>od někdy</i>“ (= nebožtík, lat. "
+        "<i>quondam</i>) před jménem dává smysl z pohledu opisovače r. 1684 (Hájek dávno mrtev), "
+        "„dle <i>nového</i> kalendáře spravena“ pak řadí úpravu po gregoriánské reformě (1584). "
+        "List je <b>přední</b> (fyzicky před Táborského opisem 1587), ale fakticky <b>dopsán na "
+        "volný přední list později</b> — běžný jev, který chronologii hlavního korpusu neruší. "
+        "K ověření na originále zůstává čtení letopočtu a zda je ruka/inkoust fol. 3 odlišná od "
+        "datovaných vrstev (Táborský 1587, komputus ~1641).</p>"
         "<p><b>Struktura — kompaktní perpetuální tabule po krocích délky dne, symetrická.</b> "
         "Tabule není řazená po všech 365 dnech, nýbrž po <b>krocích délky dne á 10 minut</b>: "
         "každý řádek udává jednu délku dne (7:50 v zimě, 8:00, 8:10 … až 16:10 v létě). Protože "

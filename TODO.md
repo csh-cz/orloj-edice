@@ -49,11 +49,11 @@ SPDX-License-Identifier: EUPL-1.2
 ## ✅ Zdroj slunečních tabulek NALEZEN — v samotném rukopise (záhlaví f3)
 Záhlaví f3 přímo jmenuje původ: tabule délky dne/východu/poledne/západu je „**od někdy
 D. Tadeáše Hájka z Hájku** … k vyvýšení **Polum L [= 50] graduů** … dle **nového kalendáře**
-spravena, **Léta M.DC.LXXXIV [≈ 1684]**“ (vydaná „před 66 lety“). Tj. **Tadeáš Hájek z Hájku**
-(†1600), Praha, pól 50°, gregoriánský kalendář — což přesně potvrzuje nezávislý otisk u f55.
-- [ ] Ověřit na originále čtení letopočtu (1674/1684) a údaje „před LXVI (66) lety“ (drobné napětí
-      s Hájkovým úmrtím 1600 → pravděpodobně opis převzal i hlavičku staršího tištěného vydání).
-- [ ] Přepsat číselnou mřížku f3 (365 dní) a ověřit stejnou metodou jako f55 (`verify_computus.py`).
+spravena, **Léta M.DC.LXXXIV [= 1684]**“ (vydaná **„před CXVI [116] lety“ → 1568**). Tj.
+**Tadeáš Hájek z Hájku** (†1600), Praha, pól 50°, gregoriánský kalendář — což přesně potvrzuje
+nezávislý otisk u f55. Datace sedí: originál 1568 (Hájek živ), tento list = opis 1684.
+- [ ] Ověřit na originále čtení letopočtu (1684) a údaje „před CXVI (116) lety“ → originál 1568
+      (čteno CXVI, ne LXVI; tím napětí s úmrtím 1600 mizí — Hájek r. 1568 žil).
 - [ ] **Dohledat Hájkovu tištěnou tabuli k přímému srovnání.** Hájek 20 let vydával české
       **minuce/pranostiky**; dochovaly se a jsou částečně digitalizované:
   - „Minucí a pranostika … Tadeáše Hájka z Hájku k létu 1567" — **NK ČR**, digitalizováno
