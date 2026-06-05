@@ -29,12 +29,13 @@ SPDX-License-Identifier: EUPL-1.2
       přepis čeká na Titan / expertní čtení.
 - [ ] **Zbývající husté mřížky — k tabulkovému HTR (Titan), NE ruční odhad** (struktura i
       správnost ověřeny, ale jednotlivé buňky gotické mřížky nelze po oku číst publikovatelně):
-  - [x] **f3** — přepsáno věrně jako **symetrická tabule délky dne**: jarní blok (vlevo, pros→čvn)
-        i podzimní blok (vpravo, čvn→pros) s **měsícem, dnem, svátkem a vstupy Slunce** čtenými ze
-        skenu; číselné sloupce (délka dne čtená, délka noci, východ, **české /orlojní/ poledne**
-        20:05→18:00→15:55, odpolední díl) ověřeny výpočtem. Jarní data se v 33/51 řádků liší od
-        výpočtu (čteno, ne generováno); [?] = nejisté čtení. **Chybí už jen** rukopisný sloupec
-        novoluní („Nové měsíce“) → tabulkový HTR (Titan) / ohledání originálu.
+  - [x] **f3** — přepsáno věrně a **kompletně** jako **symetrická tabule délky dne**: jarní blok
+        (vlevo, pros→čvn) i podzimní blok (vpravo, čvn→pros) s **měsícem, dnem, svátkem a vstupy
+        Slunce** čtenými ze skenu; číselné sloupce (délka dne čtená, délka noci, východ, **české
+        /orlojní/ poledne** 20:05→18:00→15:55, odpolední díl) ověřeny výpočtem. Jarní data se v
+        33/51 řádků liší od výpočtu (čteno, ne generováno); podzimní denní čísla potvrzují kanonická
+        data svátků. „Nové měsíce“ = omyl, samostatný sloupec novoluní neexistuje. Zbývá jen pár
+        méně zřetelných jmen [?].
   - [ ] **f58 + f59** — Tabula Festorum Mobilium (pohyblivé svátky; rekonstruovatelné z Velikonoc).
   - [ ] **f66** — epakty/novoluní po dnech roku.
   - [ ] **f61** — úplný cell-grid (princip dekódován; dořešit registraci epakty 25/XXV).

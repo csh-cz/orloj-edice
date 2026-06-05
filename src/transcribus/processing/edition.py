@@ -173,8 +173,9 @@ _TABLE_VERIFY: dict[int, str] = {
         "rovnodennost → 15:55 léto) a <b>odpolední díl</b> (½ délky dne). Časové sloupce jsou v "
         "rukopise výsledkem výpočtu z délky dne a do poslední minuty souhlasí s přepočtem "
         "(rovnodennost: východ 6:00, den = noc = 12:00; ověřeno ve verify_computus). Svátky a "
-        "vstupy Slunce jsou čteny ze skenu, <b>[?] = méně jisté čtení</b>; v závorce je vlastní "
-        "den svátku. Rukopisný sloupec novoluní („Nové měsíce“) zde zatím není.",
+        "vstupy Slunce v obou polovinách jsou čteny ze skenu; rukopisná denní čísla podzimní "
+        "poloviny potvrzují kanonická data svátků (Šimona a Judy 28. 10., Bartoloměj 24. 8., "
+        "Nanebevzetí 15. 8. …). <b>[?] = méně jisté čtení</b>; v závorce je vlastní den svátku.",
     50: "✓ ověřeno výpočtem: juliánská i gregoriánská nedělní písmena souhlasí s nezávislým "
         "výpočtem pro všech 28 let slunečního cyklu; gregoriánský sloupec platí pro 17. stol. "
         "(1583–1699), což zároveň datuje použitelnost tabulky.",
@@ -286,9 +287,10 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "číst</b>; u svátku je v závorce jeho vlastní den). <b>Časové sloupce</b> (délka noci, "
         "východ, české poledne, odpolední díl) jsou v rukopise výpočtem z délky dne a do minuty "
         "souhlasí s přepočtem (rovnodennost: východ 6:00, den = noc = 12:00). Méně jisté čtení je "
-        "značeno <b>[?]</b>; podzimní svátky vpravo jsou přečteny po pásech a u méně zřetelných "
-        "buněk ponechány s [?] nebo prázdné. Rukopisný sloupec <b>novoluní</b> („Nové měsíce“) "
-        "zatím není přepsán — čeká na tabulkový HTR (Titan) nebo ohledání originálu.</p>"
+        "značeno <b>[?]</b>. Podzimní polovina je přečtena po pásech celá; <b>rukopisná denní čísla "
+        "vpravo nezávisle potvrzují kanonická data svátků</b> (Šimona a Judy 28. 10., vstup do Vah "
+        "23. 9., Bartoloměj 24. 8., Nanebevzetí 15. 8., Maří Magdaleny 22. 7.), takže čtení sedí. "
+        "Jen u několika méně zřetelných jmen zůstává [?].</p>"
     ),
     55: (
         "<p>Porovnali jsme tuto tabuli s nezávislým astronomickým výpočtem východu Slunce "
@@ -618,9 +620,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
     ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)", "partial",
      "f2 nevyplněná předtištěná tabule; f3 = symetrická perpetuální tabule po krocích délky dne "
-     "(Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — přepsána věrně: jarní i podzimní blok "
-     "(měsíc, den, svátek, vstupy Slunce) čteny ze skenu, časy (délka dne/noci, východ, české "
-     "poledne, díl) ověřeny výpočtem; čeká jen rukopisný sloupec novoluní"),
+     "(Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — přepsána věrně a kompletně: jarní i "
+     "podzimní blok (měsíc, den, svátek, vstupy Slunce) čteny ze skenu, časy (délka dne/noci, "
+     "východ, české poledne, díl) ověřeny výpočtem; jen několik méně zřetelných jmen [?]"),
     ("f4", "latinský epigram (sedm pahorků pražských)", "done",
      "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
@@ -665,7 +667,7 @@ def _status_html() -> str:
         '<p class="status-note"><b>Co v knize ještě chybí:</b> f31–42 (diplomatická kontrola '
         "Táborského po řádcích), f54 (plný německý návod), f58/59 (Tabula festorum mobilium) a "
         "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 je "
-        "přepsáno věrně včetně jarních i podzimních svátků a měsíců; čeká jen sloupec novoluní.) "
+        "přepsáno věrně a kompletně včetně jarních i podzimních svátků a měsíců.) "
         "Prázdné/předsádky: f1, f2, f81.</p>"
     )
 
