@@ -795,8 +795,10 @@ listiny z r. 1410</b>, jíž pražská rada smluvila zhotovení orloje s <b>mist
 (v téže knize, fol. 51–54; originál listiny v knize není). Tím <b>klade zhotovení orloje k r. 1410
 / Mikulášovi z Kadaně</b>, ne Hanušovi. Písmo je mladší plynulá kurzíva 17. stol. (ne ruka opisovače A z 1587) a odkaz „<i>sub
 figura 4</i>“ předpokládá, že List purkmistra už byl v knize a očíslován — přípisek tedy <b>klademe
-k ruce spjaté s opisem Listu purkmistra, ~1628</b>, nikoli k pozdějšímu náhodnému čtenáři. (Tím se
-i toto ztotožnění autorství s Mikulášem datuje k ~1628.)</p>
+ruce <span style="white-space:nowrap">Mikuláše Petra</span></b>, který List purkmistra do knihy
+vypsal r. 1628 (podepsán na fol. 52: „<i>Z starých knih kanceláře hořejší vypsáno 15. 9bri
+[Novembris] 1628. Mikuláš Petr</i>“), nikoli k pozdějšímu náhodnému čtenáři. (Tím se i toto
+ztotožnění autorství s Mikulášem z Kadaně datuje k r. 1628.)</p>
 <p><b>Písmo: jedna ruka, totožná s opisovačem.</b> Rejstříkové i „historické“ glosy jsou
 <b>jednou rukou</b> — touž českou novogotickou kurzívou, týmž duktem a inkoustem jako hlavní text
 (srovnání „Tobiáš umřel“ / „Jakub Špaček“ / „Index Slunce“ navzájem i s tělem textu). Přisuzujeme
@@ -1085,8 +1087,9 @@ def _index_doc(
         "(1) <b>opis Táborského <i>Zprávy o orloji pražském</i></b> (fol. 5–49), který roku "
         "1587 pořídil staroměstský písař <b>Matouš Carchesius Jablonský</b> (kolofon fol. 47); "
         "(2) <b>opis Listu purkmistra</b> — původní listina je <b>z r. 1410</b> (de facto smlouva "
-        "Starého Města s hodinářem Mikulášem z Kadaně na zhotovení orloje), v knize však <b>opis "
-        "pořízený 1628</b>: německy (fol. 51–52) i v dobovém českém překladu (fol. 53–54); (3) "
+        "Starého Města s hodinářem Mikulášem z Kadaně na zhotovení orloje), v knize však <b>opis, "
+        "který r. 1628 vypsal ze starých knih hořejší kanceláře Mikuláš Petr</b> (podpis fol. 52): "
+        "německy (fol. 51–52) i v dobovém českém překladu (fol. 53–54); (3) "
         "<b>komputistické a astronomické tabulky</b> (fol. 2–3, 50, 55–69 — Littera dominicalis, "
         "zlaté číslo, epakta, východ slunce, polouorlojní počet); tabule délky dne / východu / "
         "západu (fol. 3) je dle <b>vlastního záhlaví</b> dílo <b>Tadeáše Hájka z Hájku</b> pro "
