@@ -789,7 +789,9 @@ dokládá, že <b>původní soukolíový pohon měsíce (popsaný Táborským) b
 mechanismem uvnitř tělesa měsíce</b>. To je <b>doklad reálné konstrukční změny orloje</b>, jaký
 Táborského text nemá. <b>Písmo se shoduje s přípiskem na fol. 38</b> (týž smyčkový duktus, totéž
 mísení češtiny a latiny: <i>corpus lunae</i> × <i>vide … sub figura 4</i>) — jsou to <b>jediné dvě
-pozdější vsuvky v knize a táž ruka</b>, totiž <b>Mikuláš Petr (~1628)</b>. Slovem „<i>nyní</i>“ to
+pozdější vsuvky v Táborského Zprávě a táž ruka</b>, totiž <b>Mikuláš Petr (~1628)</b>. (Pozdější
+vrstvy má kniha i jinde: německý List 1628, komputistické tabulky až z r. 1688, přední Hájkova
+tabule 1684.) Slovem „<i>nyní</i>“ to
 <b>datuje přestavbu měsíce: byla hotová už k r. 1628</b> (proběhla tedy mezi Táborského popisem
 /~1570, opis 1587/ a r. 1628).
 <br>• <b>fol. 38 — autorství a List purkmistra:</b> „<i>… léta 1410 … ten orloj … dělal … vide
@@ -812,7 +814,7 @@ proti tělu textu <b>nepatrně světlejší a méně teplý</b> (Δ jasu +13–1
 z 256), což je však <b>zčásti artefakt tenčího tahu</b> — týž železo-duběnkový hnědý inkoust,
 psaný jemnějším perem.</p>
 <p><b>Ztotožnění s jinými písaři a datace.</b> Marginálie se <b>neshodují s žádnou z pozdějších
-rukou</b> knihy — německého Listu purkmistra (1628), komputistické sekce (~1641) ani přední
+rukou</b> knihy — německého Listu purkmistra (1628), komputistické sekce (~1641; některé tabulky až 1688) ani přední
 Hájkovy tabule a přípisku (~1684); ty jsou jiným písmem a fyzicky v jiných částech. Protože
 marginálie indexují tělo textu a jsou rukou A, vznikly <b>současně s opisem, tj. r. 1587</b>
 (nebo těsně po něm) — tím je lze datovat, na rozdíl od pozdějších přípisků jinde v knize.
@@ -1020,7 +1022,7 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "český překlad hotov; německý návod na f54 (přepočet německé↔orlojní hodiny) přepsán "
      "(čtení nejisté, ale čísla i strukturu potvrzuje příklad na 3. 5. shodný s f3) + český "
      "překlad; přesné německé znění spojovacích vět čeká na expertní revizi"),
-    ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641)", "partial",
+    ("f55–f69", "komputistické/astron. tabulky + próza (próza příklad 1641, tabulky až 1688)", "partial",
      "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera), "
      "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
      "prózy f62–65, 67, 68; f61 (intervallum greg.) dekódováno (dvojče f60, 191/210, zóna epakty "
@@ -1077,16 +1079,16 @@ def _index_doc(
     )
     tiraz = (
         '<section class="tiraz"><h2>O edici</h2>'
-        "<p><b>Pramen — jedna svázaná orlojní kniha (zápisy z let ~1587–1684).</b> Archiv "
+        "<p><b>Pramen — jedna svázaná orlojní kniha (zápisy z let ~1587–1688).</b> Archiv "
         f"hlavního města Prahy, Sbírka rukopisů, inv. č. 7916. {ahmp_a}. Nejde o soubor volně "
         "vložených listů: ohledáním archiválie bylo ověřeno, že je to <b>jediný svázaný celek</b> "
         "a že zápisy vznikaly postupně na <b>předem svázané archy</b> — pořadí zápisů v hlavním "
         "korpusu tedy odpovídá chronologii. <b>Jedna výjimka</b>: referenční sluneční tabule na "
-        "ponechaných <b>volných předních listech (fol. 2–3) byly dopsány nejpozději</b> (dle "
-        "vlastního letopočtu ≈ 1684) — fyzicky jsou první, ale časově poslední, takže pořadí "
-        "folií tu chronologii neodráží a <b>protahují celkový rozsah psaní knihy zhruba na "
-        "století</b>. Díky chronologii hlavního korpusu jsou <b>datovatelné i pozdější přípisky "
-        "správců orloje</b>; právě "
+        "ponechaných <b>volných předních listech (fol. 2–3) byly dopsány pozdě</b> (dle vlastního "
+        "letopočtu ≈ 1684) — fyzicky jsou první, ale patří mezi nejmladší vrstvy. <b>Nejmladší jsou "
+        "komputistické tabulky (některé až z r. 1688)</b>, takže psaní knihy <b>celkově pokrývá "
+        "zhruba století (~1587–1688)</b>. Díky chronologii hlavního korpusu jsou <b>datovatelné i "
+        "pozdější přípisky správců orloje</b>; právě "
         "na nich stojí přeřazení vzniku orloje k r. 1410 (Z. Horský). Kniha má několik částí: "
         "(1) <b>opis Táborského <i>Zprávy o orloji pražském</i></b> (fol. 5–49), který roku "
         "1587 pořídil staroměstský písař <b>Matouš Carchesius Jablonský</b> (kolofon fol. 47); "
@@ -1095,7 +1097,9 @@ def _index_doc(
         "který r. 1628 vypsal ze starých knih hořejší kanceláře Mikuláš Petr</b> (podpis fol. 52): "
         "německy (fol. 51–52) i v dobovém českém překladu (fol. 53–54); (3) "
         "<b>komputistické a astronomické tabulky</b> (fol. 2–3, 50, 55–69 — Littera dominicalis, "
-        "zlaté číslo, epakta, východ slunce, polouorlojní počet); tabule délky dne / východu / "
+        "zlaté číslo, epakta, východ slunce, polouorlojní počet), vzniklé v 17. stol. — <b>próza "
+        "užívá příklad k r. 1641, některé tabulky sahají až k r. 1688</b> (epakty fol. 57 mají "
+        "epochu „ad 1700“); tabule délky dne / východu / "
         "západu (fol. 3) je dle <b>vlastního záhlaví</b> dílo <b>Tadeáše Hájka z Hájku</b> pro "
         "výšku pólu 50° (Praha), upravené na nový kalendář (opis ≈ 1684); (4) <b>Astrolabium "
         "parvum</b> "
@@ -1148,7 +1152,7 @@ def _index_doc(
         "<p><b>Marginálie a písařské ruce.</b> Kniha je ve své jádrové vrstvě <b>jedním "
         "opisem</b> (ruka <b>A</b> — Matouš Carchesius Jablonský, 1587: Táborského Zpráva fol. "
         "5–49 i Astrolabium parvum fol. 70–79); pozdější vrstvy přibývaly do volných míst jinými "
-        "rukama (německý List purkmistra fol. 51–52, 1628; komputus fol. 50 a 55–69, ~1641; "
+        "rukama (německý List purkmistra fol. 51–52, 1628; komputus fol. 50 a 55–69 (~1641, tabulky až 1688); "
         "přední Hájkova tabule fol. 3 a německý přípisek dole na fol. 54, ~1684; latinské "
         "epigramy fol. 4 a 80). <b>Glosy na okrajích fol. 13–46</b> (hesla „<i>Index Solis</i>“, "
         "„<i>declinatio solis</i>“, „<i>Linea oppositionis/coniunctionis</i>“, „Solstitium "
