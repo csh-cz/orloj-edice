@@ -789,11 +789,13 @@ dokládá, že <b>původní soukolíový pohon měsíce (popsaný Táborským) b
 mechanismem uvnitř tělesa měsíce</b>. To je <b>doklad reálné konstrukční změny orloje</b>, jaký
 Táborského text nemá.
 <br>• <b>fol. 38 — autorství a List purkmistra:</b> „<i>… léta 1410 … ten orloj … dělal … vide
-list purkm[istra] … origl., sub figura 4</i>“ — pozdější čtenář proti Táborského dataci „mistr
-Hanuš okolo 1490“ <b>odkazuje na List purkmistra z r. 1410</b> (smlouva mistru Mikulášovi z Kadaně,
-opsaná v téže knize, fol. 51–54), a tím <b>klade zhotovení orloje k r. 1410 / Mikulášovi z Kadaně</b>,
-ne Hanušovi. (Doplnění k dřívějšímu: takový vnitřní odkaz na List purkmistra v knize <b>existuje</b>
-— právě tady, jako pozdější přípisek.)</p>
+list purkm[istra] … origl., sub figura 4</i>“ — proti Táborského dataci „mistr Hanuš okolo 1490“
+tu pisatel <b>odkazuje na List purkmistra z r. 1410</b> (smlouva mistru Mikulášovi z Kadaně, opsaná
+v téže knize, fol. 51–54), a tím <b>klade zhotovení orloje k r. 1410 / Mikulášovi z Kadaně</b>, ne
+Hanušovi. Písmo je mladší plynulá kurzíva 17. stol. (ne ruka opisovače A z 1587) a odkaz „<i>sub
+figura 4</i>“ předpokládá, že List purkmistra už byl v knize a očíslován — přípisek tedy <b>klademe
+k ruce spjaté s opisem Listu purkmistra, ~1628</b>, nikoli k pozdějšímu náhodnému čtenáři. (Tím se
+i toto ztotožnění autorství s Mikulášem datuje k ~1628.)</p>
 <p><b>Písmo: jedna ruka, totožná s opisovačem.</b> Rejstříkové i „historické“ glosy jsou
 <b>jednou rukou</b> — touž českou novogotickou kurzívou, týmž duktem a inkoustem jako hlavní text
 (srovnání „Tobiáš umřel“ / „Jakub Špaček“ / „Index Slunce“ navzájem i s tělem textu). Přisuzujeme
