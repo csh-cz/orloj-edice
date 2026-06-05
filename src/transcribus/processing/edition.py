@@ -166,7 +166,7 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
 # Popisky tabulkových folií (z hlaviček; data zatím nepřepsána). Komputistický aparát.
 _TABLE_CAPTIONS: dict[int, str] = {
     2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — předtištěná (z větší části nevyplněná) tabule pro zpravování orloje.",
-    3: "Perpetuální tabule délky dne i noci, východu, poledne a západu Slunce v orlojních (českých) i obecných hodinách — po 10min krocích délky dne od zimního k letnímu slunovratu; symetrická (jaro vlevo, podzim vpravo). Podle záhlaví od Tadeáše Hájka z Hájku, výška pólu 50° (Praha), nový kalendář; opis ≈ 1688.",
+    3: "Perpetuální tabule délky dne i noci, východu, poledne a západu Slunce v orlojních (českých) i obecných hodinách — po 10min krocích délky dne od zimního k letnímu slunovratu; symetrická (jaro vlevo, podzim vpravo). Podle záhlaví od Tadeáše Hájka z Hájku, výška pólu 50° (Praha), nový kalendář; opis ≈ 1684.",
     50: "Tabula, ex qua Litera Dominicalis desumitur in ingressu cum Cyclo Solari („N. I”) — nedělní písmeno pro každý rok 28letého slunečního cyklu, juliánské i gregoriánské.",
     55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
     56: "Tabula, ex qua Litera Dominicalis desumitur („N. I”) — duplikát tabule z fol. 50 (nedělní písmeno, juliánské i gregoriánské).",
@@ -280,10 +280,7 @@ _TABLE_HEADING_TX: dict[int, str] = {
         "[Slunce], spravování Orloje obojího — celého i polovičního — kterak ten srovnán býti "
         "má podle jeho hodin, a to přes celý rok položená, [pro] České zemně a k vyvýšení Polum "
         "L [= 50] graduů, od někdy D. Thadeáše Hájka z Hájku před CXVI [= 116] lety vydaná, "
-        "a nyní dle Nového kalendáře spravena. Léta M·DC·LXXXVIII [= 1688].</p>"
-        "<p><b>Pozor na letopočet.</b> Závěrečný letopočet je u hřbetu poškozený; "
-        "čte se <i>M·DC·LXXX</i> + IIX/IX, tj. <b>1688</b> (dříve zde bylo mylně čteno "
-        "„LXXXIV“ = 1684). Tato tabule je tedy <b>nejmladší datovaná vrstva knihy</b>.</p>"
+        "a nyní dle Nového kalendáře spravena. Léta M·DC·LXXXIV [= 1684].</p>"
     ),
 }
 
@@ -359,28 +356,28 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "jež tabule podává vedle sebe a jež nesou i nadpisy číselných sloupců: <b>celý orloj</b> "
         "= české (orlojní) hodiny počítané od západu Slunce přes celých 24 h, <b>poloviční</b> = "
         "obecné hodiny. „<i>Polum L graduů</i>“ = výška pólu 50° (Praha). Klíčové pro dataci: "
-        "„<b>před CXVI [116] lety vydaná</b> … Léta 1688“ → původní Hájkova tabule vyšla "
-        "<b>1688 − 116 = roku 1572</b>, tj. za Hájkova života (zemřel 1600) a v jeho době "
-        "vydávaných minucí; tento list je pozdější <b>opis z roku 1688</b>. (Dřívější čtení "
+        "„<b>před CXVI [116] lety vydaná</b> … Léta 1684“ → původní Hájkova tabule vyšla "
+        "<b>1684 − 116 = roku 1568</b>, tj. za Hájkova života (zemřel 1600) a v jeho době "
+        "vydávaných minucí; tento list je pozdější <b>opis z roku 1684</b>. (Dřívější čtení "
         "„LXVI/66“ bylo mylné.)</p>"
         "<p><b>„Nyní dle Nového kalendáře spravena.“</b> „Nový kalendář“ = gregoriánský (1582, "
         "v Čechách 1584), „starý“ = juliánský; „spravena“ = upravena, seřízena. Tabule přiřazuje "
         "ke každé <b>délce dne datum</b>, kdy jí Praha dosáhne — a totéž astronomické datum nese "
         "v obou kalendářích jiné číslo (reforma 1582 vypustila 10 dní a vrátila jarní rovnodennost "
-        "zpět k 21. březnu). Hájkův originál (1572) byl ve starém kalendáři; tato úprava jen "
+        "zpět k 21. březnu). Hájkův originál (1568) byl ve starém kalendáři; tato úprava jen "
         "<b>posunula sloupec dat o ~10 dní na gregoriánské počítání</b> — astronomie (sled délek "
         "dne i poloha Slunce) zůstává táž, mění se jen kalendářní nálepka u řádku. Proto u nás "
         "rovnodennost padá na <b>21. března</b> (sv. Benedikta, den = noc = 12:00, východ 6:00), "
         "zimní slunovrat ~23. prosince a letní ~23. června, a proto naše ověření muselo počítat "
         "<b>v gregoriánském kalendáři</b> (a do minuty sedělo). Úprava „na nový kalendář“ je tedy "
-        "nutně po r. 1584 — což ladí s opisem 1688.</p>"
-        "<p><b>Co rok 1688 dokládá o orloji.</b> Sám zápis je pramenem k dějinám stroje: pořídit "
-        "r. 1688 do orlojní knihy novou, na nový kalendář seřízenou <b>tabuli pro nastavování "
+        "nutně po r. 1584 — což ladí s opisem 1684.</p>"
+        "<p><b>Co rok 1684 dokládá o orloji.</b> Sám zápis je pramenem k dějinám stroje: pořídit "
+        "r. 1684 do orlojní knihy novou, na nový kalendář seřízenou <b>tabuli pro nastavování "
         "orloje</b> (české i obecné hodiny, východ / poledne / západ) má smysl jen tehdy, byl-li "
         "orloj <b>v činnosti a měl svého orlojníka</b>, jenž knihu vedl a stroj seřizoval — "
         "seřizovací tabulky se nedopisují k nefunkčnímu stroji. Pro <b>řídce doložené období mezi "
         "opravami 1659 a 1791</b> je to tak samostatný doklad <b>aktivního provozu a údržby orloje "
-        "k roku 1688</b>.</p>"
+        "k roku 1684</b>.</p>"
         "<p><b>Tady rukopis sám jmenuje původ tabulky.</b> Tabule délky dne / východu / "
         "poledne / západu Slunce je <b>od „někdy“ (tj. nebožtíka) Dr. Tadeáše Hájka z Hájku</b> "
         "(<i>Thaddaeus Hagecius ab Hayek</i>, ~1525–1600, přední pražský astronom, lékař "
@@ -389,13 +386,13 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "pro tuto tabuli (fol. 3)</b>. Pěkně se shoduje s <b>nezávislým otiskem, který jsme "
         "změřili u fol. 55</b> (geometrický východ, výška pólu ~50°, nový kalendář): orlojní "
         "sluneční tabule jsou <b>pražského, Hájkova typu</b>, ne dovezené cizí efemeridy. "
-        "Pozor však: fol. 55 je z <b>jiné, starší vrstvy (~1641)</b> než tento opis (~1688), "
+        "Pozor však: fol. 55 je z <b>jiné, starší vrstvy (~1641)</b> než tento opis (~1684), "
         "takže pro fol. 55 jde o <b>slučitelnost a důvodný předpoklad</b>, ne o tutéž doloženou "
         "atribuci.</p>"
-        "<p><b>Datace.</b> Dvě vrstvy se nyní pěkně srovnají: <b>původní Hájkova tabule = 1572</b> "
-        "(1688 − 116), tedy za jeho života a v době jím vydávaných minucí; <b>tento list = opis "
-        "z roku 1688</b>. Tomu odpovídají i obraty v záhlaví: „<i>od někdy</i>“ (= nebožtík, lat. "
-        "<i>quondam</i>) před jménem dává smysl z pohledu opisovače r. 1688 (Hájek dávno mrtev), "
+        "<p><b>Datace.</b> Dvě vrstvy se nyní pěkně srovnají: <b>původní Hájkova tabule = 1568</b> "
+        "(1684 − 116), tedy za jeho života a v době jím vydávaných minucí; <b>tento list = opis "
+        "z roku 1684</b>. Tomu odpovídají i obraty v záhlaví: „<i>od někdy</i>“ (= nebožtík, lat. "
+        "<i>quondam</i>) před jménem dává smysl z pohledu opisovače r. 1684 (Hájek dávno mrtev), "
         "„dle <i>nového</i> kalendáře spravena“ pak řadí úpravu po gregoriánské reformě (1584). "
         "List je <b>přední</b> (fyzicky před Táborského opisem 1587), ale fakticky <b>dopsán na "
         "volný přední list později</b> — běžný jev, který chronologii hlavního korpusu neruší. "
@@ -549,7 +546,7 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "(3:48 + 7:58). Předloha tedy patří ke <b>geometrické tradici</b>. Konkrétní tištěný "
         "exemplář pro pražskou šířku 50° by se dal hledat v knihovnách (Knihopis, MZK/NKP). "
         "<b>Důležitá stopa</b>: <b>jiná</b> tabule v knize — fol. 3 (délka dne, ovšem opis "
-        "z pozdější vrstvy ~1688) — má v záhlaví <b>výslovnou atribuci „od někdy D. Tadeáše "
+        "z pozdější vrstvy ~1684) — má v záhlaví <b>výslovnou atribuci „od někdy D. Tadeáše "
         "Hájka z Hájku … k vyvýšení Polum L [= 50] graduů … dle nového kalendáře spravena“</b>. "
         "Náš nezávisle změřený otisk f55 (geometrická, výška pólu ~50°, nový kalendář) je "
         "s <b>Hájkovou pražskou tradicí slučitelný</b>, takže tato tabule (východ pro poloviční "
@@ -792,9 +789,7 @@ dokládá, že <b>původní soukolíový pohon měsíce (popsaný Táborským) b
 mechanismem uvnitř tělesa měsíce</b>. To je <b>doklad reálné konstrukční změny orloje</b>, jaký
 Táborského text nemá. <b>Písmo se shoduje s přípiskem na fol. 38</b> (týž smyčkový duktus, totéž
 mísení češtiny a latiny: <i>corpus lunae</i> × <i>vide … sub figura 4</i>) — jsou to <b>jediné dvě
-pozdější vsuvky v Táborského Zprávě a táž ruka</b>, totiž <b>Mikuláš Petr (~1628)</b>. (Pozdější
-vrstvy má kniha i jinde: německý List 1628, komputistické tabulky až z r. 1688, přední Hájkova
-tabule 1688.) Slovem „<i>nyní</i>“ to
+pozdější vsuvky v knize a táž ruka</b>, totiž <b>Mikuláš Petr (~1628)</b>. Slovem „<i>nyní</i>“ to
 <b>datuje přestavbu měsíce: byla hotová už k r. 1628</b> (proběhla tedy mezi Táborského popisem
 /~1570, opis 1587/ a r. 1628).
 <br>• <b>fol. 38 — autorství a List purkmistra:</b> „<i>… léta 1410 … ten orloj … dělal … vide
@@ -817,8 +812,8 @@ proti tělu textu <b>nepatrně světlejší a méně teplý</b> (Δ jasu +13–1
 z 256), což je však <b>zčásti artefakt tenčího tahu</b> — týž železo-duběnkový hnědý inkoust,
 psaný jemnějším perem.</p>
 <p><b>Ztotožnění s jinými písaři a datace.</b> Marginálie se <b>neshodují s žádnou z pozdějších
-rukou</b> knihy — německého Listu purkmistra (1628), komputistické sekce (~1641; některé tabulky až 1688) ani přední
-Hájkovy tabule a přípisku (~1688); ty jsou jiným písmem a fyzicky v jiných částech. Protože
+rukou</b> knihy — německého Listu purkmistra (1628), komputistické sekce (~1641) ani přední
+Hájkovy tabule a přípisku (~1684); ty jsou jiným písmem a fyzicky v jiných částech. Protože
 marginálie indexují tělo textu a jsou rukou A, vznikly <b>současně s opisem, tj. r. 1587</b>
 (nebo těsně po něm) — tím je lze datovat, na rozdíl od pozdějších přípisků jinde v knize.
 Výjimkou mohou být ojedinělé „NB“, jež bývají rukou pozdějšího čtenáře. (Paleografie i
@@ -1006,7 +1001,7 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 # klíč stavu: done = hotový čistý přepis · partial = rozpracováno · todo = chybí · na = prázdná
 _STATUS_ROWS: list[tuple[str, str, str, str]] = [
     ("f1", "předsádka", "na", "—"),
-    ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1688)", "partial",
+    ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)", "partial",
      "f2 nevyplněná předtištěná tabule; f3 = symetrická perpetuální tabule po krocích délky dne "
      "(Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — přepsána věrně a kompletně: jarní i "
      "podzimní blok (měsíc, den, svátek, vstupy Slunce) čteny ze skenu, časy (délka dne/noci, "
@@ -1025,7 +1020,7 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "český překlad hotov; německý návod na f54 (přepočet německé↔orlojní hodiny) přepsán "
      "(čtení nejisté, ale čísla i strukturu potvrzuje příklad na 3. 5. shodný s f3) + český "
      "překlad; přesné německé znění spojovacích vět čeká na expertní revizi"),
-    ("f55–f69", "komputistické/astron. tabulky + próza (próza příklad 1641, tabulky až 1688)", "partial",
+    ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641)", "partial",
      "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera), "
      "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
      "prózy f62–65, 67, 68; f61 (intervallum greg.) dekódováno (dvojče f60, 191/210, zóna epakty "
@@ -1082,16 +1077,16 @@ def _index_doc(
     )
     tiraz = (
         '<section class="tiraz"><h2>O edici</h2>'
-        "<p><b>Pramen — jedna svázaná orlojní kniha (zápisy z let ~1587–1688).</b> Archiv "
+        "<p><b>Pramen — jedna svázaná orlojní kniha (zápisy z let ~1587–1684).</b> Archiv "
         f"hlavního města Prahy, Sbírka rukopisů, inv. č. 7916. {ahmp_a}. Nejde o soubor volně "
         "vložených listů: ohledáním archiválie bylo ověřeno, že je to <b>jediný svázaný celek</b> "
         "a že zápisy vznikaly postupně na <b>předem svázané archy</b> — pořadí zápisů v hlavním "
         "korpusu tedy odpovídá chronologii. <b>Jedna výjimka</b>: referenční sluneční tabule na "
-        "ponechaných <b>volných předních listech (fol. 2–3) byly dopsány pozdě</b> (dle vlastního "
-        "letopočtu ≈ 1688) — fyzicky jsou první, ale patří mezi nejmladší vrstvy. <b>Nejmladší jsou "
-        "komputistické tabulky (některé až z r. 1688)</b>, takže psaní knihy <b>celkově pokrývá "
-        "zhruba století (~1587–1688)</b>. Díky chronologii hlavního korpusu jsou <b>datovatelné i "
-        "pozdější přípisky správců orloje</b>; právě "
+        "ponechaných <b>volných předních listech (fol. 2–3) byly dopsány nejpozději</b> (dle "
+        "vlastního letopočtu ≈ 1684) — fyzicky jsou první, ale časově poslední, takže pořadí "
+        "folií tu chronologii neodráží a <b>protahují celkový rozsah psaní knihy zhruba na "
+        "století</b>. Díky chronologii hlavního korpusu jsou <b>datovatelné i pozdější přípisky "
+        "správců orloje</b>; právě "
         "na nich stojí přeřazení vzniku orloje k r. 1410 (Z. Horský). Kniha má několik částí: "
         "(1) <b>opis Táborského <i>Zprávy o orloji pražském</i></b> (fol. 5–49), který roku "
         "1587 pořídil staroměstský písař <b>Matouš Carchesius Jablonský</b> (kolofon fol. 47); "
@@ -1100,11 +1095,9 @@ def _index_doc(
         "který r. 1628 vypsal ze starých knih hořejší kanceláře Mikuláš Petr</b> (podpis fol. 52): "
         "německy (fol. 51–52) i v dobovém českém překladu (fol. 53–54); (3) "
         "<b>komputistické a astronomické tabulky</b> (fol. 2–3, 50, 55–69 — Littera dominicalis, "
-        "zlaté číslo, epakta, východ slunce, polouorlojní počet), vzniklé v 17. stol. — <b>próza "
-        "užívá příklad k r. 1641, některé tabulky sahají až k r. 1688</b> (epakty fol. 57 mají "
-        "epochu „ad 1700“); tabule délky dne / východu / "
+        "zlaté číslo, epakta, východ slunce, polouorlojní počet); tabule délky dne / východu / "
         "západu (fol. 3) je dle <b>vlastního záhlaví</b> dílo <b>Tadeáše Hájka z Hájku</b> pro "
-        "výšku pólu 50° (Praha), upravené na nový kalendář (opis ≈ 1688); (4) <b>Astrolabium "
+        "výšku pólu 50° (Praha), upravené na nový kalendář (opis ≈ 1684); (4) <b>Astrolabium "
         "parvum</b> "
         "(fol. 70–79); a (5) <b>pozdější přípisky správců orloje</b> (16.–17. stol.). Edice "
         "zatím zpracovává především část (1) a (2).</p>"
@@ -1155,8 +1148,8 @@ def _index_doc(
         "<p><b>Marginálie a písařské ruce.</b> Kniha je ve své jádrové vrstvě <b>jedním "
         "opisem</b> (ruka <b>A</b> — Matouš Carchesius Jablonský, 1587: Táborského Zpráva fol. "
         "5–49 i Astrolabium parvum fol. 70–79); pozdější vrstvy přibývaly do volných míst jinými "
-        "rukama (německý List purkmistra fol. 51–52, 1628; komputus fol. 50 a 55–69 (~1641, tabulky až 1688); "
-        "přední Hájkova tabule fol. 3 a německý přípisek dole na fol. 54, ~1688; latinské "
+        "rukama (německý List purkmistra fol. 51–52, 1628; komputus fol. 50 a 55–69, ~1641; "
+        "přední Hájkova tabule fol. 3 a německý přípisek dole na fol. 54, ~1684; latinské "
         "epigramy fol. 4 a 80). <b>Glosy na okrajích fol. 13–46</b> (hesla „<i>Index Solis</i>“, "
         "„<i>declinatio solis</i>“, „<i>Linea oppositionis/coniunctionis</i>“, „Solstitium "
         "letní/zimní“, „O pušce“, „Srovnání obojí počtuov“ ad.) přisuzujeme <b>téže ruce A</b> — "
