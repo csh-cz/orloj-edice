@@ -120,6 +120,30 @@ def parse_page_xml(xml: str | bytes) -> list[TextRegion]:
     return [r for _, r in regions]
 
 
+def marginalia_bboxes(xml: str | bytes) -> list[tuple[tuple[int, int, int, int], str]]:
+    """Return (bbox, HTR-text) of marginal regions, sorted top-to-bottom.
+
+    A marginal region = a narrow region hugging an outer margin (geometry, see
+    ``_geom_type``). Used to crop the marginalia from the scan for the analysis page.
+    """
+    if isinstance(xml, str):
+        xml = xml.encode("utf-8")
+    root = etree.fromstring(xml)
+    page = next((e for e in root.iter() if _local(e.tag) == "Page"), None)
+    page_w = int(page.get("imageWidth", 0)) if page is not None else 0
+    raw = [r for r in root.iter() if _local(r.tag) == "TextRegion"]
+    out: list[tuple[tuple[int, int, int, int], str]] = []
+    for region in raw:
+        bb = _bbox(region)
+        if bb and _geom_type(bb, page_w, len(raw)) == "marginalia":
+            txt = " ".join(
+                t for t in (_line_text(ln) for ln in region.iter()
+                            if _local(ln.tag) == "TextLine") if t
+            )
+            out.append((bb, txt))
+    return sorted(out, key=lambda it: it[0][1])  # by y0, top to bottom
+
+
 def _line_text(line: etree._Element) -> str | None:
     """Return the line's transcribed text (TextEquiv/Unicode), or None if absent."""
     for te in line.iter():

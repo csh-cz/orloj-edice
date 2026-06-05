@@ -21,8 +21,18 @@ import re
 from pathlib import Path
 
 from transcribus.processing.normalize import normalize_text
-from transcribus.processing.page_xml import Table, TextRegion, parse_page_xml
+from transcribus.processing.page_xml import (
+    Table,
+    TextRegion,
+    marginalia_bboxes,
+    parse_page_xml,
+)
 from transcribus.processing.teige import TeigeIndex, fold
+
+try:  # Pillow is optional; without it the marginalia page is skipped (no crops).
+    from PIL import Image
+except ImportError:  # pragma: no cover
+    Image = None
 
 _MARGINALIA = {"marginalia", "margin-text", "margin"}
 _HEADING = {"heading", "header", "title", "caption"}
@@ -590,6 +600,153 @@ def _marginalia_html(marg_lines: list[str], page_nr: int) -> str:
     )
 
 
+# --- Rozbor marginálií (samostatná stránka marginalia.html) -------------------------
+_MARG_LAT = ("index", "declinat", "linea", "tabula", "solstit", "solis", "horar",
+             "oppositi", "coniuncti", "circul")
+_MARG_HIST = ("zvůnek", "táborsk", "tobiáš", "tobiass", "špaček", "obnoven", "zprávce",
+              "přistaup", "přistoup", "umřel", "škody", "zase přist")
+
+
+def _marg_notes(marg_lines: list[str]) -> list[str]:
+    """Split the clean marginalia block into individual glosses."""
+    text = " ".join(ln.strip() for ln in marg_lines).strip()
+    text = re.sub(r"^\[[^\]]*?okraji:\]\s*", "", text)
+    text = re.sub(r"\s*\[[^\]]*?:\].*$", "", text)  # drop trailing editorial note if any
+    parts = re.split(r"\s—\s|;\s", text.rstrip(" ]."))
+    return [p.strip(" .—") for p in parts if p.strip(" .—")]
+
+
+def _marg_category(note: str) -> tuple[str, str]:
+    """Classify a gloss → (tag, popis)."""
+    low = note.lower()
+    if low.startswith("nb"):
+        return ("NB", "pozdější čtenář (?)")
+    if any(k in low for k in _MARG_HIST):
+        return ("HIST", "dějiny orloje / orlojníci")
+    if any(k in low for k in _MARG_LAT):
+        return ("LAT", "latinský odborný termín")
+    return ("IDX", "český tematický rejstřík")
+
+
+def _marg_crops(work_dir: Path, out_dir: Path, page_nr: int) -> list[str]:
+    """Crop the folio's marginal glosses from the scan; return relative img paths.
+
+    Reproductions of AHMP scans (small study crops). Uses the marginalia region
+    bbox from PAGE XML (else an outer-margin strip), then splits it into ink bands
+    = single glosses. One column crop if band detection fails.
+    """
+    if Image is None:
+        return []
+    scan = work_dir / "scans" / f"{page_nr:04d}.jpg"
+    if not scan.exists():
+        return []
+    im = Image.open(scan).convert("RGB")
+    w, h = im.size
+    xmlp = work_dir / "page_xml" / f"{page_nr:04d}.xml"
+    bbs = marginalia_bboxes(xmlp.read_text(encoding="utf-8")) if xmlp.exists() else []
+    if bbs:
+        x0 = max(0, min(b[0][0] for b in bbs) - 12)
+        x1 = min(w, max(b[0][2] for b in bbs) + 12)
+        y0 = max(0, min(b[0][1] for b in bbs) - 10)
+        y1 = min(h, max(b[0][3] for b in bbs) + 10)
+    elif page_nr % 2 == 0:  # verso → left margin (inset past binding; before main text)
+        x0, x1, y0, y1 = 55, 300, 320, min(h, 3450)
+    else:  # recto → right margin (after main text; inset from edge)
+        x0, x1, y0, y1 = w - 300, w - 55, 320, min(h, 3450)
+    col = im.crop((x0, y0, x1, y1))
+    g = col.convert("L")
+    cw, ch = g.size
+    px = g.load()
+    min_dark = max(3, cw // 70)
+    rows = [sum(1 for x in range(0, cw, 2) if px[x, y] < 150) >= min_dark for y in range(ch)]
+    bands: list[tuple[int, int]] = []
+    y, gap = 0, 12
+    while y < ch:
+        if rows[y]:
+            s = y
+            while y < ch and (rows[y] or (y + gap < ch and any(rows[y:y + gap]))):
+                y += 1
+            if 16 <= y - s <= 300:  # a real gloss; drop tiny noise and giant merged bands
+                bands.append((s, y))
+        else:
+            y += 1
+    d = out_dir / "img" / "marg"
+    d.mkdir(parents=True, exist_ok=True)
+    paths: list[str] = []
+    if not bands or len(bands) > 14:  # detection unreliable → no crop (transcription only)
+        return []
+    for i, (a, b) in enumerate(bands):
+        sub = col.crop((0, max(0, a - 6), cw, min(ch, b + 6)))
+        if sub.width > 430:
+            sub = sub.resize((430, round(sub.height * 430 / sub.width)))
+        sub.save(d / f"m{page_nr:04d}_{i}.jpg", quality=85)
+        paths.append(f"img/marg/m{page_nr:04d}_{i}.jpg")
+    return paths
+
+
+_MARG_TAGNAMES = {"IDX": "rejstřík", "LAT": "lat. termín", "HIST": "dějiny orloje",
+                  "NB": "NB / čtenář"}
+
+
+def _marginalia_doc(title: str, items: list[dict]) -> str:
+    """Standalone analysis page for the marginalia (crops + per-gloss classification)."""
+    cnt: dict[str, int] = {}
+    for it in items:
+        for _t, tag, _d in it["notes"]:
+            cnt[tag] = cnt.get(tag, 0) + 1
+    summary = " · ".join(
+        f"{_MARG_TAGNAMES[k]}: {cnt[k]}" for k in ("IDX", "LAT", "HIST", "NB") if cnt.get(k)
+    )
+    secs = []
+    for it in items:
+        imgs = "".join(
+            f'<img src="{_esc(p)}" alt="marginálie fol. {it["page"]}" loading="lazy">'
+            for p in it["imgs"]
+        ) or "<i>[výřez nedostupný — viz sken v AHMP]</i>"
+        notes = "".join(
+            f'<li><span class="mtag t-{tag}">{_MARG_TAGNAMES[tag]}</span> {_esc(txt)}</li>'
+            for (txt, tag, _desc) in it["notes"]
+        )
+        label = f' — <span class="mctx">{_esc(it["label"])}</span>' if it.get("label") else ""
+        secs.append(
+            f'<section class="marg-item"><h3 id="f{it["page"]:04d}">fol. {it["page"]}{label} '
+            f'· <a href="p{it["page"]:04d}.html">přepis folia →</a></h3>'
+            f'<div class="marg-row"><div class="marg-figs">{imgs}</div>'
+            f'<ol class="marg-notes">{notes}</ol></div></section>'
+        )
+    return f"""<!doctype html>
+<html lang="cs"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rozbor marginálií — {_esc(title)}</title>
+<link rel="stylesheet" href="assets/edition.css"></head>
+<body class="mode-dipl">
+<header><a class="home" href="index.html">≡</a><h1>Rozbor marginálií</h1></header>
+<main>
+<section class="tiraz">
+<p><b>Co jsou marginálie.</b> Na okrajích folií <b>13–46</b> (Táborského Zpráva) je
+{sum(len(it['notes']) for it in items)} okrajových přípisků na {len(items)} foliích —
+krátká hesla, jež <b>indexují přilehlý text</b>: české tematické značky, latinské odborné
+termíny a poznámky k dějinám orloje a jeho správců. Klasifikace: {summary}.</p>
+<p><b>Pisatel.</b> Přípisky přisuzujeme <b>téže ruce jako hlavní text — ruka A</b>
+(Matouš Carchesius Jablonský, opis <b>1587</b>): tatáž česká novogotická kurzíva a duktus,
+totéž mísení češtiny a latiny, a obsah <b>shrnuje vyprávění</b> (včetně výčtu orlojníků:
+Václav Zvůnek, Jan Táborský, Tobiáš, Jakub Špaček) — jde tedy o <b>autorský/písařský
+rejstřík</b>, ne o cizí čtenářskou ruku; jen ojedinělé „NB" mohou být pozdějšího čtenáře.</p>
+<p><b>Odstín inkoustu.</b> Měřením tahů proti hlavnímu textu (fol. 20 a 43) vycházejí
+marginálie <b>nepatrně světlejší a méně teplé</b> (Δ jasu +13–15, Δ „tepla" R−B −18 až −34
+z 256); rozdíl je však <b>zčásti artefaktem tenčího tahu</b> — jde o týž železo-duběnkový
+hnědý inkoust, psaný jemnějším perem, slučitelné se vznikem současně s opisem (1587).
+(Paleografie i kolorimetrie ze skenu = pracovní hypotéza, ne znalecký posudek.)</p>
+<p class="warn"><b>Výřezy:</b> drobné studijní výřezy ze skenů <b>Archivu hlavního města
+Prahy</b> (Sbírka rukopisů, inv. č. 7916). Reprodukováno pro vědecký rozbor; souhlas archivu
+s reprodukcí v jednání.</p>
+</section>
+{"".join(secs)}
+</main>
+<footer>Rozbor marginálií — pracovní hypotéza ze skenů AHMP. Edice © David Knespl, CC BY 4.0.</footer>
+</body></html>"""
+
+
 # Editorská překreslení nákresů (vlastní rekonstrukce, NE reprodukce skenu).
 _F80_TRIANGLE_SVG = (
     '<svg viewBox="0 0 230 330" xmlns="http://www.w3.org/2000/svg" width="220" role="img" aria-label="Pravoúhlý trojúhelník 3-4-5 (3 na 4 = 5)"><g stroke="#2a2a2a" stroke-width="1.1"><polygon points="40,290 190,290 190,90" fill="none" stroke="#2a2a2a" stroke-width="1.6"/><path d="M 178,290 v -12 h 12" fill="none" stroke="#2a2a2a" stroke-width="1.2"/><line x1="90.0" y1="284.0" x2="90.0" y2="296.0"/><line x1="140.0" y1="284.0" x2="140.0" y2="296.0"/><line x1="190.0" y1="284.0" x2="190.0" y2="296.0"/><line x1="196.0" y1="240.0" x2="184.0" y2="240.0"/><line x1="196.0" y1="190.0" x2="184.0" y2="190.0"/><line x1="196.0" y1="140.0" x2="184.0" y2="140.0"/><line x1="196.0" y1="90.0" x2="184.0" y2="90.0"/><line x1="65.2" y1="246.4" x2="74.8" y2="253.6"/><line x1="95.2" y1="206.4" x2="104.8" y2="213.6"/><line x1="125.2" y1="166.4" x2="134.8" y2="173.6"/><line x1="155.2" y1="126.4" x2="164.8" y2="133.6"/></g><g font-family="Georgia,serif" font-size="14" fill="#2a2a2a" font-style="italic"><text x="65" y="310" text-anchor="middle">1</text><text x="115" y="310" text-anchor="middle">2</text><text x="165" y="310" text-anchor="middle">3</text><text x="201" y="269">1</text><text x="201" y="219">2</text><text x="201" y="169">3</text><text x="201" y="119">4</text><text x="42" y="267" text-anchor="middle">1</text><text x="72" y="227" text-anchor="middle">2</text><text x="102" y="187" text-anchor="middle">3</text><text x="132" y="147" text-anchor="middle">4</text><text x="162" y="107" text-anchor="middle">5</text></g></svg>'
@@ -963,6 +1120,7 @@ def _index_doc(
 <header><h1>{_esc(title)}</h1></header>
 <main>
 {_status_html()}
+<p class="marg-link">▸ <a href="marginalia.html">Rozbor marginálií</a> — okrajové přípisky folií 13–46 (výřezy ze skenu, klasifikace, identifikace písaře).</p>
 {tiraz}
 <p class="note">Jedna svázaná kniha (více částí, jeden celek). <span class="teige-badge">T</span> = folia s opisem
 Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní oddíly referenci nemají.
@@ -1068,6 +1226,25 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .status tbody tr[data-href]:hover{background:#f0e6c8}
 .status td a{color:#7a5c2e;text-decoration:none;font-weight:600}
 .status td a:hover{text-decoration:underline}
+.marg-link{font-family:system-ui,sans-serif;font-size:.9rem;margin:.6rem 0 1.2rem;
+  padding:.5rem .7rem;background:#f0e6c8;border-left:3px solid #b8860b;border-radius:3px}
+.marg-link a{color:#7a5c2e;font-weight:700}
+.marg-item{margin:1.1rem 0;padding-top:.6rem;border-top:1px solid #e2d7bb}
+.marg-item h3{font-family:system-ui,sans-serif;font-size:.95rem;margin:.2rem 0 .5rem;color:#3a342a}
+.marg-item h3 a{font-size:.8rem;font-weight:normal;color:#7a5c2e}
+.marg-ctx,.mctx{color:#6b6256;font-weight:normal}
+.marg-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-start}
+.marg-figs{flex:0 0 320px;display:flex;flex-direction:column;gap:5px}
+.marg-figs img{max-width:320px;border:1px solid #d8cba8;background:#fff;border-radius:2px}
+.marg-notes{flex:1 1 320px;margin:0;padding-left:1.2rem;font-size:.92rem;line-height:1.6}
+.marg-notes li{margin:.2rem 0}
+.mtag{display:inline-block;font-family:system-ui,sans-serif;font-size:.68rem;
+  text-transform:uppercase;letter-spacing:.03em;padding:.05rem .35rem;border-radius:3px;
+  margin-right:.35rem;vertical-align:.08em}
+.t-IDX{background:#e7eecd;color:#4a5a1e}
+.t-LAT{background:#dde6f0;color:#33506e}
+.t-HIST{background:#f0dcd0;color:#7a3b1e}
+.t-NB{background:#eee;color:#555}
 .status .b-done{color:#2e7d32;font-weight:bold;white-space:nowrap}
 .status .b-partial{color:#b8860b;font-weight:bold;white-space:nowrap}
 .status .b-todo{color:#a3332b;font-weight:bold;white-space:nowrap}
@@ -1205,6 +1382,7 @@ def build_edition(
 
     # Pass 2: write per-folio pages + index.
     toc: dict[int, tuple[str, bool]] = {}
+    marg_items: list[dict] = []
     for page_nr, regions, tables, plain, passage, fig_names, clean_lines, is_tbl in entries:
         doc = _page_doc(
             title=title, page_nr=page_nr, total=total, regions=regions,
@@ -1222,6 +1400,19 @@ def build_edition(
             else:
                 snip = "[vyobrazení]" if fig_names else "[prázdná]"
         toc[page_nr] = (snip, passage is not None)
+        _main, marg_lines = _split_marginalia(clean_lines)
+        notes = _marg_notes(marg_lines)
+        if notes:
+            marg_items.append({
+                "page": page_nr, "label": _FOLIO_SNIP.get(page_nr, ""),
+                "notes": [(n, *_marg_category(n)) for n in notes],
+                "imgs": _marg_crops(work_dir, out_dir, page_nr),
+            })
+
+    if marg_items:
+        (out_dir / "marginalia.html").write_text(
+            _marginalia_doc(title, marg_items), encoding="utf-8"
+        )
 
     index = out_dir / "index.html"
     index.write_text(_index_doc(title, sections, toc, ahmp_permalink), encoding="utf-8")
