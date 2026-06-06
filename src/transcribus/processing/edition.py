@@ -284,6 +284,30 @@ _TABLE_HEADING_TX: dict[int, str] = {
     ),
 }
 
+# Souvislý text (próza) na tabulkovém foliu — renderuje se POD tabulkou jako přepis.
+_TABLE_PROSE: dict[int, str] = {
+    55: (
+        '<div class="ms-prose"><span class="ms-prose-label">Návod pod tabulkou — přepis</span>'
+        "<p>Z této tabule východu sobě zase vynajdeš západ Slunce wedle polovičního, poledne a "
+        "východ wedle celého orloje, jako i dlúhost dne, takto: přidáš ke dni východu Slunce "
+        "komplementum do 12; ten týž počet odejmi od 24 hodin — co zbyde, ukáže poledne hodin "
+        "českých; a odejma týž počet od téhož [poledne], ukáže východ wedle českých hodin. Když "
+        "pak dotčený počet zdvojíš, ukáže dlúhost dne.</p>"
+        "<p>Ku příkladu, chci to všecko věděti z máje: i nacházím v této tabuli východ Slunce "
+        "wedle polovičního orloje ve <b>4 hod. 43 min</b>. Přidám k tomu jeho komplementum, aby "
+        "bylo 12, totiž <b>7 hod. 17 min</b> — to jest západ hodin polovičných. Odejmu týž počet "
+        "od 24 hodin, dostanu <b>16 hod. 43 min</b> — to jest poledne hodin českých. Opět odejmu "
+        "odtud týž počet, zůstane mi <b>9 hod. 26 min</b> — to jest východ celý český. Když pak "
+        "ten týž počet dvakrát položím, což přinese <b>14 hod. 34 min</b>, ukáže mi dlúhost dne. "
+        "A tak ve všech rozuměj.</p>"
+        "<p class=\"ms-prose-ed\">[Ediční pozn.: tento <b>český</b> návod je obsahově totožný s "
+        "<b>německým</b> návodem dole na fol. 54 — týž postup i týž příklad na 3. května; německý "
+        "text je tedy <b>německou paralelou</b> tohoto českého návodu k tabuli východu. (Poledne "
+        "„16:43“ čteno z příkladu — HTR podává „16:13“, ale vlastní počet 9:26 i délka dne 14:34 "
+        "ukazují 16:43.)]</p></div>"
+    ),
+}
+
 
 # Deterministic verification (external computation / astronomy). See tools/verify_computus.py.
 _TABLE_VERIFY: dict[int, str] = {
@@ -915,6 +939,7 @@ def _page_doc(
             else:
                 head, note_lead = editorial, ""
             body_regions = head + "".join(_table_html(t) for t in tables)
+            body_regions += _TABLE_PROSE.get(page_nr, "")
             long_note = _TABLE_NOTE_LONG.get(page_nr)
             if long_note or note_lead:
                 summ = _TABLE_NOTE_SUMMARY.get(page_nr, "Metodická poznámka — rozbor a ověření")
@@ -1254,6 +1279,12 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .table-cap .table-note{color:#8a7d63;font-weight:normal;font-size:.78rem}
 .table-cap .table-note.verified{color:#2f6b3a}
 .ms-heading{margin:.3rem 0 .7rem;line-height:1.55}
+.ms-prose{margin:1rem 0;padding:.6rem .8rem;background:#f7f3ea;border-left:3px solid #c9b88a;
+  line-height:1.6}
+.ms-prose-label{display:block;font-family:system-ui,sans-serif;font-size:.72rem;
+  text-transform:uppercase;letter-spacing:.04em;color:#8a7d63;margin-bottom:.3rem}
+.ms-prose p{margin:.45rem 0}
+.ms-prose-ed{font-size:.86rem;color:#6b6256}
 .zod{font-variant-emoji:text;font-family:"Segoe UI Symbol","Noto Sans Symbols2","DejaVu Sans",
   "Apple Symbols",serif;color:#5a4a2a}
 .ms-heading-label{display:block;font-family:system-ui,sans-serif;font-size:.72rem;
