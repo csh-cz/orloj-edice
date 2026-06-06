@@ -1029,24 +1029,26 @@ def _page_doc(
             )
             vcls = "table-note verified" if note.startswith("✓") else "table-note"
             heading_tx = _TABLE_HEADING_TX.get(page_nr)
-            editorial = (
-                f'<p class="table-cap"><b>{_esc(cap)}</b> '
-                f'<span class="{vcls}">— {_esc(note)}</span></p>'
-                if cap else ""
-            )
+            cap_html = f'<p class="table-cap">{_esc(cap)}</p>' if cap else ""
+            # Above the table: the transcribed manuscript heading if we have one (original
+            # text), otherwise the editorial caption. The ✓/verification note and any
+            # method commentary always go BELOW, into the collapsible note.
             if heading_tx:
-                # Přepis záhlaví NAD tabulku; editorský popis dolů do poznámky.
-                head, note_lead = heading_tx, editorial
+                head = heading_tx
+                cap_in_note = cap_html  # editorial caption belongs to the note here
             else:
-                head, note_lead = editorial, ""
+                head = cap_html
+                cap_in_note = ""
+            verify_html = f'<p class="{vcls}">{_esc(note)}</p>' if cap else ""
             body_regions = head + "".join(_table_html(t) for t in tables)
             body_regions += _TABLE_PROSE.get(page_nr, "")
             long_note = _TABLE_NOTE_LONG.get(page_nr)
-            if long_note or note_lead:
+            note_body = cap_in_note + verify_html + (long_note or "")
+            if note_body.strip():
                 summ = _TABLE_NOTE_SUMMARY.get(page_nr, "Metodická poznámka — rozbor a ověření")
                 body_regions += (
                     f'<details class="method-note"><summary>{_esc(summ)}</summary>'
-                    f"{note_lead}{long_note or ''}</details>"
+                    f"{note_body}</details>"
                 )
         elif table_page:
             link = (
@@ -1446,28 +1448,30 @@ body.layout-flow .lno{display:none}
 body.layout-flow .ln:target{box-shadow:none}
 body.layout-flow .pbreak{display:block;height:0;margin-bottom:.85rem}
 /* editorial-apparatus marks ([?], expansions); hidden by the „ediční značky" toggle */
-.ed{color:#a07b3c}
+.ed{color:#2f6b3a}
 body.app-off .ed{display:none}
 .ed-note{margin:.9rem 0 .2rem;font-family:system-ui,sans-serif;font-size:.82rem;
-  line-height:1.55;background:#f4efe2;border-left:3px solid #b9923f;border-radius:3px;
-  padding:.1rem .7rem}
-.ed-note summary{cursor:pointer;font-weight:600;color:#8a6a2e;padding:.35rem 0}
+  line-height:1.55;background:#eaf3ec;border-left:3px solid #2f6b3a;border-radius:3px;
+  padding:.1rem .7rem;color:#39573f}
+.ed-note summary{cursor:pointer;font-weight:600;color:#2f6b3a;padding:.35rem 0}
 .ed-note p{margin:.4rem 0}
 body.app-off .ed-note,body.app-off .clean-flag{display:none}
 .heading{font-size:1.05rem;font-weight:bold}
 .table-todo{font-family:system-ui,sans-serif;font-size:.85rem;color:#6b6256;background:#f6f1e4;
   border:1px dashed #cdbf9f;border-radius:4px;padding:.7rem .9rem}
 .table-todo a{color:#7a5c2e}
-.table-cap{font-family:system-ui,sans-serif;font-size:.85rem;margin:.2rem 0 .5rem}
-.table-cap .table-note{color:#8a7d63;font-weight:normal;font-size:.78rem}
-.table-cap .table-note.verified{color:#2f6b3a}
+/* editorial table caption (not original text) → green, like the side ed-notes */
+.table-cap{font-family:system-ui,sans-serif;font-size:.85rem;margin:.2rem 0 .6rem;
+  color:#2f6b3a;font-weight:600}
+.table-note{font-family:system-ui,sans-serif;font-size:.82rem;color:#39573f;margin:.45rem 0}
+.table-note.verified{color:#2f6b3a}
 .ms-heading{margin:.3rem 0 .7rem;line-height:1.55}
 .ms-prose{margin:1rem 0;padding:.6rem .8rem;background:#f7f3ea;border-left:3px solid #c9b88a;
   line-height:1.6}
 .ms-prose-label{display:block;font-family:system-ui,sans-serif;font-size:.72rem;
   text-transform:uppercase;letter-spacing:.04em;color:#8a7d63;margin-bottom:.3rem}
 .ms-prose p{margin:.45rem 0}
-.ms-prose-ed{font-size:.86rem;color:#6b6256}
+.ms-prose-ed{font-size:.86rem;color:#39573f}
 .zod{font-variant-emoji:text;font-family:"Segoe UI Symbol","Noto Sans Symbols2","DejaVu Sans",
   "Apple Symbols",serif;color:#5a4a2a}
 .ms-heading-label{display:block;font-family:system-ui,sans-serif;font-size:.72rem;
