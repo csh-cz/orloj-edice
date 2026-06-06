@@ -103,6 +103,13 @@ elevatione Poli N graduum*“.
       mizině, Bechyně, „Dvadcet kop", …).
 
 ## Web / edice — prezentace a práva
+- [x] **Edičně-typografická vrstva** (hotovo): tři nezávislé osy v hlavičce
+      (Znění: diplomatické/normalizované/Teige · Sazba: řádky/čtení · ediční značky on/off),
+      číslování řádků po 5 s citovatelnou kotvou `pNNlN` (klik = kopie citace „fol. N, ř. M"),
+      strana čísel zrcadlí recto/verso opačně k margináliím (žádná kolize), závěrečné
+      `[Ediční pozn.]` vyzvednuté do kolabovaného `<details>`. Vše perzistováno v localStorage.
+- [ ] **Pravá diplomatická řádková věrnost (1:1 s rukopisem)** — clean řádky ≈ fyzické
+      řádky, ne přesně; přesné zarovnání dodá až řádkový GT z eScriptoria (viz Kraken sekce).
 - [ ] **Paleografka Listu purkmistra (f51–52)** — dohledat jméno; potvrdit, zda chce
       kredit → nahradit „autorka k doplnění", případně nechat bez kreditu.
 - [ ] **Kredity „a další"** — případně doplnit (Stan Marušák; konkrétní členové ČSH).

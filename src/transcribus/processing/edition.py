@@ -130,8 +130,10 @@ def _line_html(
             f'<span class="norm">{nor}</span></span>'
         )
     lid = f"p{page_nr}l{n}"
+    cls = "lno show" if n % 5 == 0 else "lno"
     gutter = (
-        f'<a class="lno" href="#{lid}">{n}</a>' if n % 5 == 0 else '<span class="lno"></span>'
+        f'<a class="{cls}" href="#{lid}" data-n="{n}" '
+        f'title="Kopírovat citaci řádku">{n}</a>'
     )
     return (
         f'<span class="ln" id="{lid}" data-n="{n}">{gutter}'
@@ -156,7 +158,10 @@ def _clean_block(main_lines: list[str], page_nr: int, do_norm: bool) -> str:
             in_ed = True
         (ed_lines if in_ed else text_lines).append(ln)
 
-    out = ['<span class="clean-flag">opravený přepis</span>', '<div class="lines">']
+    out = [
+        '<span class="clean-flag">opravený přepis</span>',
+        f'<div class="lines" data-folio="{page_nr}">',
+    ]
     n = 0
     for ln in text_lines:
         if not ln.strip():
@@ -1040,12 +1045,16 @@ def _page_doc(
         body = '<div class="empty">[prázdná strana / vazba]</div>'
 
     body = _zodiac_textstyle(body)
+    # Line numbers sit in the margin OPPOSITE the marginalia (which go verso→left,
+    # recto→right) so the two never collide: recto (odd) → numbers left, verso (even)
+    # → numbers right. A recto/verso parity in the spirit of the marginalia placement.
+    numside = "numside-left" if page_nr % 2 == 1 else "numside-right"
     return f"""<!doctype html>
 <html lang="cs"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>fol. {page_nr:04d} — {_esc(title)}</title>
 <link rel="stylesheet" href="assets/edition.css"></head>
-<body class="mode-dipl layout-lined app-on">
+<body class="mode-dipl layout-lined app-on {numside}">
 <header>
   <a class="home" href="index.html">≡</a>
   <h1>{_esc(title)}</h1>
@@ -1352,13 +1361,20 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .ln{display:block;position:relative;padding-left:2.4rem;line-height:1.75}
 .lno{position:absolute;left:0;width:1.9rem;text-align:right;top:.15em;
   font-family:system-ui,sans-serif;font-size:.66rem;color:#b6a982;user-select:none;
-  text-decoration:none}
+  text-decoration:none;cursor:pointer;opacity:0;transition:opacity .12s}
+.lno.show{opacity:.85}
+.ln:hover .lno{opacity:.85}
 a.lno:hover{color:var(--accent);text-decoration:underline}
+/* number side mirrors recto/verso (set on <body>); default = left */
+body.numside-right .ln{padding-left:0;padding-right:2.4rem}
+body.numside-right .lno{left:auto;right:0;text-align:left}
 .ln:target{background:#fbf1cf;border-radius:2px;box-shadow:0 0 0 3px #fbf1cf}
+.ln.flash{animation:lnflash 1.1s ease-out}
+@keyframes lnflash{0%{background:#f4dd8a}100%{background:transparent}}
 .pbreak{display:block;height:.7rem}
 /* čtecí (continuous) sazba: join lines into justified prose */
 body.layout-flow .lines{text-align:justify;line-height:1.8;hyphens:auto}
-body.layout-flow .ln{display:inline;padding-left:0}
+body.layout-flow .ln{display:inline;padding-left:0;padding-right:0}
 body.layout-flow .ln::after{content:" "}
 body.layout-flow .lno{display:none}
 body.layout-flow .ln:target{box-shadow:none}
@@ -1484,6 +1500,11 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .toc .snip{color:#8a8071}
 footer{max-width:62rem;margin:0 auto;text-align:center;color:#6b6256;font-size:.72rem;padding:1.5rem;
   font-family:system-ui,sans-serif}
+#ed-toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%) translateY(1rem);
+  background:#2b2b2b;color:#f7f3ea;font-family:system-ui,sans-serif;font-size:.8rem;
+  padding:.5rem .95rem;border-radius:6px;opacity:0;pointer-events:none;z-index:20;
+  transition:opacity .18s,transform .18s;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+#ed-toast.show{opacity:.97;transform:translateX(-50%) translateY(0)}
 """
 
 _JS = """
@@ -1510,6 +1531,27 @@ _JS = """
     for(const r of document.querySelectorAll('input[name=mode]'))r.addEventListener('change',()=>setMode(r.value));
     for(const r of document.querySelectorAll('input[name=layout]'))r.addEventListener('change',()=>setLayout(r.value));
     const c=document.getElementById('appToggle');if(c)c.addEventListener('change',()=>setApp(c.checked));
+    let tt;
+    function toast(msg){
+      let el=document.getElementById('ed-toast');
+      if(!el){el=document.createElement('div');el.id='ed-toast';document.body.appendChild(el);}
+      el.textContent=msg;el.classList.add('show');
+      clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),1900);}
+    document.addEventListener('click',function(e){
+      const a=e.target.closest('a.lno');if(!a)return;
+      e.preventDefault();
+      const id=a.getAttribute('href').slice(1);
+      const wrap=a.closest('.lines');const fol=wrap?wrap.getAttribute('data-folio'):'';
+      const ref='fol. '+fol+', ř. '+a.getAttribute('data-n');
+      const url=location.href.split('#')[0]+'#'+id;
+      try{history.replaceState(null,'','#'+id)}catch(_){location.hash=id;}
+      const t=document.getElementById(id);
+      if(t){t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash');}
+      const cite=ref+' — '+url;
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(cite).then(()=>toast('Zkopírováno: '+ref)).catch(()=>toast(ref));
+      }else toast(ref);
+    });
     document.addEventListener('keydown',function(e){
       if(e.target.tagName==='INPUT')return;
       if(e.key==='ArrowLeft'){const a=document.querySelector('.pager .prev');if(a&&!a.hidden)location.href=a.getAttribute('href');}
