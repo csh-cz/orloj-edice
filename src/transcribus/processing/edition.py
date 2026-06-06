@@ -684,13 +684,35 @@ def _marginalia_html(marg_lines: list[str], page_nr: int) -> str:
     text = " ".join(ln.strip() for ln in marg_lines).strip()
     if "okraji:]" in text:
         text = text.split("okraji:]", 1)[1].strip()
-    side = "side-left" if page_nr % 2 == 0 else "side-right"
     later = " ".join(marg_lines)
-    cls = "marginalia later-present" if ("Pozdější ruk" in later or "pozdější ruk" in later) else "marginalia"
+    cls = "m-note m-orig later" if ("Pozdější ruk" in later or "pozdější ruk" in later) else "m-note m-orig"
     return (
-        f'<aside class="{cls} {side}">'
+        f'<div class="{cls}">'
         '<span class="mlabel">Přípisky na okraji</span>'
-        f"<p>{_esc(text)}</p></aside>"
+        f"<p>{_esc(text)}</p></div>"
+    )
+
+
+# Editorial side-notes placed in the same outer margin as the scribal marginalia,
+# but colour-distinguished (green) so the reader never mistakes a modern editorial
+# remark for an original gloss. Short notes only; long method notes stay in the
+# collapsible block under the text. Keyed by folio; ready to be populated.
+_MARG_ED: dict[int, list[str]] = {
+    22: [
+        "Glosy na tomto okraji jsou tematický rejstřík (rukou písaře M. Carchesia, "
+        "1587) — orientační záhlaví odstavců, ne nový obsah."
+    ],
+}
+
+
+def _marg_ed_html(page_nr: int) -> str:
+    notes = _MARG_ED.get(page_nr)
+    if not notes:
+        return ""
+    items = "".join(f"<p>{_apparatus(_esc(t))}</p>" for t in notes)
+    return (
+        '<div class="m-note m-ed"><span class="mlabel">Ediční poznámka na okraji</span>'
+        f"{items}</div>"
     )
 
 
@@ -1037,18 +1059,31 @@ def _page_doc(
             fold(w) for r in regions for line in r.lines for w in line.split() if len(fold(w)) >= 4
         }
         teige = _teige_html(teige_passage, page_folded)
+        if clean_lines:
+            # True two-zone leaf: text column + a dedicated outer margin (recto→right,
+            # verso→left) holding the scribal marginalia and (colour-distinct) editorial
+            # side-notes — mirroring the manuscript page, not floated inside the text.
+            vcls = "verso" if page_nr % 2 == 0 else "recto"
+            margin_col = marginalia + _marg_ed_html(page_nr)
+            folio = (
+                f'<div class="folio folio-2col {vcls}">'
+                f'<div class="textcol">{fig_note}{body_regions}</div>'
+                f'<aside class="margin-col">{margin_col}</aside></div>'
+            )
+        else:
+            folio = f'<div class="folio">{marginalia}{fig_note}{body_regions}</div>'
         body = (
-            f'<div class="folio">{marginalia}{fig_note}{body_regions}</div>'
-            f'<div class="teige-pane"><div class="teige-label">Teige (1570), přibližné zarovnání</div>{teige}</div>'
+            folio
+            + '<div class="teige-pane"><div class="teige-label">Teige (1570), '
+            f"přibližné zarovnání</div>{teige}</div>"
         )
     else:
         body = '<div class="empty">[prázdná strana / vazba]</div>'
 
     body = _zodiac_textstyle(body)
-    # Line numbers sit in the margin OPPOSITE the marginalia (which go verso→left,
-    # recto→right) so the two never collide: recto (odd) → numbers left, verso (even)
-    # → numbers right. A recto/verso parity in the spirit of the marginalia placement.
-    numside = "numside-left" if page_nr % 2 == 1 else "numside-right"
+    # Line numbers sit on the margin side, between text and the margin column:
+    # recto (odd) → right, verso (even) → left.
+    numside = "numside-right" if page_nr % 2 == 1 else "numside-left"
     return f"""<!doctype html>
 <html lang="cs"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1345,17 +1380,37 @@ header .home{font-size:1.3rem;text-decoration:none;color:var(--accent)}
 main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .folio{background:var(--paper);border:1px solid #cdbf9f;border-radius:4px;padding:1.2rem 1.6rem;
   box-shadow:0 1px 3px rgba(0,0,0,.12)}
+/* two-zone leaf: text column + a dedicated outer margin (recto→right, verso→left),
+   mirroring the manuscript page; marginalia & editorial side-notes live there. */
+.folio-2col{display:grid;gap:1.7rem;justify-content:center;align-items:start;
+  grid-template-columns:minmax(26rem,40rem) 14.5rem}
+.folio-2col.verso{grid-template-columns:14.5rem minmax(26rem,40rem)}
+.folio-2col.verso .textcol{grid-column:2;grid-row:1}
+.folio-2col.verso .margin-col{grid-column:1;grid-row:1}
+.textcol{min-width:0}
+.margin-col{min-width:0;font-family:system-ui,sans-serif}
+.margin-col:empty{display:none}
 .region{margin:0 0 .6rem}
-.marginalia{font-family:system-ui,sans-serif;font-size:.78rem;line-height:1.45;color:#5a5046;
-  background:#f5efe0;border:1px solid #d8ccae;border-radius:4px;
-  padding:.45rem .65rem;width:31%;margin:.15rem 0 .7rem}
-.marginalia.side-right{float:right;margin-left:1.1rem;clear:right}
-.marginalia.side-left{float:left;margin-right:1.1rem;clear:left}
-.marginalia .mlabel{display:block;font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;
-  color:#9a8d70;margin-bottom:.2rem}
-.marginalia p{margin:0}
-.marginalia.later-present{border-left:3px solid #5a6b8c}
-@media(max-width:640px){.marginalia{float:none;width:auto;margin:.4rem 0}}
+/* notes in the outer margin — original scribal glosses (brown) vs editorial (green) */
+.m-note{font-size:.76rem;line-height:1.5;border-radius:4px;padding:.45rem .62rem;margin:0 0 .7rem}
+.m-note .mlabel{display:block;font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;
+  margin-bottom:.22rem}
+.m-note p{margin:.25rem 0 0}
+.m-note p:first-of-type{margin-top:0}
+.m-orig{background:#f5efe0;border:1px solid #d8ccae;color:#5a5046}
+.m-orig .mlabel{color:#9a8d70}
+.m-orig.later{border-left:3px solid #5a6b8c}
+.m-ed{background:#eaf3ec;border:1px solid #bcd9c2;border-left:3px solid #2f6b3a;color:#39573f}
+.m-ed .mlabel{color:#2f6b3a}
+/* fallback for raw-region marginalia on non-clean folios */
+.region.marginalia{font-family:system-ui,sans-serif;font-size:.8rem;color:#5a5046;background:#f5efe0;
+  border:1px solid #d8ccae;border-radius:4px;padding:.45rem .65rem;margin:.4rem 0}
+@media(max-width:760px){
+  .folio-2col,.folio-2col.verso{grid-template-columns:1fr}
+  .folio-2col.verso .textcol,.folio-2col.verso .margin-col{grid-column:1;grid-row:auto}
+  body.numside-right .ln{padding-left:2.4rem;padding-right:0}
+  body.numside-right .lno{left:0;right:auto;text-align:right}
+}
 /* --- lineated transcription with margin line numbers (citable) --- */
 .lines{position:relative}
 .ln{display:block;position:relative;padding-left:2.4rem;line-height:1.75}
