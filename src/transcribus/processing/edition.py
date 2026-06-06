@@ -1081,15 +1081,12 @@ def _page_doc(
         body = '<div class="empty">[prázdná strana / vazba]</div>'
 
     body = _zodiac_textstyle(body)
-    # Line numbers sit on the margin side, between text and the margin column:
-    # recto (odd) → right, verso (even) → left.
-    numside = "numside-right" if page_nr % 2 == 1 else "numside-left"
     return f"""<!doctype html>
 <html lang="cs"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>fol. {page_nr:04d} — {_esc(title)}</title>
 <link rel="stylesheet" href="assets/edition.css"></head>
-<body class="mode-dipl layout-lined app-on {numside}">
+<body class="mode-dipl layout-lined app-on">
 <header>
   <a class="home" href="index.html">≡</a>
   <h1>{_esc(title)}</h1>
@@ -1114,7 +1111,7 @@ def _page_doc(
   <a class="next" href="{next_link}"{'' if next_link else ' hidden'}>další →</a>
 </nav>
 <div class="section-label">{_esc(section_label)}</div>
-<main>{body}{scan_embed}</main>
+<main class="leaf">{body}{scan_embed}</main>
 <footer>Diplomatický přepis (Transkribus HTR, model 263129). Normalizace heuristická — nutná korektura.
 Teige: edice 1901, public domain. Vyobrazení ani skeny se zde nereprodukují — odkazy „sken"
 vedou na stabilní permalink archiválie v Archivu hlavního města Prahy (katalog.ahmp.cz);
@@ -1372,19 +1369,24 @@ header .home{font-size:1.3rem;text-decoration:none;color:var(--accent)}
 .modes label{cursor:pointer;font-family:system-ui,sans-serif;font-size:.8rem}
 .modes .ctl-app{font-family:system-ui,sans-serif;font-size:.8rem;cursor:pointer}
 .modes input{vertical-align:middle}
-.pager{max-width:62rem;margin:.6rem auto 0;padding:0 1rem;display:flex;justify-content:space-between;
+.pager{max-width:min(97vw,86rem);margin:.6rem auto 0;padding:0 1rem;display:flex;justify-content:space-between;
   align-items:center;font-family:system-ui,sans-serif;font-size:.85rem}
 .pager a{color:var(--accent);text-decoration:none}
 .pager .folno{color:#6b6256}
 .pager a[hidden]{visibility:hidden}
 main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
+/* folio pages use (almost) the full screen width so lines need not wrap */
+main.leaf{max-width:min(97vw,86rem)}
 .folio{background:var(--paper);border:1px solid #cdbf9f;border-radius:4px;padding:1.2rem 1.6rem;
   box-shadow:0 1px 3px rgba(0,0,0,.12)}
 /* two-zone leaf: text column + a dedicated outer margin (recto→right, verso→left),
    mirroring the manuscript page; marginalia & editorial side-notes live there. */
-.folio-2col{display:grid;gap:1.7rem;justify-content:center;align-items:start;
-  grid-template-columns:minmax(26rem,40rem) 14.5rem}
-.folio-2col.verso{grid-template-columns:14.5rem minmax(26rem,40rem)}
+/* Text column is wide enough that a manuscript line fits without wrapping
+   (≈99 % of lines ≤ 121 chars → ~64rem incl. the number gutter); the outer
+   margin stays a fixed 15rem. Both hug the left so the margin sits near the text. */
+.folio-2col{display:grid;gap:1.7rem;align-items:start;justify-content:start;
+  grid-template-columns:minmax(0,64rem) 15rem}
+.folio-2col.verso{grid-template-columns:15rem minmax(0,64rem)}
 .folio-2col.verso .textcol{grid-column:2;grid-row:1}
 .folio-2col.verso .margin-col{grid-column:1;grid-row:1}
 .textcol{min-width:0}
@@ -1408,8 +1410,6 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 @media(max-width:760px){
   .folio-2col,.folio-2col.verso{grid-template-columns:1fr}
   .folio-2col.verso .textcol,.folio-2col.verso .margin-col{grid-column:1;grid-row:auto}
-  body.numside-right .ln{padding-left:2.4rem;padding-right:0}
-  body.numside-right .lno{left:0;right:auto;text-align:right}
 }
 /* --- lineated transcription with margin line numbers (citable) --- */
 .lines{position:relative}
@@ -1420,15 +1420,13 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .lno.show{opacity:.85}
 .ln:hover .lno{opacity:.85}
 a.lno:hover{color:var(--accent);text-decoration:underline}
-/* number side mirrors recto/verso (set on <body>); default = left */
-body.numside-right .ln{padding-left:0;padding-right:2.4rem}
-body.numside-right .lno{left:auto;right:0;text-align:left}
 .ln:target{background:#fbf1cf;border-radius:2px;box-shadow:0 0 0 3px #fbf1cf}
 .ln.flash{animation:lnflash 1.1s ease-out}
 @keyframes lnflash{0%{background:#f4dd8a}100%{background:transparent}}
 .pbreak{display:block;height:.7rem}
-/* čtecí (continuous) sazba: join lines into justified prose */
-body.layout-flow .lines{text-align:justify;line-height:1.8;hyphens:auto}
+/* čtecí (continuous) sazba: join lines into justified prose at a comfortable
+   measure (the wide no-wrap column is for the lineated „řádky" view only) */
+body.layout-flow .lines{text-align:justify;line-height:1.8;hyphens:auto;max-width:46rem}
 body.layout-flow .ln{display:inline;padding-left:0;padding-right:0}
 body.layout-flow .ln::after{content:" "}
 body.layout-flow .lno{display:none}
@@ -1495,7 +1493,7 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .teige-text{line-height:1.6;color:#444}
 .teige-text .hit{background:#eef3d8}
 .teige-empty{color:#a99;font-style:italic}
-.section-label{max-width:62rem;margin:.3rem auto 0;padding:0 1rem;font-family:system-ui,sans-serif;
+.section-label{max-width:min(97vw,86rem);margin:.3rem auto 0;padding:0 1rem;font-family:system-ui,sans-serif;
   font-size:.78rem;color:#7a5c2e;text-transform:uppercase;letter-spacing:.04em}
 .tiraz{font-family:system-ui,sans-serif;font-size:.85rem;line-height:1.5;background:#f6f1e4;
   border:1px solid #cdbf9f;border-radius:5px;padding:.8rem 1.1rem;margin:0 0 1.4rem}
