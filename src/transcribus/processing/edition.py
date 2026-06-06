@@ -83,6 +83,17 @@ def _esc(s: str) -> str:
     return html.escape(s, quote=False)
 
 
+# Editorial apparatus inside the running text: everything in square brackets is an
+# editorial intervention (expansion „[Novembris]", uncertain reading „[?]", gloss
+# „[= 116]"). Wrap each so the reader can dim/hide them (the „Ediční značky" toggle)
+# for uninterrupted reading. Applied to already-escaped HTML (brackets aren't escaped).
+_ED_RE = re.compile(r"\[[^\]]*\]")
+
+
+def _apparatus(escaped: str) -> str:
+    return _ED_RE.sub(lambda m: f'<span class="ed">{m.group(0)}</span>', escaped)
+
+
 _ZODIAC = "♈♉♊♋♌♍♎♏♐♑♒♓"
 
 
@@ -101,14 +112,68 @@ def _zodiac_textstyle(s: str) -> str:
 _NO_NORMALIZE: frozenset[int] = frozenset({4, 51, 52, 54, 62, 80})
 
 
-def _line_html(line: str, *, normalize: bool = True) -> str:
+def _line_html(
+    line: str, *, normalize: bool = True, page_nr: int = 0, n: int | None = None
+) -> str:
+    """Render one transcription line (diplomatic + normalized span).
+
+    When ``n`` is given the line gets a citable id (``pNNlN``) and a margin
+    line-number gutter; the number itself is shown only every 5th line (edition
+    convention), but every line is individually anchorable for citation.
+    """
     norm = normalize_text(line) if normalize else line
-    return (
-        '<span class="ln">'
-        f'<span class="dipl">{_esc(line)}</span>'
-        f'<span class="norm">{_esc(norm)}</span>'
-        "</span>"
+    dip = _apparatus(_esc(line))
+    nor = _apparatus(_esc(norm))
+    if n is None:
+        return (
+            f'<span class="ln"><span class="dipl">{dip}</span>'
+            f'<span class="norm">{nor}</span></span>'
+        )
+    lid = f"p{page_nr}l{n}"
+    gutter = (
+        f'<a class="lno" href="#{lid}">{n}</a>' if n % 5 == 0 else '<span class="lno"></span>'
     )
+    return (
+        f'<span class="ln" id="{lid}" data-n="{n}">{gutter}'
+        f'<span class="dipl">{dip}</span>'
+        f'<span class="norm">{nor}</span></span>'
+    )
+
+
+def _clean_block(main_lines: list[str], page_nr: int, do_norm: bool) -> str:
+    """Render corrected clean text as numbered lines + a collapsed editorial note.
+
+    Blank lines become paragraph breaks. Trailing ``[Ediční pozn.: …]`` / ``[Pozn. …]``
+    lines are lifted out of the running text into a collapsible apparatus block so they
+    don't interrupt reading.
+    """
+    ed_start = re.compile(r"^\[(?:[Ee]diční pozn|[Pp]ozn[.:])")
+    text_lines: list[str] = []
+    ed_lines: list[str] = []
+    in_ed = False
+    for ln in main_lines:
+        if not in_ed and ed_start.match(ln.lstrip()):
+            in_ed = True
+        (ed_lines if in_ed else text_lines).append(ln)
+
+    out = ['<span class="clean-flag">opravený přepis</span>', '<div class="lines">']
+    n = 0
+    for ln in text_lines:
+        if not ln.strip():
+            out.append('<span class="pbreak"></span>')
+            continue
+        n += 1
+        out.append(_line_html(ln, normalize=do_norm, page_nr=page_nr, n=n))
+    out.append("</div>")
+
+    ed_text = " ".join(s.strip() for s in ed_lines if s.strip())
+    if ed_text:
+        ed_text = re.sub(r"^\[(?:[Ee]diční pozn|[Pp]ozn)[.:\s]*", "", ed_text).rstrip("] ")
+        out.append(
+            '<details class="ed-note"><summary>Ediční poznámka</summary>'
+            f"<p>{_apparatus(_esc(ed_text))}</p></details>"
+        )
+    return "".join(out)
 
 
 def _region_html(region: TextRegion) -> str:
@@ -915,11 +980,7 @@ def _page_doc(
         if clean_lines:
             main_lines, marg_lines = _split_marginalia(clean_lines)
             do_norm = page_nr not in _NO_NORMALIZE
-            body_regions = (
-                '<span class="clean-flag">opravený přepis</span><p class="region paragraph">'
-                + "\n".join(_line_html(line, normalize=do_norm) for line in main_lines if line)
-                + "</p>"
-            )
+            body_regions = _clean_block(main_lines, page_nr, do_norm)
             marginalia = _marginalia_html(marg_lines, page_nr)
         elif tables:
             cap = _TABLE_CAPTIONS.get(page_nr)
@@ -984,14 +1045,23 @@ def _page_doc(
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>fol. {page_nr:04d} — {_esc(title)}</title>
 <link rel="stylesheet" href="assets/edition.css"></head>
-<body class="mode-dipl">
+<body class="mode-dipl layout-lined app-on">
 <header>
   <a class="home" href="index.html">≡</a>
   <h1>{_esc(title)}</h1>
   <div class="modes">
-    <label><input type="radio" name="mode" value="dipl" checked> Diplomatický</label>
-    <label><input type="radio" name="mode" value="norm"> Normalizovaný</label>
-    <label><input type="radio" name="mode" value="teige"> Teige</label>
+    <span class="ctl">
+      <span class="ctl-lbl">Znění</span>
+      <label><input type="radio" name="mode" value="dipl" checked> diplomatické</label>
+      <label><input type="radio" name="mode" value="norm"> normalizované</label>
+      <label><input type="radio" name="mode" value="teige"> Teige</label>
+    </span>
+    <span class="ctl">
+      <span class="ctl-lbl">Sazba</span>
+      <label><input type="radio" name="layout" value="lined" checked> řádky</label>
+      <label><input type="radio" name="layout" value="flow"> čtení</label>
+    </span>
+    <label class="ctl-app"><input type="checkbox" id="appToggle" checked> ediční značky</label>
   </div>
 </header>
 <nav class="pager">
@@ -1250,7 +1320,14 @@ header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px
   padding:.5rem 1rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
 header h1{font-size:1rem;margin:0;flex:1 1 auto}
 header .home{font-size:1.3rem;text-decoration:none;color:var(--accent)}
-.modes label{margin-right:.7rem;cursor:pointer;font-family:system-ui,sans-serif;font-size:.82rem}
+.modes{display:flex;gap:.9rem;align-items:center;flex-wrap:wrap}
+.modes .ctl{display:inline-flex;align-items:center;gap:.5rem;padding:.1rem .55rem;
+  background:#f1ead8;border:1px solid #ddd0ad;border-radius:6px}
+.modes .ctl-lbl{font-family:system-ui,sans-serif;font-size:.62rem;text-transform:uppercase;
+  letter-spacing:.05em;color:#9a8d70}
+.modes label{cursor:pointer;font-family:system-ui,sans-serif;font-size:.8rem}
+.modes .ctl-app{font-family:system-ui,sans-serif;font-size:.8rem;cursor:pointer}
+.modes input{vertical-align:middle}
 .pager{max-width:62rem;margin:.6rem auto 0;padding:0 1rem;display:flex;justify-content:space-between;
   align-items:center;font-family:system-ui,sans-serif;font-size:.85rem}
 .pager a{color:var(--accent);text-decoration:none}
@@ -1270,7 +1347,31 @@ main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 .marginalia p{margin:0}
 .marginalia.later-present{border-left:3px solid #5a6b8c}
 @media(max-width:640px){.marginalia{float:none;width:auto;margin:.4rem 0}}
-.ln{display:block;line-height:1.6}
+/* --- lineated transcription with margin line numbers (citable) --- */
+.lines{position:relative}
+.ln{display:block;position:relative;padding-left:2.4rem;line-height:1.75}
+.lno{position:absolute;left:0;width:1.9rem;text-align:right;top:.15em;
+  font-family:system-ui,sans-serif;font-size:.66rem;color:#b6a982;user-select:none;
+  text-decoration:none}
+a.lno:hover{color:var(--accent);text-decoration:underline}
+.ln:target{background:#fbf1cf;border-radius:2px;box-shadow:0 0 0 3px #fbf1cf}
+.pbreak{display:block;height:.7rem}
+/* čtecí (continuous) sazba: join lines into justified prose */
+body.layout-flow .lines{text-align:justify;line-height:1.8;hyphens:auto}
+body.layout-flow .ln{display:inline;padding-left:0}
+body.layout-flow .ln::after{content:" "}
+body.layout-flow .lno{display:none}
+body.layout-flow .ln:target{box-shadow:none}
+body.layout-flow .pbreak{display:block;height:0;margin-bottom:.85rem}
+/* editorial-apparatus marks ([?], expansions); hidden by the „ediční značky" toggle */
+.ed{color:#a07b3c}
+body.app-off .ed{display:none}
+.ed-note{margin:.9rem 0 .2rem;font-family:system-ui,sans-serif;font-size:.82rem;
+  line-height:1.55;background:#f4efe2;border-left:3px solid #b9923f;border-radius:3px;
+  padding:.1rem .7rem}
+.ed-note summary{cursor:pointer;font-weight:600;color:#8a6a2e;padding:.35rem 0}
+.ed-note p{margin:.4rem 0}
+body.app-off .ed-note,body.app-off .clean-flag{display:none}
 .heading{font-size:1.05rem;font-weight:bold}
 .table-todo{font-family:system-ui,sans-serif;font-size:.85rem;color:#6b6256;background:#f6f1e4;
   border:1px dashed #cdbf9f;border-radius:4px;padding:.7rem .9rem}
@@ -1387,14 +1488,28 @@ footer{max-width:62rem;margin:0 auto;text-align:center;color:#6b6256;font-size:.
 
 _JS = """
 (function(){
-  function apply(m){document.body.className='mode-'+m;
+  const B=document.body;
+  function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function setMode(m){
+    B.classList.remove('mode-dipl','mode-norm','mode-teige');B.classList.add('mode-'+m);
     for(const r of document.querySelectorAll('input[name=mode]'))r.checked=(r.value===m);
-    try{localStorage.setItem('edmode',m)}catch(e){}}
-  const saved=(function(){try{return localStorage.getItem('edmode')}catch(e){return null}})();
+    store('edmode',m);}
+  function setLayout(l){
+    B.classList.remove('layout-lined','layout-flow');B.classList.add('layout-'+l);
+    for(const r of document.querySelectorAll('input[name=layout]'))r.checked=(r.value===l);
+    store('edlayout',l);}
+  function setApp(on){
+    B.classList.toggle('app-off',!on);
+    const c=document.getElementById('appToggle');if(c)c.checked=on;
+    store('edapp',on?'1':'0');}
   document.addEventListener('DOMContentLoaded',function(){
-    if(saved)apply(saved);
-    for(const r of document.querySelectorAll('input[name=mode]'))
-      r.addEventListener('change',()=>apply(r.value));
+    const sm=load('edmode');if(sm)setMode(sm);
+    const sl=load('edlayout');if(sl)setLayout(sl);
+    const sa=load('edapp');if(sa!==null)setApp(sa==='1');
+    for(const r of document.querySelectorAll('input[name=mode]'))r.addEventListener('change',()=>setMode(r.value));
+    for(const r of document.querySelectorAll('input[name=layout]'))r.addEventListener('change',()=>setLayout(r.value));
+    const c=document.getElementById('appToggle');if(c)c.addEventListener('change',()=>setApp(c.checked));
     document.addEventListener('keydown',function(e){
       if(e.target.tagName==='INPUT')return;
       if(e.key==='ArrowLeft'){const a=document.querySelector('.pager .prev');if(a&&!a.hidden)location.href=a.getAttribute('href');}
