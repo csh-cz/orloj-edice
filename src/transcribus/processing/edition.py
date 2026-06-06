@@ -674,23 +674,36 @@ def _split_marginalia(lines: list[str]) -> tuple[list[str], list[str]]:
 
 
 def _marginalia_html(marg_lines: list[str], page_nr: int) -> str:
-    """Render the marginalia as a side note on the codicologically correct margin.
-
-    verso (even folio) → left margin, recto (odd) → right margin. Later-hand keepers'
-    notes (``[Pozdější rukou …]``) keep their editorial markers and get a distinct style.
+    """Render the scribal marginalia (brown box) and, if a modern editorial note is
+    embedded in the same block (``… — [Ediční pozn.: …]``), lift it into a separate
+    colour-distinct (green) box so the two are never mixed. Later-hand keepers' notes
+    (``[Pozdější rukou …]``) keep their markers and get the ``later`` accent.
     """
     if not marg_lines:
         return ""
     text = " ".join(ln.strip() for ln in marg_lines).strip()
     if "okraji:]" in text:
         text = text.split("okraji:]", 1)[1].strip()
-    later = " ".join(marg_lines)
-    cls = "m-note m-orig later" if ("Pozdější ruk" in later or "pozdější ruk" in later) else "m-note m-orig"
-    return (
-        f'<div class="{cls}">'
-        '<span class="mlabel">Přípisky na okraji</span>'
-        f"<p>{_esc(text)}</p></div>"
-    )
+    # Split off any embedded editorial note → own green box, scribal text stays brown.
+    ed_text = ""
+    parts = re.split(r"\[[Ee]diční pozn[.:\s]*", text, maxsplit=1)
+    if len(parts) > 1:
+        text = re.sub(r"\s*[—–-]\s*$", "", parts[0]).strip()
+        ed_text = parts[1].rstrip().rstrip("]").strip()
+    later = "Pozdější ruk" in text or "pozdější ruk" in text
+    cls = "m-note m-orig later" if later else "m-note m-orig"
+    out = ""
+    if text:
+        out += (
+            f'<div class="{cls}"><span class="mlabel">Přípisky na okraji</span>'
+            f"<p>{_esc(text)}</p></div>"
+        )
+    if ed_text:
+        out += (
+            '<div class="m-note m-ed"><span class="mlabel">Ediční poznámka na okraji</span>'
+            f"<p>{_apparatus(_esc(ed_text))}</p></div>"
+        )
+    return out
 
 
 # Editorial side-notes placed in the same outer margin as the scribal marginalia,
