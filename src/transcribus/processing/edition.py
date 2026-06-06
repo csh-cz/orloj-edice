@@ -98,7 +98,7 @@ def _zodiac_textstyle(s: str) -> str:
 
 # Folia, jejichž jazyk NENÍ čeština (latina, němčina) — česká normalizace by je zkomolila
 # (g→j apod.), takže se u nich „normalizovaný" pohled rovná diplomatickému.
-_NO_NORMALIZE: frozenset[int] = frozenset({4, 51, 52, 54, 80})
+_NO_NORMALIZE: frozenset[int] = frozenset({4, 51, 52, 54, 62, 80})
 
 
 def _line_html(line: str, *, normalize: bool = True) -> str:
