@@ -42,8 +42,12 @@ SPDX-License-Identifier: EUPL-1.2
         35 řádků (Velikonoce 22.III–25.IV), svátky = pevné posuny od Velikonoc (f58 96 %, f59 99 %
         shoda s OCR; zbytek = „9/10“→10); litera, zlatý počet (jul. PFM), epakta (103−E mod 30 + výjimka
         24/25/XXV), Advent dopočítány vzorcem. `tools/build_festa_table.py`, `tools/verify_festa_mobilia.py`.
-  - [ ] **f66** — epakty/novoluní po dnech roku.
-  - [ ] **f61** — úplný cell-grid (princip dekódován; dořešit registraci epakty 25/XXV).
+  - [ ] **f66** — epakty/novoluní po dnech roku (jediná zbývající tabule; Titan přečten, nutná jemná registrace).
+  - [x] **f61** — Tabula Intervalli Paschae gregoriánská — **HOTOVO A OVĚŘENO**: plný cell-grid
+        (epakty 30(*)…1 × nedělní písmena A–G), buňka = „týden doplněk“; týden = ⌊(greg. Velikonoce
+        od 1.III +16)/7⌋, doplněk = (35 pro A, jinak 34) − týden; epakta → velikonoční úplněk → 1. neděle.
+        Shoduje se se skenem buňka po buňce (epakta *,29,28,27,26·XXV,25·24…) i s Titan distribucí;
+        Dies Concurrentes 0–6 ze skenu. `tools/build_f61_table.py`.
   - **Cesta:** spustit Titan ve webovém Transkribu (kredity na účtu jsou; API token na TrHtr
     nemá nárok — 403), pak naimportovat přes `get_page_xml` (funguje).
   - **f2** — předtištěná, z větší části nevyplněná tabule (jen hlavička) → nic k přepisu.

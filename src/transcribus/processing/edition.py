@@ -244,7 +244,7 @@ _TABLE_CAPTIONS: dict[int, str] = {
     58: "Tabula Festorum Mobilium Calendarii Juliani — pohyblivé svátky pro každé z 35 možných dat Velikonoc (22. III – 25. IV): Septuagesima, Estomihi (Quinquagesima), Pascha, Ascensio, Pentecostes, Dominica I Adventus; indexováno zlatým počtem a nedělním písmenem.",
     59: "Tabula Festorum Mobilium Calendarii Gregoriani — gregoriánské dvojče f58 (tytéž svátky), indexováno epaktou a nedělním písmenem; zakončeno rubrikou „Incipit Adventus Domini Sabbato post Catharinam“.",
     60: "Tabula Intervalli [Paschae] in Calendario Juliano — datum velikonočního úplňku/Velikonoc podle zlatého počtu (1–19) a nedělního písmene (A–G).",
-    61: "Tabula Intervalli [Paschae] in Calendario Gregoriano — gregoriánské dvojče f60: první číslo dvojice = týden gregoriánských Velikonoc, indexováno epaktou a nedělním písmenem (dole „Dies concurrentes“ 0–6). Dekódováno týmž klíčem jako f60, ověřeno principiálně.",
+    61: "Tabula Intervalli Paschae in Calendario Gregoriano — gregoriánské dvojče f60: každá buňka „týden doplněk“ podle epakty (řádek) a nedělního písmene A–G (sloupec); dole řádek „Dies Concurrentes“ (0–6). Týden = pořadí týdne gregoriánských Velikonoc.",
     62: "O slunečném cyklu (28letém), aneb jak najít nedělní písmeno pro každý rok.",
     63: "Výpočet v obojím — starém i novém — kalendáři (pokrač.).",
     64: "O zlatém počtu — cyklus decennovenalis (19letý lunární), měsíčný cyklus.",
@@ -416,6 +416,13 @@ _TABLE_VERIFY: dict[int, str] = {
         "Velikonoc) mod 30, s gregoriánskou výjimkou lunární rovnice 24/25/XXV na 17.–18. IV "
         "(přesně jak ji rukopis značí). Hodnoty dopočítány vzorcem (kanonické), shodné s "
         "rukopisem.",
+    61: "✓ dekódováno a ověřeno proti skenu: každá buňka = „týden doplněk“. Týden = ⌊(datum "
+        "gregoriánských Velikonoc od 1. III + 16)/7⌋, kde Velikonoce = první neděle po "
+        "velikonočním úplňku (z epakty řádku) podle nedělního písmene sloupce; doplněk = (35 "
+        "pro sloupec A, jinak 34) − týden. Generovaný plný cell-grid se shoduje se skenem buňka "
+        "po buňce na ověřených řádcích (epakta *, 29, 28, 27, 26·XXV, 25·24 …) a distribučně "
+        "s přepisem Text Titan I ter; epakty v pořadí 30(*)…1 (24 a XXV jsou alternativy 25/26). "
+        "Dies Concurrentes 0–6 čteny ze skenu.",
 }
 
 # Delší metodické poznámky pod vybranými tabulkami (rozbalovací <details>).
