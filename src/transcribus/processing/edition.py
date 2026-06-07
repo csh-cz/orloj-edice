@@ -338,7 +338,7 @@ _FOLIO_SNIP: dict[int, str] = {
     67: "Komputus na prstech — délka měsíců (31/30/29 dní)",
     68: "Nalezení nového a plného měsíce — výpočet z epakt",
     69: "Malá násobilka (pythagorejská tabule)",
-    70: "Astrolabium parvum (Táborský, ~1570) — úvod a návod",
+    70: "Astrolabium parvum (~1642, překlad F. Rittera; ruka C) — úvod a návod",
     71: "Astrolabium parvum — návod (pokrač.)",
     72: "Astrolabium parvum — návod (pokrač.)",
     73: "Astrolabium parvum — návod (pokrač.)",
@@ -966,13 +966,15 @@ listiny z r. 1410</b>, jíž pražská rada smluvila zhotovení orloje s <b>mist
 / Mikulášovi z Kadaně</b>, ne Hanušovi. Písmo je mladší plynulá kurzíva 17. stol. (ne ruka opisovače A z 1587) a odkaz „<i>sub
 figura 4</i>“ předpokládá, že List purkmistra už byl v knize a očíslován — přípisek je tedy
 <b>pozdější (po r. 1628</b>, kdy List purkmistra do knihy vepsal a očísloval Mikuláš Petr;
-podpis na fol. 52: „<i>… 15. 9bri [Novembris] 1628. Mikuláš Petr</i>“). Jeho ruku klademe
-<b>buď Mikuláši Petrovi /1628/, nebo témuž orlojníku-astronomu /~1641–42/</b> co vsuvku na
-fol. 22 — dříve uváděné ztotožnění obou vsuvek do jediné ruky tu <b>necháváme otevřené</b>
-(rozhodne expertní srovnání na originále). <b>Historický obsah</b> — zhotovení orloje r. 1410
-mistrem Mikulášem z Kadaně — <b>tím dotčen není</b>.</p>
-<p><b>Písmo: jedna ruka, totožná s opisovačem.</b> Rejstříkové i „historické“ glosy jsou
-<b>jednou rukou</b> — touž českou novogotickou kurzívou, týmž duktem a inkoustem jako hlavní text
+podpis na fol. 52: „<i>… 15. 9bri [Novembris] 1628. Mikuláš Petr</i>“). Jde o <b>jinou ruku než
+vsuvka o měsíční kouli na fol. 22</b> (ta je ruka C) — writer-ID ani vizuální paleografie obě
+vsuvky neztotožnily. Klademe ji proto k <b>pozdějším rukám ≥1628</b>, přičemž <b>B vs C zůstává
+nerozhodnuto</b>; obsahově mírně svědčí pro <b>B (Mikuláš Petr</b>, který List purkmistra do knihy
+vepsal a křížově naň odkazuje). Rozhodne expertní autopsie. <b>Historický obsah</b> — zhotovení
+orloje r. 1410 mistrem Mikulášem z Kadaně — <b>tím dotčen není</b>.</p>
+<p><b>Rejstříkové glosy (vč. „historických“): jedna ruka, totožná s opisovačem.</b> Na rozdíl
+od obou pozdějších vsuvek výše jsou <b>rejstříkové</b> glosy fol. 13–46 (i ty s historickým obsahem
+jako „Tobiáš umřel“) <b>jednou rukou</b> — touž českou novogotickou kurzívou, týmž duktem a inkoustem jako hlavní text
 (srovnání „Tobiáš umřel“ / „Jakub Špaček“ / „Index Slunce“ navzájem i s tělem textu). Přisuzujeme
 je proto <b>ruce A — Matouši Carchesiovi Jablonskému, opisovači z r. 1587</b>; jde o
 <b>autorský/písařský rejstřík</b>, ne o cizí čtenářskou ruku. Odstín inkoustu vychází měřením
@@ -1222,9 +1224,10 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 
 # Stav zpracování po částech knihy. Průběžně se aktualizuje (edit → regenerace → deploy).
 # klíč stavu: done = hotový čistý přepis · partial = rozpracováno · todo = chybí · na = prázdná
-_STATUS_ROWS: list[tuple[str, str, str, str]] = [
-    ("f1", "předsádka", "na", "—"),
-    ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)", "partial",
+_STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
+    ("f1", "předsádka", "—", "na", "—"),
+    ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)",
+     "D · ~1684", "partial",
      "f2 = táž tabule jen předkreslená a nevyplněná, ale s týmž záhlavím a <b>touž rukou jako "
      "f3</b> (kopista r. 1684 list nadepsal a nalinkoval, vyplnil až f3); f3 = symetrická "
      "perpetuální tabule po krocích délky dne (Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — "
@@ -1232,29 +1235,33 @@ _STATUS_ROWS: list[tuple[str, str, str, str]] = [
      "ze skenu, časy ověřeny výpočtem; německý návod, jak takovou tabuli užít, je dole na f54 — "
      "ale ten platí pro f3 i f55 (tytéž hodnoty), vznikl až po tabuli (≥1641) a je rukou "
      "pozdějšího, německy mluvícího orlojníka; jen několik méně zřetelných jmen [?]"),
-    ("f4", "latinský epigram (sedm pahorků pražských)", "done",
+    ("f4", "latinský epigram (sedm pahorků pražských)", "—", "done",
      "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
-    ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "done", "drobná [?] místa"),
-    ("f13–f30", "Táborský: kap. VI–XIII", "done", "marginálie ověřeny ze skenu (f13 nejisté)"),
-    ("f31–f42", "Táborský: kap. XIII–XVIII", "partial",
-     "Teige-ukotveno; diplomatická kontrola po řádcích"),
-    ("f43–f49", "Táborský: biografický závěr, verše, kolofony 1570 + 1587", "done", "—"),
-    ("f50", "Tabula Litera dominicalis (N. I)", "done",
+    ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "A · 1587", "done", "drobná [?] místa"),
+    ("f13–f30", "Táborský: kap. VI–XIII", "A · 1587", "done",
+     "marginálie ověřeny ze skenu (f13 nejisté); pozdější vsuvka f22 (přestavba měsíční koule "
+     "na samootáčivou) = ruka C ~1641–42"),
+    ("f31–f42", "Táborský: kap. XIII–XVIII", "A · 1587", "partial",
+     "Teige-ukotveno; diplomatická kontrola po řádcích; pozdější vsuvka f38 (redatace orloje "
+     "k r. 1410, „vide list purkmistra“) = jiná pozdější ruka ≥1628 (B/C nerozhodnuto, obsahově spíše B)"),
+    ("f43–f49", "Táborský: biografický závěr, verše, kolofony 1570 + 1587", "A · 1587", "done", "—"),
+    ("f50", "Tabula Litera dominicalis (N. I)", "C · ~1641–42", "done",
      "cyklus solaris → nedělní písmeno (jul./greg.), 28 řádků, ověřeno vzorcem"),
-    ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "done", "—"),
-    ("f53–f54", "List purkmistra — dobový český překlad", "partial",
-     "český překlad hotov; německý návod na f54 (přepočet německé↔orlojní hodiny) přepsán "
-     "(čtení nejisté, ale čísla i strukturu potvrzuje příklad na 3. 5. shodný s f3) + český "
-     "překlad; přesné německé znění spojovacích vět čeká na expertní revizi"),
-    ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641)", "partial",
-     "ověřeno výpočtem: f55 (vejchod, astron.), f57 (epakty, Meeus), f50/f56 (litera), "
-     "f60 (intervallum jul. — dekódováno: týden Velikonoc, 133/133), f69 (násobilka) + "
-     "prózy f62–65, 67, 68; f61 (intervallum greg.) dekódováno (dvojče f60, 191/210, zóna epakty "
-     "25/XXV k dořešení); zbývají husté mřížky f58/59 (festa mob.) a f66 (epakty po dnech)"),
-    ("f70–f79", "Astrolabium parvum", "done", "—"),
-    ("f80", "dva latinské epigramy (Pythagoras, Archimedes) + nákres trojúhelníku", "done",
+    ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "B · 1628", "done", "—"),
+    ("f53–f54", "List purkmistra — dobový český překlad", "B · 1628", "partial",
+     "český překlad hotov (ruka B); německý návod na f54 (přepočet německé↔orlojní hodiny) "
+     "přepsán + český překlad — je to <b>zvláštní německy píšící ruka</b> (≥1641); přesné "
+     "německé znění spojovacích vět čeká na expertní revizi"),
+    ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641–42)", "C · ~1641–42", "done",
+     "vše přepsáno a ověřeno výpočtem: litera dominicalis (f50/56), epakty (f57), vejchod Slunce "
+     "(f55), intervallum jul./greg. (f60/61 — týden Velikonoc), festa mobilia jul./greg. (f58/59), "
+     "calendarium novoluní po dnech (f66), násobilka (f69) + komputistické prózy f62–65, 67, 68"),
+    ("f70–f79", "Astrolabium parvum (~1642, čes. překlad Franze Rittera)", "C · ~1641–42", "done",
+     "noční určení času ze stínu Měsíce + oprava astrolábem; datovaný příklad z 1. XI 1642 "
+     "ověřen nezávislým výpočtem (tools/verify_astrolabe_1642.py)"),
+    ("f80", "dva latinské epigramy (Pythagoras, Archimedes) + nákres trojúhelníku", "—", "done",
      "přepsáno + překlad (hekatomba; „pohnu zemí“)"),
-    ("f81", "předsádka", "na", "—"),
+    ("f81", "předsádka", "—", "na", "—"),
 ]
 _STATUS_BADGE = {
     "done": '<span class="b-done">✅ hotovo</span>',
@@ -1266,22 +1273,23 @@ _STATUS_BADGE = {
 # --- orloj1570: originál Táborského (autograf 1570), 30 snímků vč. desek vazby ----------
 # Toto je PŘEDLOHA, kterou roku 1587 opsal Carchesius (orlojní kniha 1587 = jiná edice).
 # Jen Táborského Zpráva: titulní verš, dedikace, XVIII kapitul, kolofon, závěrečné verše.
-_STATUS_ROWS_1570: list[tuple[str, str, str, str]] = [
+_STATUS_ROWS_1570: list[tuple[str, str, str, str, str]] = [
     ("f1", "přední deska vazby — zlacený titul „Sprawa o orlogi pražském“, znak Starého "
-     "Města Pražského a letopočet 1570", "na", "renesanční vazba; sken nereprodukován"),
+     "Města Pražského a letopočet 1570", "—", "na", "renesanční vazba; sken nereprodukován"),
     ("f2", "přední přídeští — archivní exlibris „Ins Stadt-Archiv der Haupt-Stadt Prag "
-     "gehörig“", "na", "—"),
+     "gehörig“", "—", "na", "—"),
     ("f3", "titulní list — úvodní verš a datace (dokončeno „léta drahého patnáctistého "
-     "sedmdesátého“)", "done", "přepsáno"),
-    ("f4–f5", "dedikace pánuom purgmistru a raddě Starého Města Pražského", "done",
-     "drobná [?] místa"),
+     "sedmdesátého“)", "Táborský · 1570", "done", "přepsáno"),
+    ("f4–f5", "dedikace pánuom purgmistru a raddě Starého Města Pražského", "Táborský · 1570",
+     "done", "drobná [?] místa"),
     ("f6–f29", "Zpráva o orloji — XVIII kapitul: chvála a popis orloje, jeho sfér, soukolí "
      "a polouorlojního počtu, tajnosti stroje; dějiny správců (mistr Hanuš, žák Jakub, "
      "Václav Tobiáš) a Táborského druhé zpravování. Na f29 kolofon „Dokonán jest spis tento "
-     "šťastně v středu na den sv. Lukáše léta páně 1570“ a závěrečné verše", "partial",
+     "šťastně v středu na den sv. Lukáše léta páně 1570“ a závěrečné verše", "Táborský · 1570",
+     "partial",
      "HTR (Transkribus 263129) ukotvené na Teigeho edici 1901, korektura po řádcích; "
      "marginálie (rejstříkové glosy) čteny ze skenu a vysazeny do postranní zóny"),
-    ("f30", "zadní deska vazby — tepaná kůže se zlaceným medailonem (český lev)", "na",
+    ("f30", "zadní deska vazby — tepaná kůže se zlaceným medailonem (český lev)", "—", "na",
      "sken nereprodukován"),
 ]
 # Popisky vazebních/prázdných folií pro tělo stránky (jinak generické „[prázdná strana]“).
@@ -1307,26 +1315,32 @@ def _status_html(slug: str = "") -> str:
         f'<tr data-href="{_status_first_page(fol)}">'
         f'<td><a href="{_status_first_page(fol)}">{_esc(fol)}</a></td>'
         f"<td>{_esc(part)}</td>"
+        f'<td class="hand">{_esc(hand)}</td>'
         f"<td>{_STATUS_BADGE.get(st, _esc(st))}</td><td>{_esc(rest)}</td></tr>"
-        for fol, part, st, rest in status_rows
+        for fol, part, hand, st, rest in status_rows
     )
     if is_1570:
         note = (
             '<p class="status-note"><b>Co zbývá:</b> diplomatická kontrola Zprávy po řádcích '
             "(f6–f29) proti skenu a dočtení sporných marginálií. Vazební a prázdná folia: "
-            "f1 (přední deska), f2 (přídeští), f30 (zadní deska).</p>"
+            "f1 (přední deska), f2 (přídeští), f30 (zadní deska). Celý text je autograf "
+            "<b>Jana Táborského (1570)</b> — jediná ruka.</p>"
         )
     else:
         note = (
-            '<p class="status-note"><b>Co v knize ještě chybí:</b> f31–42 (diplomatická kontrola '
-            "Táborského po řádcích), f58/59 (Tabula festorum mobilium), f61 (intervallum greg.) a "
-            "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 je "
-            "přepsáno věrně a kompletně včetně jarních i podzimních svátků a měsíců.) "
-            "Prázdné/předsádky: f1, f2, f81.</p>"
+            '<p class="status-note"><b>Stav: textově i tabulkově kompletní</b> — každé folio je '
+            "buď opravený přepis, ověřená tabulka, nebo vazba; žádné nepřepsané ani neověřené "
+            "místo. Sloupec „ruka · datace“ ukazuje vrstvení konvolutu: <b>A</b> Carchesius 1587 "
+            "(jádro), <b>B</b> Mikuláš Petr 1628 (List purkmistra), <b>C</b> orlojník-astronom "
+            "~1641–42 (komputus + Astrolabium), <b>D</b> ~1684 (Hájkova tabule). <b>Do finální "
+            "kritické edice zbývá:</b> diplomatická kontrola f31–42 po řádcích, expertní revize "
+            "německého znění návodu f54 a dořešení zbylých nejistých čtení [?]. Prázdné/předsádky: "
+            "f1, f81.</p>"
         )
     return (
         '<table class="status"><caption>Stav zpracování (průběžně aktualizováno)</caption>'
-        f"<thead><tr><th>folia</th><th>{head_part}</th><th>stav</th><th>zbývá</th></tr></thead>"
+        f"<thead><tr><th>folia</th><th>{head_part}</th><th>ruka · datace</th>"
+        f"<th>stav</th><th>zbývá</th></tr></thead>"
         f"<tbody>{rows}</tbody></table>{note}"
     )
 
@@ -1414,7 +1428,8 @@ def _index_doc(
         "západu (fol. 3) je dle <b>vlastního záhlaví</b> dílo <b>Tadeáše Hájka z Hájku</b> pro "
         "výšku pólu 50° (Praha), upravené na nový kalendář (opis ≈ 1684); (4) <b>Astrolabium "
         "parvum</b> "
-        "(fol. 70–79); a (5) <b>pozdější přípisky správců orloje</b> (16.–17. stol.). Edice "
+        "(fol. 70–79, ~1642, autorův český překlad Franze Rittera z Norimberku — ruka C); a (5) "
+        "<b>pozdější přípisky správců orloje</b> (16.–17. stol.). Edice "
         "zatím zpracovává především část (1) a (2).</p>"
         "<p><b>Metoda — syntetická edice.</b> Text vzniká <b>kombinací zdrojů</b>, ne pouhým "
         "strojovým přepisem: strojové rozpoznání rukopisu (HTR, Transkribus PyLaia — čeština "
@@ -1460,22 +1475,33 @@ def _index_doc(
         "Naproti tomu <b>fol. 60</b> (<i>Tabula intervalli in Calendario Juliano</i>) se ověřit "
         "<b>zatím nepodařilo</b>: dvojčíslí v buňkách se nepodařilo dekódovat ani ztotožnit "
         "s vypočteným juliánským datem Velikonoc — proto je v edici označeno jako neověřené.</p>"
-        "<p><b>Marginálie a písařské ruce.</b> Kniha je ve své jádrové vrstvě <b>jedním "
-        "opisem</b> (ruka <b>A</b> — Matouš Carchesius Jablonský, 1587: Táborského Zpráva fol. "
-        "5–49 i Astrolabium parvum fol. 70–79); pozdější vrstvy přibývaly do volných míst jinými "
-        "rukama (německý List purkmistra fol. 51–52, 1628; komputus fol. 50 a 55–69, ~1641; "
-        "přední Hájkova tabule fol. 3 (1684) a německý návod k tabuli východu dole na fol. 54 "
-        "(pozdější, ≥1641); latinské "
-        "epigramy fol. 4 a 80). <b>Glosy na okrajích fol. 13–46</b> (hesla „<i>Index Solis</i>“, "
-        "„<i>declinatio solis</i>“, „<i>Linea oppositionis/coniunctionis</i>“, „Solstitium "
-        "letní/zimní“, „O pušce“, „Srovnání obojí počtuov“ ad.) přisuzujeme <b>téže ruce A</b> — "
-        "jsou psány toutéž českou novogotickou kurzívou jako hlavní text, týmž duktem a se "
-        "stejným mísením české a latinské terminologie; jde tedy o <b>rejstříkový aparát "
-        "samotného opisovače</b>, ne o čtenářské přípisky cizí ruky. Potvrzuje to i jejich "
-        "obsah: hesla <b>shrnují přilehlý text</b> včetně Táborského výčtu orlojníků („Václav "
-        "Zvůnek, třetí zprávce“, „Jan Táborský přistoupil“, „Tobiáš umřel“, „Jakub Špaček“, "
-        "„Obnovení orloje“) — neindexují vnější události, nýbrž vyprávění; jen ojedinělé „NB“ "
-        "(např. fol. 38) mohou být pozdějšího čtenáře.</p>"
+        "<p><b>Písařské ruce.</b> Kniha je <b>konvolut čtyř hlavních rukou z let ~1587–1684</b>. "
+        "<b>A — Matouš Carchesius Jablonský</b> (1587, kolofon fol. 47): opis Táborského "
+        "<i>Zprávy</i> fol. 5–49 a její rejstříkové glosy fol. 13–46. <b>B — Mikuláš Petr</b> "
+        "(1628, podpis fol. 52): List purkmistra německy (fol. 51–52) i v dobovém českém "
+        "překladu (fol. 53–54). <b>C — orlojník-astronom</b> (~1641–1642): komputistické tabulky "
+        "a próza (fol. 50, 55–69) a <b>Astrolabium parvum fol. 70–79</b> — <b>nikoli ruka A</b>: "
+        "text mluví o Táborském ve 3. osobě, vznikl „poněvadž papír prázdný zůstával“, je to "
+        "autorův <b>český překlad Franze Rittera z Norimberku</b> a nese <b>vlastní dataci „1642, "
+        "1. Novembris“</b> (fol. 78). <b>D</b> (~1684): přední Hájkova tabule fol. 2–3. Německý "
+        "návod k tabuli dole na fol. 54 (≥1641) je <b>nejistý</b> — buď C dvojjazyčně, nebo "
+        "zvláštní německá ruka (jiný jazyk = jiné písmo, rukopisně nerozhodnutelné). Latinské "
+        "epigramy fol. 4 a 80 zatím nepřiřazeny.</p>"
+        "<p><b>Glosy a pozdější přípisky.</b> <b>Rejstříkové glosy fol. 13–46</b> (hesla "
+        "„<i>Index Solis</i>“, „<i>Linea oppositionis/coniunctionis</i>“, „O pušce“, „Václav "
+        "Zvůnek, třetí zprávce“, „Tobiáš umřel“ ad.) přisuzujeme <b>ruce A</b> — táž česká "
+        "novogotická kurzíva jako hlavní text, týž dukt a mísení české a latinské terminologie; "
+        "jde o <b>rejstříkový aparát opisovače</b>, ne cizí přípisky (hesla shrnují vyprávění, ne "
+        "vnější události). <b>Dvě pozdější vsuvky 17. století jsou však cizíma rukama:</b> na "
+        "<b>fol. 22</b> přípisek „<i>Nyní jest to jinače spraveno… žádných koleček není… samým "
+        "otočováním se měsíce… corpus lunae o 1 grad… v 30 dnech celý se obrátí</i>“ dokumentuje "
+        "<b>přestavbu měsíční koule na samootáčivou</b> a rukopisně i obsahem patří <b>ruce C</b> "
+        "(~1641–42; slovem „nyní“ tu přestavbu datuje); na <b>fol. 38</b> přípisek „<i>…léta 1410… "
+        "vide list purkmistra… sub figura 4</i>“ <b>přeřazuje vznik orloje k r. 1410</b> (proti "
+        "„mistr Hanuš okolo 1490“ v textu) — pozdější latinsky gramotná ruka (≥1628, předpokládá "
+        "vložený a očíslovaný List), <b>odlišná od C; mezi B a C nerozhodnuto</b>. Strojové "
+        "shlukování rukopisu (writer-ID) oddělí hrubé rozdíly (německý Kurrent), ale na atribuci "
+        "jednotlivé glosy nestačí — ta stojí na paleografii, obsahu a dataci.</p>"
         "<p><b>Odstín inkoustu.</b> Střední barva tahů marginálií proti hlavnímu textu v témž "
         "snímku (fol. 20 a 43) vychází <b>nepatrně světlejší a méně teplá</b> (méně "
         "červenohnědá; Δ jasu +13–15, Δ „tepla“ R−B −18 až −34 z 256). Tento rozdíl je však "
@@ -1693,6 +1719,7 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .status tbody tr[data-href]:hover{background:#f0e6c8}
 .status td a{color:#7a5c2e;text-decoration:none;font-weight:600}
 .status td a:hover{text-decoration:underline}
+.status td.hand{white-space:nowrap;color:#5a5046;font-size:.8rem;font-variant-numeric:tabular-nums}
 .marg-link{font-family:system-ui,sans-serif;font-size:.9rem;margin:.6rem 0 1.2rem;
   padding:.5rem .7rem;background:#f0e6c8;border-left:3px solid #b8860b;border-radius:3px}
 .marg-link a{color:#7a5c2e;font-weight:700}
