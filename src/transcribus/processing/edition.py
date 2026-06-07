@@ -950,22 +950,27 @@ sprostá, však předce dosti trefně vymyšlená, tak že samým otočováním 
 hodinách corpus lunae o 1 grad se pohne, a v 30 dnech celý se obrátí…</i>“ — pisatel zde
 dokládá, že <b>původní soukolíový pohon měsíce (popsaný Táborským) byl nahrazen jednodušším
 mechanismem uvnitř tělesa měsíce</b>. To je <b>doklad reálné konstrukční změny orloje</b>, jaký
-Táborského text nemá. <b>Písmo se shoduje s přípiskem na fol. 38</b> (týž smyčkový duktus, totéž
-mísení češtiny a latiny: <i>corpus lunae</i> × <i>vide … sub figura 4</i>) — jsou to <b>jediné dvě
-pozdější vsuvky v knize a táž ruka</b>, totiž <b>Mikuláš Petr (~1628)</b>. Slovem „<i>nyní</i>“ to
-<b>datuje přestavbu měsíce: byla hotová už k r. 1628</b> (proběhla tedy mezi Táborského popisem
-/~1570, opis 1587/ a r. 1628).
+Táborského text nemá. <b>Písmo se s dobrou pravděpodobností shoduje s rukou Astrolabia parvum
+(fol. 70–79) a komputistické prózy (fol. 62–68)</b> — tedy <b>orlojníka-astronoma činného
+~1641–1642</b> (týž pravý sklon, hnědý inkoust a mísení latiny: <i>corpus lunae</i>, <i>gradus</i>,
+<i>sphera</i>). Slovem „<i>nyní</i>“ tak <b>datuje přestavbu měsíce k ~1641–1642</b> (proběhla tedy
+mezi Táborského popisem /~1570, opis 1587/ a touto pozdější astronomickou vrstvou). Dataci vrstvy
+nezávisle ukotvuje výpočet příkladu z 1. XI 1642 v Astrolabiu (skript
+<code>tools/verify_astrolabe_1642.py</code>). <b>Tím revidujeme dřívější přiřazení Mikuláši
+Petrovi /~1628/</b>; doporučena expertní verifikace na originále.
 <br>• <b>fol. 38 — autorství a List purkmistra:</b> „<i>… léta 1410 … ten orloj … dělal … vide
 list purkm[istra] … origl., sub figura 4</i>“ — proti Táborského dataci „mistr Hanuš okolo 1490“
 tu pisatel <b>odkazuje na List purkmistra</b> (Littera Maior), totiž na <b>opis z r. 1628 původní
 listiny z r. 1410</b>, jíž pražská rada smluvila zhotovení orloje s <b>mistrem Mikulášem z Kadaně</b>
 (v téže knize, fol. 51–54; originál listiny v knize není). Tím <b>klade zhotovení orloje k r. 1410
 / Mikulášovi z Kadaně</b>, ne Hanušovi. Písmo je mladší plynulá kurzíva 17. stol. (ne ruka opisovače A z 1587) a odkaz „<i>sub
-figura 4</i>“ předpokládá, že List purkmistra už byl v knize a očíslován — přípisek tedy <b>klademe
-ruce <span style="white-space:nowrap">Mikuláše Petra</span></b>, který List purkmistra do knihy
-vypsal r. 1628 (podepsán na fol. 52: „<i>Z starých knih kanceláře hořejší vypsáno 15. 9bri
-[Novembris] 1628. Mikuláš Petr</i>“), nikoli k pozdějšímu náhodnému čtenáři. (Tím se i toto
-ztotožnění autorství s Mikulášem z Kadaně datuje k r. 1628.)</p>
+figura 4</i>“ předpokládá, že List purkmistra už byl v knize a očíslován — přípisek je tedy
+<b>pozdější (po r. 1628</b>, kdy List purkmistra do knihy vepsal a očísloval Mikuláš Petr;
+podpis na fol. 52: „<i>… 15. 9bri [Novembris] 1628. Mikuláš Petr</i>“). Jeho ruku klademe
+<b>buď Mikuláši Petrovi /1628/, nebo témuž orlojníku-astronomu /~1641–42/</b> co vsuvku na
+fol. 22 — dříve uváděné ztotožnění obou vsuvek do jediné ruky tu <b>necháváme otevřené</b>
+(rozhodne expertní srovnání na originále). <b>Historický obsah</b> — zhotovení orloje r. 1410
+mistrem Mikulášem z Kadaně — <b>tím dotčen není</b>.</p>
 <p><b>Písmo: jedna ruka, totožná s opisovačem.</b> Rejstříkové i „historické“ glosy jsou
 <b>jednou rukou</b> — touž českou novogotickou kurzívou, týmž duktem a inkoustem jako hlavní text
 (srovnání „Tobiáš umřel“ / „Jakub Špaček“ / „Index Slunce“ navzájem i s tělem textu). Přisuzujeme
