@@ -45,7 +45,7 @@ _ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI",
 
 
 def derive_sections(
-    matched: set[int], total: int, *, gap: int = 2
+    matched: set[int], total: int, *, gap: int = 2, work_slug: str = ""
 ) -> list[tuple[str, int, int, str]]:
     """Group folios into sections from the Teige-match blocks.
 
@@ -72,9 +72,18 @@ def derive_sections(
     if not intervals:
         sections = [("jine", 1, total)]
 
+    # Originál 1570 = jeden souvislý text (Zpráva); „jiné“ oddíly jsou jen vazba/přídeští.
+    label_1570 = {
+        "taborsky": "Zpráva o orloji pražském (1570)",
+        "jine": "Vazba a přídeští",
+    }
+    is_1570 = "1570" in work_slug
     out: list[tuple[str, int, int, str]] = []
     for i, (kind, lo, hi) in enumerate(sections, start=1):
-        label = f"Oddíl {_ROMAN[i] if i < len(_ROMAN) else i} — {_SECTION_LABEL[kind]}"
+        if is_1570:
+            label = label_1570[kind]
+        else:
+            label = f"Oddíl {_ROMAN[i] if i < len(_ROMAN) else i} — {_SECTION_LABEL[kind]}"
         out.append((kind, lo, hi, label))
     return out
 
@@ -1001,7 +1010,7 @@ def _page_doc(
     ahmp_url: str | None, teige_passage: str | None, section_label: str = "",
     tables: list[Table] | None = None, figures: list[str] | None = None,
     clean_lines: list[str] | None = None, embed_scan: bool = False,
-    table_page: bool = False,
+    table_page: bool = False, binding_note: str = "",
 ) -> str:
     tables = tables or []
     figures = figures or []
@@ -1040,6 +1049,7 @@ def _page_doc(
     )
 
     marginalia = ""
+    region_margin = ""
     if has_content:
         # Precedence: corrected clean text > Docling table grid > raw per-line HTR.
         if clean_lines:
@@ -1093,7 +1103,30 @@ def _page_doc(
                     f"{long_note}</details>"
                 )
         else:
-            body_regions = "\n".join(_region_html(r) for r in regions)
+            # Per-line HTR path (no corrected clean text). Split marginal regions out
+            # of the text flow so they can sit in a dedicated outer margin column,
+            # mirroring the manuscript leaf — same two-zone layout as the clean path.
+            def _real_lines(r: TextRegion) -> list[str]:
+                return [line.strip() for line in r.lines if line.strip()]
+
+            def _is_noise(r: TextRegion) -> bool:
+                # A narrow outer-margin strip on which the HTR hallucinated the SAME
+                # token on every line (e.g. "Já"×10, "prut,"×13) is layout noise on a
+                # blank/ruled edge — not a scribal gloss. Suppress it entirely.
+                rl = _real_lines(r)
+                return len(rl) >= 2 and len(set(rl)) == 1
+
+            marg_regs: list[TextRegion] = []
+            body_regs: list[TextRegion] = []
+            for r in regions:
+                if r.rtype in _MARGINALIA and _real_lines(r):
+                    if _is_noise(r):
+                        continue  # drop degenerate margin-strip HTR repetition
+                    marg_regs.append(r)
+                else:
+                    body_regs.append(r)
+            body_regions = "\n".join(_region_html(r) for r in body_regs)
+            region_margin = "\n".join(_region_html(r) for r in marg_regs)
         body_regions += _FIGURE_SVG.get(page_nr, "")
         page_folded = {
             fold(w) for r in regions for line in r.lines for w in line.split() if len(fold(w)) >= 4
@@ -1110,6 +1143,15 @@ def _page_doc(
                 f'<div class="textcol">{fig_note}{body_regions}</div>'
                 f'<aside class="margin-col">{margin_col}</aside></div>'
             )
+        elif region_margin:
+            # Per-line HTR with a detected marginal region: same true two-zone leaf,
+            # margin side following recto/verso (recto→right, verso→left).
+            vcls = "verso" if page_nr % 2 == 0 else "recto"
+            folio = (
+                f'<div class="folio folio-2col {vcls}">'
+                f'<div class="textcol">{fig_note}{body_regions}</div>'
+                f'<aside class="margin-col">{region_margin}</aside></div>'
+            )
         else:
             folio = f'<div class="folio">{marginalia}{fig_note}{body_regions}</div>'
         body = (
@@ -1118,7 +1160,7 @@ def _page_doc(
             f"přibližné zarovnání</div>{teige}</div>"
         )
     else:
-        body = '<div class="empty">[prázdná strana / vazba]</div>'
+        body = f'<div class="empty">{_esc(binding_note) if binding_note else "[prázdná strana / vazba]"}</div>'
 
     body = _zodiac_textstyle(body)
     return f"""<!doctype html>
@@ -1133,9 +1175,9 @@ def _page_doc(
   <div class="modes">
     <span class="ctl">
       <span class="ctl-lbl">Znění</span>
-      <label><input type="radio" name="mode" value="dipl" checked> diplomatické</label>
-      <label><input type="radio" name="mode" value="norm"> normalizované</label>
-      <label><input type="radio" name="mode" value="teige"> Teige</label>
+      <label><input type="radio" name="mode" value="dipl" checked> transliterace</label>
+      <label><input type="radio" name="mode" value="norm"> transkripce</label>
+      <label><input type="radio" name="mode" value="teige"> edice (Teige)</label>
     </span>
     <span class="ctl">
       <span class="ctl-lbl">Sazba</span>
@@ -1213,7 +1255,36 @@ _STATUS_BADGE = {
     "done": '<span class="b-done">✅ hotovo</span>',
     "partial": '<span class="b-partial">🔶 rozpracováno</span>',
     "todo": '<span class="b-todo">❌ chybí</span>',
-    "na": '<span class="b-na">— prázdná</span>',
+    "na": '<span class="b-na">— vazba/prázdná</span>',
+}
+
+# --- orloj1570: originál Táborského (autograf 1570), 30 snímků vč. desek vazby ----------
+# Toto je PŘEDLOHA, kterou roku 1587 opsal Carchesius (orlojní kniha 1587 = jiná edice).
+# Jen Táborského Zpráva: titulní verš, dedikace, XVIII kapitul, kolofon, závěrečné verše.
+_STATUS_ROWS_1570: list[tuple[str, str, str, str]] = [
+    ("f1", "přední deska vazby — zlacený titul „Sprawa o orlogi pražském“, znak Starého "
+     "Města Pražského a letopočet 1570", "na", "renesanční vazba; sken nereprodukován"),
+    ("f2", "přední přídeští — archivní exlibris „Ins Stadt-Archiv der Haupt-Stadt Prag "
+     "gehörig“", "na", "—"),
+    ("f3", "titulní list — úvodní verš a datace (dokončeno „léta drahého patnáctistého "
+     "sedmdesátého“)", "done", "přepsáno"),
+    ("f4–f5", "dedikace pánuom purgmistru a raddě Starého Města Pražského", "done",
+     "drobná [?] místa"),
+    ("f6–f29", "Zpráva o orloji — XVIII kapitul: chvála a popis orloje, jeho sfér, soukolí "
+     "a polouorlojního počtu, tajnosti stroje; dějiny správců (mistr Hanuš, žák Jakub, "
+     "Václav Tobiáš) a Táborského druhé zpravování. Na f29 kolofon „Dokonán jest spis tento "
+     "šťastně v středu na den sv. Lukáše léta páně 1570“ a závěrečné verše", "partial",
+     "HTR (Transkribus 263129) ukotvené na Teigeho edici 1901, korektura po řádcích; "
+     "marginálie (rejstříkové glosy) čteny ze skenu a vysazeny do postranní zóny"),
+    ("f30", "zadní deska vazby — tepaná kůže se zlaceným medailonem (český lev)", "na",
+     "sken nereprodukován"),
+]
+# Popisky vazebních/prázdných folií pro tělo stránky (jinak generické „[prázdná strana]“).
+_BINDING_NOTE_1570: dict[int, str] = {
+    1: "[přední deska vazby — zlacený titul „Sprawa o orlogi pražském“, znak Starého Města "
+       "Pražského a letopočet 1570; sken viz AHMP]",
+    2: "[přední přídeští — archivní exlibris „Ins Stadt-Archiv der Haupt-Stadt Prag gehörig“]",
+    30: "[zadní deska vazby — tepaná kůže se zlaceným medailonem s českým lvem; sken viz AHMP]",
 }
 
 
@@ -1223,23 +1294,79 @@ def _status_first_page(fol: str) -> str:
     return f"p{int(m.group()):04d}.html" if m else ""
 
 
-def _status_html() -> str:
+def _status_html(slug: str = "") -> str:
+    is_1570 = "1570" in slug
+    status_rows = _STATUS_ROWS_1570 if is_1570 else _STATUS_ROWS
+    head_part = "část" if is_1570 else "část knihy"
     rows = "".join(
         f'<tr data-href="{_status_first_page(fol)}">'
         f'<td><a href="{_status_first_page(fol)}">{_esc(fol)}</a></td>'
         f"<td>{_esc(part)}</td>"
         f"<td>{_STATUS_BADGE.get(st, _esc(st))}</td><td>{_esc(rest)}</td></tr>"
-        for fol, part, st, rest in _STATUS_ROWS
+        for fol, part, st, rest in status_rows
     )
+    if is_1570:
+        note = (
+            '<p class="status-note"><b>Co zbývá:</b> diplomatická kontrola Zprávy po řádcích '
+            "(f6–f29) proti skenu a dočtení sporných marginálií. Vazební a prázdná folia: "
+            "f1 (přední deska), f2 (přídeští), f30 (zadní deska).</p>"
+        )
+    else:
+        note = (
+            '<p class="status-note"><b>Co v knize ještě chybí:</b> f31–42 (diplomatická kontrola '
+            "Táborského po řádcích), f58/59 (Tabula festorum mobilium), f61 (intervallum greg.) a "
+            "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 je "
+            "přepsáno věrně a kompletně včetně jarních i podzimních svátků a měsíců.) "
+            "Prázdné/předsádky: f1, f2, f81.</p>"
+        )
     return (
         '<table class="status"><caption>Stav zpracování (průběžně aktualizováno)</caption>'
-        "<thead><tr><th>folia</th><th>část knihy</th><th>stav</th><th>zbývá</th></tr></thead>"
-        f"<tbody>{rows}</tbody></table>"
-        '<p class="status-note"><b>Co v knize ještě chybí:</b> f31–42 (diplomatická kontrola '
-        "Táborského po řádcích), f58/59 (Tabula festorum mobilium), f61 (intervallum greg.) a "
-        "f66 (epakty po dnech) — husté rukopisné číselné mřížky k přepisu tabulkovým HTR. (f3 je "
-        "přepsáno věrně a kompletně včetně jarních i podzimních svátků a měsíců.) "
-        "Prázdné/předsádky: f1, f2, f81.</p>"
+        f"<thead><tr><th>folia</th><th>{head_part}</th><th>stav</th><th>zbývá</th></tr></thead>"
+        f"<tbody>{rows}</tbody></table>{note}"
+    )
+
+
+def _tiraz_1570(ahmp_a: str) -> str:
+    """„O edici“ pro originál Táborského (autograf 1570, AHMP sign. 1867)."""
+    return (
+        '<section class="tiraz"><h2>O edici</h2>'
+        "<p><b>Pramen — autograf Jana Táborského z Klokotské Hory (1570).</b> Archiv hlavního "
+        f"města Prahy, Sbírka rukopisů, sign. 1867. {ahmp_a}. Jde o <b>originál</b> Táborského "
+        "<i>Zprávy o orloji pražském</i>, dokončený podle vlastního kolofonu <b>v středu na den "
+        "sv. Lukáše, tj. 18. října 1570</b> (f29). Rukopis je vázán v skvostné renesanční kožené "
+        "vazbě se zlaceným titulem „Sprawa o orlogi pražském“, znakem Starého Města Pražského a "
+        "letopočtem 1570 (přední deska, f1); na zadní desce (f30) je zlacený medailon s českým "
+        "lvem. Edice zpracovává <b>vlastní text Zprávy</b> (f3–f29): titulní verš, dedikaci, "
+        "XVIII kapitul, kolofon a závěrečné verše. Folia f1, f2 a f30 jsou <b>vazba a přídeští</b> "
+        "(bez textu Zprávy).</p>"
+        '<p class="teige"><b>Vztah k orlojní knize 1587.</b> Tento rukopis je <b>předloha</b>, '
+        "kterou roku 1587 opsal staroměstský písař <b>Matouš Carchesius Jablonský</b> do tzv. "
+        "orlojní knihy (AHMP, inv. č. 7916) — ta je zpracována jako <b>samostatná edice</b> a od "
+        "originálu se místy liší (varianty písaře, pozdější přídavky, komputistické tabulky a "
+        "další části). <b>Edici originálu 1570 vydal Josef Teige</b> v Časopise Společnosti přátel "
+        "starožitností českých (roč. IX, 1901). Zde tedy Teige vydává <b>tentýž</b> rukopis, "
+        "který čteme — slouží proto jako přímá <b>kolační a korekturní opora</b>.</p>"
+        "<p><b>Metoda — syntetická edice.</b> Strojové rozpoznání rukopisu (HTR, Transkribus "
+        "PyLaia, čeština 263129) tvoří kostru přepisu řádek po řádku; ta je <b>korigována podle "
+        "Teigeho edice 1901</b> a sporná místa (zejména marginálie) <b>dočítána ze skenu</b>. "
+        "Text lze zobrazit ve <b>třech režimech</b>: <i>transliterace</i> (čtení ukotvené na "
+        "řádky rukopisu) / <i>transkripce</i> (diakritická, dle normy Ivan Šťovíček a kol.) / "
+        "<i>edice (Teige)</i>.</p>"
+        "<p><b>Marginálie.</b> Na okrajích jsou <b>rejstříkové glosy</b> shrnující přilehlý text "
+        "(např. „Tabula horarum planetarum“, „Obnovení orloje“, „Tobiáš umřel“, „Táborský "
+        "přistúpil“, „Čeho nevyšetřili“, „Jakub Špaček“, „Suma“). V edici jsou vysazeny do "
+        "<b>postranní zóny</b> podle strany rukopisu (recto → pravý okraj, verso → levý).</p>"
+        '<p class="warn"><b>Stav: rozpracovaná pracovní edice.</b> Normalizace je heuristická a '
+        "vyžaduje korekturu; diplomatická kontrola Zprávy po řádcích (f6–f29) proti skenu "
+        "probíhá. Zatím neslouží jako citovatelná kritická edice.</p>"
+        '<p><b>Práva a licence:</b> skeny ani vyobrazení se zde nereprodukují — odkazy „sken“ '
+        "vedou do prohlížeče AHMP (práva k reprodukcím: Archiv hlavního města Prahy). "
+        "Text edice © David Knespl, licence CC&nbsp;BY&nbsp;4.0; software EUPL-1.2.</p>"
+        "<p><b>Použité zdroje a poděkování.</b> Pramen a skeny: <b>Archiv hlavního města "
+        "Prahy</b> (sign. 1867). Strojový přepis: <b>Transkribus</b> (READ-COOP), model PyLaia "
+        "263129. Kolace: edice originálu 1570 <b>Josefa Teigeho</b> (1901, public domain). Norma "
+        "transkripce: <b>Ivan Šťovíček a kol.</b> Datace a badatelství orloje: <b>Zdeněk "
+        "Horský</b>.</p></section>"
     )
 
 
@@ -1248,6 +1375,8 @@ def _index_doc(
     sections: list[tuple[str, int, int, str]],
     pages: dict[int, tuple[str, bool]],
     ahmp_permalink: str | None = None,
+    work_slug: str = "",
+    has_marginalia_page: bool = False,
 ) -> str:
     ahmp_a = (
         f'<a href="{_esc(ahmp_permalink)}" target="_blank" rel="noopener">'
@@ -1258,9 +1387,11 @@ def _index_doc(
         '<section class="tiraz"><h2>O edici</h2>'
         "<p><b>Pramen — jedna svázaná orlojní kniha (zápisy z let ~1587–1684).</b> Archiv "
         f"hlavního města Prahy, Sbírka rukopisů, inv. č. 7916. {ahmp_a}. Nejde o soubor volně "
-        "vložených listů: ohledáním archiválie bylo ověřeno, že je to <b>jediný svázaný celek</b> "
-        "a že zápisy vznikaly postupně na <b>předem svázané archy</b> — pořadí zápisů v hlavním "
-        "korpusu tedy odpovídá chronologii. <b>Jedna výjimka</b>: referenční sluneční tabule na "
+        "vložených listů: <b>přímým ohledáním originálu v archivu (AHMP) bylo ověřeno, že jde "
+        "o jediný původní svázaný celek</b> — <b>prázdný sešit svázaný vcelku a teprve pak "
+        "postupně popisovaný</b>, nikoli pozdější tematická převazba. Zápisy proto vznikaly na "
+        "<b>předem svázané archy</b> a pořadí folií v hlavním korpusu odpovídá chronologii jejich "
+        "vzniku. <b>Jedna výjimka</b>: referenční sluneční tabule na "
         "ponechaných <b>volných předních listech (fol. 2–3) byly dopsány nejpozději</b> (dle "
         "vlastního letopočtu ≈ 1684) — fyzicky jsou první, ale časově poslední, takže pořadí "
         "folií tu chronologii neodráží a <b>protahují celkový rozsah psaní knihy zhruba na "
@@ -1363,6 +1494,9 @@ def _index_doc(
         "Datace a badatelství: <b>Zdeněk Horský</b> (1988); opis objevil <b>Stanislav "
         "Macháček</b> (1962). Rozpoznání tabulek: <b>Docling</b> (IBM).</p></section>"
     )
+    is_1570 = "1570" in work_slug
+    if is_1570:
+        tiraz = _tiraz_1570(ahmp_a)
     blocks = []
     for _kind, lo, hi, label in sections:
         items = "\n".join(
@@ -1381,11 +1515,10 @@ def _index_doc(
 <body class="mode-dipl">
 <header><h1>{_esc(title)}</h1></header>
 <main>
-{_status_html()}
-<p class="marg-link">▸ <a href="marginalia.html">Rozbor marginálií</a> — přepisy okrajových přípisků folií 13–46, co přinášejí, identifikace písaře a datace.</p>
+{_status_html(work_slug)}
+{'' if is_1570 and not has_marginalia_page else '<p class="marg-link">▸ <a href="marginalia.html">Rozbor marginálií</a> — přepisy okrajových přípisků folií 13–46, co přinášejí, identifikace písaře a datace.</p>'}
 {tiraz}
-<p class="note">Jedna svázaná kniha (více částí, jeden celek). <span class="teige-badge">T</span> = folia s opisem
-Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní oddíly referenci nemají.
+<p class="note">{'Autograf Jana Táborského (1570), jeden svázaný celek.' if is_1570 else 'Jedna svázaná kniha (více částí, jeden celek).'} <span class="teige-badge">T</span> = {'folia, k nimž Teigeho edice originálu (1901) poskytuje srovnávací znění' if is_1570 else 'folia s opisem Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní oddíly referenci nemají'}.
 Označeno {n_teige} z {len(pages)} folií. Hranice oddílů jsou odvozené automaticky (heuristika).</p>
 {"".join(blocks)}</main>
 <footer>{len(pages)} folií. Diplomatická edice z Transkribus HTR.</footer>
@@ -1691,6 +1824,8 @@ def build_edition(
     teige_path: Path | None = None, embed_scan: bool = False,
 ) -> Path:
     work_dir = Path(work_dir)
+    work_slug = work_dir.name
+    binding_notes = _BINDING_NOTE_1570 if "1570" in work_slug else {}
     xml_files = sorted((work_dir / "page_xml").glob("*.xml"))
     if not xml_files:
         raise RuntimeError(f"No PAGE XML in {work_dir / 'page_xml'}; run HTR/export first.")
@@ -1746,7 +1881,7 @@ def build_edition(
         )
 
     matched = {e[0] for e in entries if e[4]}
-    sections = derive_sections(matched, total)
+    sections = derive_sections(matched, total, work_slug=work_slug)
     folio_section = {n: label for _k, lo, hi, label in sections for n in range(lo, hi + 1)}
 
     # NOTE: no AHMP reproduction is republished (figures or whole pages) — each folio
@@ -1762,11 +1897,16 @@ def build_edition(
             ahmp_url=_folio_ahmp_url(ahmp_permalink, page_nr), teige_passage=passage,
             section_label=folio_section.get(page_nr, ""), tables=tables, figures=fig_names,
             clean_lines=clean_lines, embed_scan=embed_scan, table_page=is_tbl,
+            binding_note=binding_notes.get(page_nr, ""),
         )
         (out_dir / f"p{page_nr:04d}.html").write_text(doc, encoding="utf-8")
-        snip = _FOLIO_SNIP.get(page_nr)
+        # _FOLIO_SNIP a _TABLE_CAPTIONS jsou specifické pro orlojní knihu 1587 —
+        # pro originál 1570 je nepoužívej (popisky by neseděly na jeho folia).
+        snip = None if "1570" in work_slug else _FOLIO_SNIP.get(page_nr)
         if not snip:
-            if tables or is_tbl:
+            if binding_notes.get(page_nr):
+                snip = binding_notes[page_nr].strip("[]").split(" — ")[0]
+            elif (tables or is_tbl) and "1570" not in work_slug:
                 snip = _TABLE_CAPTIONS.get(page_nr, "[tabulka]")
             elif plain:
                 snip = plain[:80] + "…"
@@ -1790,5 +1930,11 @@ def build_edition(
         )
 
     index = out_dir / "index.html"
-    index.write_text(_index_doc(title, sections, toc, ahmp_permalink), encoding="utf-8")
+    index.write_text(
+        _index_doc(
+            title, sections, toc, ahmp_permalink,
+            work_slug=work_slug, has_marginalia_page=bool(marg_items),
+        ),
+        encoding="utf-8",
+    )
     return index
