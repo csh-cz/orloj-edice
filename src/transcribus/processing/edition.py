@@ -249,7 +249,7 @@ _TABLE_CAPTIONS: dict[int, str] = {
     63: "Výpočet v obojím — starém i novém — kalendáři (pokrač.).",
     64: "O zlatém počtu — cyklus decennovenalis (19letý lunární), měsíčný cyklus.",
     65: "Ukazatel nového měsíce — návodná próza (česky) k výpočtu novoluní.",
-    66: "Tabule k nalezení epakt / novoluní po dnech roku — hustá číselná tabulka (měsíce v záhlaví).",
+    66: "Calendarium perpetuum — pro každý den (1–31, řádky) a měsíc (sloupce, vždy dvojice Epacta / Litera): epakta, jejíž novoluní na ten den padá, a feriální/nedělní písmeno dne.",
     67: "Komputus na prstech — výpočet, který měsíc má 31/30/29 dní (Ex Gustavi Selen Cryptographia, fol. 487).",
     68: "Nalezení nového a plného měsíce pro každý měsíc — výpočet z epakt.",
     69: "Malá násobilka (pythagorejská tabule) — trojúhelníková, součiny 2×2 až 10×10.",
@@ -416,6 +416,12 @@ _TABLE_VERIFY: dict[int, str] = {
         "Velikonoc) mod 30, s gregoriánskou výjimkou lunární rovnice 24/25/XXV na 17.–18. IV "
         "(přesně jak ji rukopis značí). Hodnoty dopočítány vzorcem (kanonické), shodné s "
         "rukopisem.",
+    66: "✓ dekódováno a ověřeno proti skenu: Litera = feriální písmeno dne ABCDEFG[(den v roce − "
+        "1) mod 7] (A = 1. I); Epacta = epakta, jejíž ekleziastické novoluní na ten den padá — "
+        "klesá po dnech (30 = *), s vynecháním epakty 25 v šesti 29denních lunárních měsících "
+        "(II, IV, VI, VIII, IX, XI; pár VIII/IX = saltus lunae). Kotva: novoluní epakty 23 "
+        "v březnu = 8. III (= velikonoční úplněk − 13). Generovaný plný kalendář se shoduje se "
+        "skenem buňka po buňce (ověřeno I–IV i X–XII).",
     61: "✓ dekódováno a ověřeno proti skenu: každá buňka = „týden doplněk“. Týden = ⌊(datum "
         "gregoriánských Velikonoc od 1. III + 16)/7⌋, kde Velikonoce = první neděle po "
         "velikonočním úplňku (z epakty řádku) podle nedělního písmene sloupce; doplněk = (35 "

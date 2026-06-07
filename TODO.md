@@ -29,8 +29,8 @@ SPDX-License-Identifier: EUPL-1.2
       strukturu i všechna čísla potvrzuje vložený příklad na 3. 5. (východ 4:48 → poledne české
       16:48 → východ český 9:36 → délka dne 14:24), shodný s tabulí f3. Zbývá jen **expertní
       revize přesného německého znění** spojovacích vět ([?]/[…]).
-- [ ] **Zbývající husté mřížky — k tabulkovému HTR (Titan), NE ruční odhad** (struktura i
-      správnost ověřeny, ale jednotlivé buňky gotické mřížky nelze po oku číst publikovatelně):
+- [x] **Husté mřížky — VŠECHNY PŘEPSÁNY A OVĚŘENY** (Transkribus Titan + komputistika; žádný
+      placeholder v edici už nezbývá):
   - [x] **f3** — přepsáno věrně a **kompletně** jako **symetrická tabule délky dne**: jarní blok
         (vlevo, pros→čvn) i podzimní blok (vpravo, čvn→pros) s **měsícem, dnem, svátkem a vstupy
         Slunce** čtenými ze skenu; číselné sloupce (délka dne čtená, délka noci, východ, **české
@@ -42,7 +42,11 @@ SPDX-License-Identifier: EUPL-1.2
         35 řádků (Velikonoce 22.III–25.IV), svátky = pevné posuny od Velikonoc (f58 96 %, f59 99 %
         shoda s OCR; zbytek = „9/10“→10); litera, zlatý počet (jul. PFM), epakta (103−E mod 30 + výjimka
         24/25/XXV), Advent dopočítány vzorcem. `tools/build_festa_table.py`, `tools/verify_festa_mobilia.py`.
-  - [ ] **f66** — epakty/novoluní po dnech roku (jediná zbývající tabule; Titan přečten, nutná jemná registrace).
+  - [x] **f66** — Calendarium perpetuum (epakty/novoluní + feriální písmeno po dnech) — **HOTOVO
+        A OVĚŘENO**: Litera = ABCDEFG[(den v roce−1) mod 7]; Epacta klesá po dnech (30=*) s vynecháním
+        epakty 25 v 29denních lunárních měsících (II,IV,VI,VIII,IX,XI; VIII/IX = saltus). Kotva:
+        novoluní epakty 23 v III = 8.III (= PFM−13). Shoduje se se skenem buňka po buňce (I–IV i X–XII).
+        `tools/build_f66_table.py`.
   - [x] **f61** — Tabula Intervalli Paschae gregoriánská — **HOTOVO A OVĚŘENO**: plný cell-grid
         (epakty 30(*)…1 × nedělní písmena A–G), buňka = „týden doplněk“; týden = ⌊(greg. Velikonoce
         od 1.III +16)/7⌋, doplněk = (35 pro A, jinak 34) − týden; epakta → velikonoční úplněk → 1. neděle.
