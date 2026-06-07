@@ -38,7 +38,10 @@ SPDX-License-Identifier: EUPL-1.2
         33/51 řádků liší od výpočtu (čteno, ne generováno); podzimní denní čísla potvrzují kanonická
         data svátků. „Nové měsíce“ = omyl, samostatný sloupec novoluní neexistuje. Zbývá jen pár
         méně zřetelných jmen [?].
-  - [ ] **f58 + f59** — Tabula Festorum Mobilium (pohyblivé svátky; rekonstruovatelné z Velikonoc).
+  - [x] **f58 + f59** — Tabula Festorum Mobilium (jul./greg.) — **přepsáno Titanem a OVĚŘENO**:
+        35 řádků (Velikonoce 22.III–25.IV), svátky = pevné posuny od Velikonoc (f58 96 %, f59 99 %
+        shoda s OCR; zbytek = „9/10“→10); litera, zlatý počet (jul. PFM), epakta (103−E mod 30 + výjimka
+        24/25/XXV), Advent dopočítány vzorcem. `tools/build_festa_table.py`, `tools/verify_festa_mobilia.py`.
   - [ ] **f66** — epakty/novoluní po dnech roku.
   - [ ] **f61** — úplný cell-grid (princip dekódován; dořešit registraci epakty 25/XXV).
   - **Cesta:** spustit Titan ve webovém Transkribu (kredity na účtu jsou; API token na TrHtr

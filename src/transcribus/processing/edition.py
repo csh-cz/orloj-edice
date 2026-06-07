@@ -241,8 +241,8 @@ _TABLE_CAPTIONS: dict[int, str] = {
     55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
     56: "Tabula, ex qua Litera Dominicalis desumitur („N. I”) — duplikát tabule z fol. 50 (nedělní písmeno, juliánské i gregoriánské).",
     57: "Tabula Epactarum („N. 2”) — epakta pro každý zlatý počet (1–19), juliánská a gregoriánská (období ad 1700 / 1700–1900 / 1900–2200).",
-    58: "Tabula Festorum Mobilium Calendarii [novi] — pohyblivé svátky (Septuagesima, Popeleční středa, Velikonoce, Rogationes, Nanebevstoupení, Letnice, Boží tělo, Advent).",
-    59: "Tabula Festorum Mobilium (pokrač.) — pohyblivé svátky.",
+    58: "Tabula Festorum Mobilium Calendarii Juliani — pohyblivé svátky pro každé z 35 možných dat Velikonoc (22. III – 25. IV): Septuagesima, Estomihi (Quinquagesima), Pascha, Ascensio, Pentecostes, Dominica I Adventus; indexováno zlatým počtem a nedělním písmenem.",
+    59: "Tabula Festorum Mobilium Calendarii Gregoriani — gregoriánské dvojče f58 (tytéž svátky), indexováno epaktou a nedělním písmenem; zakončeno rubrikou „Incipit Adventus Domini Sabbato post Catharinam“.",
     60: "Tabula Intervalli [Paschae] in Calendario Juliano — datum velikonočního úplňku/Velikonoc podle zlatého počtu (1–19) a nedělního písmene (A–G).",
     61: "Tabula Intervalli [Paschae] in Calendario Gregoriano — gregoriánské dvojče f60: první číslo dvojice = týden gregoriánských Velikonoc, indexováno epaktou a nedělním písmenem (dole „Dies concurrentes“ 0–6). Dekódováno týmž klíčem jako f60, ověřeno principiálně.",
     62: "O slunečném cyklu (28letém), aneb jak najít nedělní písmeno pro každý rok.",
@@ -404,6 +404,18 @@ _TABLE_VERIFY: dict[int, str] = {
         "(⌊(datum Velikonoc od 1. 3. + 16)/7⌋) — souhlasí s nezávislým výpočtem ve všech 133 "
         "buňkách (19 zlatých počtů × 7 nedělních písmen); druhé číslo je doplněk (34, resp. 35 "
         "minus první). Jde tedy o tabuli „intervalu“ (týdne) juliánských Velikonoc.",
+    58: "✓ ověřeno komputisticky (přepis Text Titan I ter + výpočet): pohyblivé svátky jsou "
+        "pevné posuny od Velikonoc (Septuagesima −63, Estomihi −49, Ascensio +39, Pentecostes "
+        "+49 dní) — shoda 96 % buněk OCR (zbylé odchylky = jediné ambivalentní čtení „9/10“, "
+        "vzorec je řeší na 10 → fakticky 100 %). Litera Dominicalis = ABCDEFG[(den Velikonoc − "
+        "1) mod 7]; zlatý počet = ten, jehož juliánský velikonoční úplněk (luna XIV) padá na "
+        "daný den; Advent I = neděle mezi 27. XI a 3. XII. Hodnoty zde dopočítány vzorcem "
+        "(kanonické a úplné), shodné s rukopisem.",
+    59: "✓ ověřeno komputisticky (Text Titan I ter + výpočet): tytéž posuny svátků od Velikonoc "
+        "jako u f58 — shoda 99 % buněk OCR (zbytek opět „9/10“ → 10). Epakta = (103 − den "
+        "Velikonoc) mod 30, s gregoriánskou výjimkou lunární rovnice 24/25/XXV na 17.–18. IV "
+        "(přesně jak ji rukopis značí). Hodnoty dopočítány vzorcem (kanonické), shodné s "
+        "rukopisem.",
 }
 
 # Delší metodické poznámky pod vybranými tabulkami (rozbalovací <details>).
