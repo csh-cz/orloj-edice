@@ -11,7 +11,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 WORK="work/orloj1587"
-TITLE="Jan Táborský: Zpráva o orloji Pražském (opis 1587, AHMP)"
+TITLE="Orlojní kniha (opis 1587)"
 REMOTE="https://github.com/csh-cz/orloj-edice.git"
 PY="${PY:-.venv/bin/python}"
 
