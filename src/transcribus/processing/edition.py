@@ -391,8 +391,12 @@ _TABLE_PROSE: dict[int, str] = {
 # Deterministic verification (external computation / astronomy). See tools/verify_computus.py.
 _TABLE_VERIFY: dict[int, str] = {
     3: "✓ věrný přepis ze skenu včetně rukopisných nadpisů sloupců. V buňkách je jen přepis "
-        "(jména svatých v genitivu a zápis „Slunce na [znamení]“). Jména ověřena proti kalendáři; "
-        "[?] = nejisté čtení, jež se s žádným svatým k danému dni neshoduje. Časové sloupce "
+        "(jména svatých v genitivu a zápis „Slunce na [znamení]“). Jména ověřena proti skenu "
+        "i kalendáři; několik svátků neodpovídá standardnímu kalendáři pro daný den (např. "
+        "Ferdinanda 19. I, Samuele 1. III, Anselma 18. III; naopak „Cyrila a Metoděje“ 9. III je "
+        "starý český svátek před pozdějším přesunem na 5. VII) — čteno věrně podle předlohy, nejde "
+        "o chyby přepisu. Jediné zbylé [?] (Jana Milostivého v listopadu) je nejisté čtení. "
+        "Časové sloupce "
         "souhlasí s přepočtem do minuty. Plný přepis záhlaví, význam sloupců, legenda znamení a "
         "vysvětlení českých hodin jsou v poznámce pod tabulkou.",
     50: "✓ ověřeno výpočtem: juliánská i gregoriánská nedělní písmena souhlasí s nezávislým "
