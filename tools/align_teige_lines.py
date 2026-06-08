@@ -96,7 +96,7 @@ def main() -> None:
     json.dump(allres, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"disputed lines (nw>=3, conf<0.4 or empty): {len(low)} -> {out}")
     print("=== sporné řádky (k dořešení skenem) ===")
-    for pn, li, ln, tt, c in low[:25]:
+    for pn, li, ln, _tt, c in low[:25]:
         print(f"  {pn} ř{li:2} c={c}: '{ln[:46]}'")
 
 
