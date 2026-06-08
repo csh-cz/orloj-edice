@@ -1245,8 +1245,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
      "ale ten platí pro f3 i f55 (tytéž hodnoty), vznikl až po tabuli (≥1641) a je rukou "
      "pozdějšího, německy mluvícího orlojníka. Jediné zbylé [?] je přízvisko jména „Jana“ "
      "u dne 12. XI (sv. Jan Almužník?) — viz ediční pozn. u tabulky"),
-    ("f4", "latinský epigram (sedm pahorků pražských)", "—", "done",
-     "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
+    ("f4", "latinský epigram (sedm pahorků pražských)", "C? · ~1641–42", "done",
+     "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu. Ruka pracovně připsána "
+     "<b>C</b> (táž jako f80; writer-ID + obsah) — jistota střední, viz ediční pozn."),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "A · 1587", "done", "drobná [?] místa"),
     ("f13–f30", "Táborský: kap. VI–XIII", "A · 1587", "done",
      "marginálie ověřeny ze skenu (f13 nejisté); pozdější vsuvka f22 (přestavba měsíční koule "
@@ -1272,8 +1273,10 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
     ("f70–f79", "Astrolabium parvum (~1642, čes. překlad Franze Rittera)", "C · ~1641–42", "done",
      "noční určení času ze stínu Měsíce + oprava astrolábem; datovaný příklad z 1. XI 1642 "
      "ověřen nezávislým výpočtem (tools/verify_astrolabe_1642.py)"),
-    ("f80", "dva latinské epigramy (Pythagoras, Archimedes) + nákres trojúhelníku", "—", "done",
-     "přepsáno + překlad (hekatomba; „pohnu zemí“)"),
+    ("f80", "dva latinské epigramy (Pythagoras, Archimedes) + nákres trojúhelníku",
+     "C? · ~1641–42", "done",
+     "přepsáno + překlad (hekatomba; „pohnu zemí“). Ruka pracovně připsána <b>C</b> "
+     "(táž jako f4; writer-ID, matematický obsah, poloha hned za Astrolabiem) — jistota střední"),
     ("f81", "předsádka", "—", "na", "—"),
 ]
 _STATUS_BADGE = {
@@ -1499,7 +1502,10 @@ def _index_doc(
         "1. Novembris“</b> (fol. 78). <b>D</b> (~1684): přední Hájkova tabule fol. 2–3. Německý "
         "návod k tabuli dole na fol. 54 (≥1641) je <b>nejistý</b> — buď C dvojjazyčně, nebo "
         "zvláštní německá ruka (jiný jazyk = jiné písmo, rukopisně nerozhodnutelné). Latinské "
-        "epigramy fol. 4 a 80 zatím nepřiřazeny. <b>Metoda atribuce:</b> syntéza tří kritérií "
+        "epigramy fol. 4 a 80 (jednou rukou) pracovně připsány <b>ruce C</b> (writer-ID je řadí "
+        "ke shluku C, sedí matematický obsah f80 i poloha hned za Astrolabiem, a C latinka "
+        "„Corpus lunæ“ f22 / „Novembris“ f78 je s písmem epigramů slučitelná) — jistota střední. "
+        "<b>Metoda atribuce:</b> syntéza tří kritérií "
         "— písmo (vizuální paleografie + počítačová <i>writer-ID</i> analýza ~4100 řádkových "
         "výřezů: texturní rysy ResNet-50 → UMAP/HDBSCAN), obsah / jazyk / odkazy a datace "
         "(kolofony, interní roky). Strojová analýza spolehlivě oddělí hrubé rozdíly (německý "
