@@ -245,7 +245,7 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
 # Popisky tabulkových folií (z hlaviček; data zatím nepřepsána). Komputistický aparát.
 _TABLE_CAPTIONS: dict[int, str] = {
     2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — předtištěná (z větší části nevyplněná) tabule pro zpravování orloje.",
-    3: "Perpetuální tabule délky dne i noci, východu, poledne a západu Slunce v orlojních (českých) i obecných hodinách — po 10min krocích délky dne od zimního k letnímu slunovratu; symetrická (jaro vlevo, podzim vpravo). Podle záhlaví od Tadeáše Hájka z Hájku, výška pólu 50° (Praha), nový kalendář; opis ≈ 1689.",
+    3: "Perpetuální tabule délky dne i noci, východu, poledne a západu Slunce v orlojních (českých) i obecných hodinách — po 10min krocích délky dne od zimního k letnímu slunovratu; symetrická (jaro vlevo, podzim vpravo). Opis tištěné tabule Tadeáše Hájka z Hájku „Tabule dlúhosti dne a noci k spravování orloje“ (1574), zhotovené přímo pro pražský orloj; výška pólu 50° (Praha), upraveno na nový kalendář; opis ≈ 1689 (ruka D). Viz poznámku pod tabulkou.",
     50: "Tabula, ex qua Litera Dominicalis desumitur in ingressu cum Cyclo Solari („N. I”) — nedělní písmeno pro každý rok 28letého slunečního cyklu, juliánské i gregoriánské.",
     55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
     56: "Tabula, ex qua Litera Dominicalis desumitur („N. I”) — duplikát tabule z fol. 50 (nedělní písmeno, juliánské i gregoriánské).",
@@ -498,6 +498,23 @@ _TABLE_NOTE_LONG: dict[int, str] = {
         "vydávaných minucí; tento list je pozdější <b>opis z roku 1689</b>. (Letopočet je v "
         "záhlaví psán římsky <b>M·DC·LXXXIX</b>; koncové „<b>IX</b>“ = 9, ne „IV“ = 4 — dřívější "
         "čtení „1684“ i „LXVI/66“ byla mylná, ověřeno na skenu při maximálním zvětšení.)</p>"
+        "<p><b>Předloha — Hájkova „Tabule dlúhosti dne a noci k spravování orloje“ (1574).</b> "
+        "Záhlaví neuvádí jen autora, ale i konkrétní dílo: jde o opis tištěné tabule "
+        "<b>Tadeáše Hájka z Hájku „Tabule dlúhosti dne a noci k spravování orloje“ (1574)</b>. "
+        "Shoduje se titul (záhlaví f2/f3 „Tabule dlúhosti dne i noci, vejchodu, poledne i "
+        "západu, spravování orloje“), účel (Hájek ji zhotovil <b>přímo pro nastavování "
+        "pražského orloje</b>) i výška pólu 50°; datace „před CXVI lety“ (od opisu 1689) dává "
+        "1573, katalogově 1574 — týž tisk (rozdíl roku je u dobových tabulí běžný). "
+        "<b>Tadeáš Hájek z Hájku</b> (1525/26–1600) byl dvorní matematik Rudolfa II., "
+        "pozorovatel supernovy 1572 a komety 1577, člen komise pro gregoriánskou reformu a "
+        "ten, kdo do Prahy přivedl Tychona Brahe (a tím i Keplera) — z čehož vzešly Rudolfínské "
+        "tabulky 1627; orlojník v této knize (ruka C, ~1641–42) je přitom ještě nevyužil "
+        "(viz pozn. u f78). <b>Význam f3:</b> Hájkova tabule byla užitkový jednolist, jaké se "
+        "dochovávají zcela výjimečně; dochovaný exemplář originálu 1574 zatím není doložen "
+        "(k ověření v Knihopisu / NK ČR). Pokud je originál ztracen, je <b>tento opis (1689) "
+        "vzácným, ne-li jediným svědkem obsahu Hájkovy orlojní tabule</b> — navíc už v "
+        "gregoriánské úpravě. (Souhrnný badatelský zápis: <code>docs/hajek-tabule-orloje-1574.md</code> "
+        "v repozitáři edice.)</p>"
         "<p><b>„Nyní dle Nového kalendáře spravena.“</b> „Nový kalendář“ = gregoriánský (1582, "
         "v Čechách 1584), „starý“ = juliánský; „spravena“ = upravena, seřízena. Tabule přiřazuje "
         "ke každé <b>délce dne datum</b>, kdy jí Praha dosáhne — a totéž astronomické datum nese "
