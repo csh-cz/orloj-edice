@@ -1252,11 +1252,13 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
     ("f50", "Tabula Litera dominicalis (N. I)", "C · ~1641–42", "done",
      "cyklus solaris → nedělní písmeno (jul./greg.), 28 řádků, ověřeno vzorcem"),
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "B · 1628", "done", "—"),
-    ("f53–f54", "List purkmistra — dobový český překlad", "B · 1628", "partial",
-     "český překlad hotov (ruka B); německý návod na f54 (přepočet německé↔orlojní hodiny) "
-     "přepsán + přeložen — <b>zvláštní německy píšící ruka</b> (≥1641); <b>všechna čísla "
-     "příkladu ověřena</b> tabulkou f55 (3. máj = 4:43) + aritmetikou + astronomií "
-     "(verify_f54_sunrise.py), jen spojovací německé fráze zůstávají orientační ([?]/[…])"),
+    ("f53–f54", "List purkmistra — dobový český překlad", "B · 1628", "done",
+     "český překlad kompletní (ruka B) — od „My, purkmistr…“ přes datovací doložku 1410 "
+     "(„ve čtvrtek před sv. Havlem“, ověřeno: 9. X 1410 = čtvrtek) až po připsaný kancelářský "
+     "kolofon 1628 (Mikuláš Petr). Německý návod na f54 (přepočet německé↔orlojní hodiny) — "
+     "<b>zvláštní německy píšící ruka</b> (≥1641) — přepsán a přeložen, <b>všechna čísla "
+     "příkladu ověřena</b> (f55: 3. máj = 4:43; verify_f54_sunrise.py); orientační zůstávají "
+     "jen spojovací německé fráze ([?]/[…])"),
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641–42)", "C · ~1641–42", "done",
      "vše přepsáno a ověřeno výpočtem: litera dominicalis (f50/56), epakty (f57), vejchod Slunce "
      "(f55), intervallum jul./greg. (f60/61 — týden Velikonoc), festa mobilia jul./greg. (f58/59), "
