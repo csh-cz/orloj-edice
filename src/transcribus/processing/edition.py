@@ -1534,9 +1534,86 @@ def _index_doc(
         "Datace a badatelství: <b>Zdeněk Horský</b> (1988); opis objevil <b>Stanislav "
         "Macháček</b> (1962). Rozpoznání tabulek: <b>Docling</b> (IBM).</p></section>"
     )
+    uvod = (
+        '<section class="uvod"><h2>Úvod</h2>'
+        '<p class="lead">Digitální vědecká edice jediného rukopisu — orlojní knihy '
+        "pražského orloje, do níž čtyři generace správců zapisovaly přes celé století "
+        "(~1587–1684).</p>"
+        "<p>Tato edice zpřístupňuje <b>jednu svázanou knihu</b> z Archivu hlavního města "
+        "Prahy (Sbírka rukopisů, inv. č. 7916). Není to sborník volně vložených listů, "
+        "ale <b>prázdný sešit svázaný vcelku a teprve pak postupně popisovaný</b> — což jsme "
+        "ověřili přímým ohledáním originálu v archivu. Kniha je proto <b>konvolut</b>: vrství "
+        "v sobě texty od konce 16. do konce 17. století, jak je psali po sobě jdoucí "
+        "orlojníci.</p>"
+        "<h3>O čem kniha je</h3>"
+        "<ul>"
+        "<li><b>Jádro (fol. 5–49):</b> opis <i>Zprávy o orloji pražském</i> Jana Táborského, "
+        "který roku 1587 pořídil staroměstský písař <b>Matouš Carchesius Jablonský</b> — "
+        "základní dobový popis stroje, jeho soukolí, dějin a obsluhy.</li>"
+        "<li><b>List purkmistra (fol. 51–54):</b> opis (1628, <b>Mikuláš Petr</b>) listiny "
+        "<b>z r. 1410</b> — de facto smlouvy Starého Města s hodinářem <b>Mikulášem z Kadaně</b> "
+        "na zhotovení orloje; německy i v dobovém českém překladu.</li>"
+        "<li><b>Komputistické a astronomické tabulky (fol. 2–3, 50, 55–69):</b> nedělní písmena, "
+        "zlaté číslo, epakty, východ Slunce, počítání nového měsíce a Velikonoc; tabule délky "
+        "dne (fol. 3) je dle vlastního záhlaví dílo <b>Tadeáše Hájka z Hájku</b> pro Prahu.</li>"
+        "<li><b>Astrolabium parvum (fol. 70–79, ~1642):</b> orlojníkův vlastní český překlad "
+        "příručky <b>Franze Rittera</b> z Norimberku — jak astrolábem počítat čas, východ a "
+        "západ Slunce i Měsíce, včetně řešených příkladů.</li>"
+        "<li><b>Pozdější přípisky správců orloje</b> (16.–17. stol.) na okrajích a volných "
+        "místech.</li>"
+        "</ul>"
+        "<h3>Na co jsme přišli</h3>"
+        "<ul>"
+        "<li><b>Kniha je datovací stroj.</b> Protože byla svázána jako prázdný sešit a "
+        "popisována postupně, <b>pořadí folií odráží chronologii vzniku</b> — díky tomu lze "
+        "datovat i nedatované přípisky. (Výjimka: přední volné listy fol. 2–3 byly dopsány "
+        "<b>nejpozději</b>, ≈ 1684, takže fyzicky první jsou časově poslední.)</li>"
+        "<li><b>Čtyři hlavní písařské ruce.</b> Rozlišili jsme je (A Carchesius 1587 · "
+        "B Mikuláš Petr 1628 · C orlojník-astronom ~1641–42 · D ~1684) syntézou paleografie, "
+        "<b>počítačové analýzy písma</b> a obsahu/datace. Mj. se ukázalo, že <b>Astrolabium "
+        "není ruka A</b>, ale vlastní překlad orlojníka C z r. ~1642.</li>"
+        "<li><b>Doklad pro vznik orloje r. 1410.</b> Přeřazení vzniku orloje od legendárního "
+        "„mistra Hanuše (~1490)“ k r. <b>1410</b> stojí na <b>pozdějším přípisku na fol. 38</b>, "
+        "který odkazuje na vložený List purkmistra — to je opora datace Z. Horského.</li>"
+        "<li><b>Přesně datované pozorování (1. 11. 1642).</b> Astrolabium nese jediné přesně "
+        "datované noční pozorování. <b>Ověřili jsme je výpočtem</b>: Slunce na 8° Štíra, Měsíc "
+        "na 1° Ryb, západ Slunce 16:48, kulminace Měsíce ~19:48 — vše souhlasí s moderním "
+        "přepočtem na 1–2 minuty a potvrzuje rok 1642 (gregoriánský kalendář).</li>"
+        "<li><b>Systematická chyba ze stáří tabulek.</b> Slunce i Měsíc leží shodně o ~1° níže "
+        "než pravá poloha. Že je odchylka u obou stejná je <b>průkazem</b>, že nejde o chybu "
+        "data ani měření, ale o <b>precesní zastarání předrudolfínských tabulek</b> (o řádově "
+        "století starších), z nichž orlojník počítal; v rozdílu poloh Slunce a Měsíce se chyba "
+        "vykrátí, takže výsledný čas přesto sedí.</li>"
+        "<li><b>Všechny číselné tabulky dekódovány a ověřeny.</b> Komputistické tabulky "
+        "(nedělní písmena, epakty, východ Slunce, intervaly Velikonoc, věčný kalendář, "
+        "násobilka) jsme rozluštili podle dobových vzorců a <b>nezávisle ověřili buňku po "
+        "buňce</b>; jedinou (fol. 60) se ověřit nepodařilo — je tak označena.</li>"
+        "</ul>"
+        "<h3>Metody a nástroje</h3>"
+        "<p><b>Syntetická edice.</b> Text nevzniká pouhým strojovým přepisem, ale "
+        "<b>kombinací zdrojů</b>: strojové rozpoznání rukopisu (HTR — <b>Transkribus</b> "
+        "PyLaia, čeština i německý Kurrent, dva nezávislé běhy), <b>ruční korektura čtením "
+        "skenu</b>, rozpoznání tabulek (<b>Docling</b> TableFormer) a externí opory — edice "
+        "originálu 1570 (J. Teige, 1901) a přepisy z orloj.eu.</p>"
+        "<p><b>Ověřování výpočtem.</b> Číselné tabulky byly přepsány ručně (strojové čtení "
+        "číslic selhává) a poté <b>deterministicky ověřeny nezávislým výpočtem</b> — dobové "
+        "komputistické vzorce a astronomie (Meeus); ověřovací skripty jsou součástí "
+        "repozitáře.</p>"
+        "<p><b>Počítačová identifikace písaře (writer-ID).</b> Z ~4100 řádkových výřezů se "
+        "extrahovaly texturní rysy písma (ResNet-50) a shlukovaly (UMAP/HDBSCAN) — jako jedno "
+        "ze tří kritérií atribuce vedle paleografie a obsahu/datace.</p>"
+        "<p><b>Čtenářské rozhraní.</b> Český text lze zobrazit ve <b>třech režimech</b> "
+        "(diplomatický / normalizovaný / Teige), s <b>číslováním řádků podle předlohy</b> "
+        "a rozbalovacími edičními poznámkami; okrajové přípisky stojí ve vnější margině "
+        "jako v rukopise.</p>"
+        '<p class="more">▸ Podrobné vymezení pramene, metody, písařských rukou, '
+        "ověření tabulek, práv a poděkování viz <b>O edici</b> níže.</p>"
+        "</section>"
+    )
     is_1570 = "1570" in work_slug
     if is_1570:
         tiraz = _tiraz_1570(ahmp_a)
+        uvod = ""
     blocks = []
     for _kind, lo, hi, label in sections:
         items = "\n".join(
@@ -1555,6 +1632,7 @@ def _index_doc(
 <body class="mode-dipl">
 <header><h1>{_esc(title)}</h1></header>
 <main>
+{uvod}
 {_status_html(work_slug)}
 {'' if is_1570 and not has_marginalia_page else '<p class="marg-link">▸ <a href="marginalia.html">Rozbor marginálií</a> — přepisy okrajových přípisků folií 13–46, co přinášejí, identifikace písaře a datace.</p>'}
 {tiraz}
@@ -1719,6 +1797,16 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .tiraz .verify{background:#eaf3ec;border-left:3px solid #2f6b3a;padding:.4rem .6rem;border-radius:3px}
 .tiraz .verify code{font-size:.82em;background:#dce8df;padding:0 .2em;border-radius:2px}
 .tiraz a{color:#7a5c2e}
+.uvod{font-family:Georgia,'Times New Roman',serif;font-size:.98rem;line-height:1.62;
+  background:var(--paper);border:1px solid #cdbf9f;border-radius:5px;padding:1.1rem 1.4rem;margin:0 0 1.4rem}
+.uvod h2{font-size:1.3rem;margin:.1rem 0 .3rem;border:0}
+.uvod h2+.lead{margin-top:0;color:#6b6256;font-style:italic}
+.uvod h3{font-size:1.02rem;margin:1.1rem 0 .3rem;color:#5a4a2e}
+.uvod p{margin:.5rem 0}
+.uvod ul{margin:.4rem 0;padding-left:1.2rem}
+.uvod li{margin:.35rem 0}
+.uvod a{color:#7a5c2e}
+.uvod .more{font-size:.86rem;color:#6b6256;margin-top:1rem}
 .status{font-family:system-ui,sans-serif;font-size:.82rem;border-collapse:collapse;width:100%;margin:0 0 1.4rem}
 .status caption{text-align:left;font-weight:bold;font-size:1rem;margin-bottom:.4rem;color:#3a342a}
 .status th,.status td{border:1px solid #cdbf9f;padding:.3rem .55rem;text-align:left;vertical-align:top}
