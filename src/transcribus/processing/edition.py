@@ -395,7 +395,12 @@ _TABLE_VERIFY: dict[int, str] = {
         "i kalendáři; několik svátků neodpovídá standardnímu kalendáři pro daný den (např. "
         "Ferdinanda 19. I, Samuele 1. III, Anselma 18. III; naopak „Cyrila a Metoděje“ 9. III je "
         "starý český svátek před pozdějším přesunem na 5. VII) — čteno věrně podle předlohy, nejde "
-        "o chyby přepisu. Jediné zbylé [?] (Jana Milostivého v listopadu) je nejisté čtení. "
+        "o chyby přepisu. Jediné zbylé [?] je listopadové jméno u dne 12: první slovo je jistě "
+        "„Jana“ (= Jan), připojené přízvisko je však zkráceno a nečitelné (čteno „Ve[?] Pro[?]“) — "
+        "proto v buňce jen „Jana [?]“. Datum 12. XI odpovídá v kalendáři sv. Janu Almužníkovi "
+        "(„Janu Milostivému“), takže identifikace světce je pravděpodobná, viditelné litery "
+        "přízviska ji ale nepotvrzují; ponecháno jako nejisté čtení. (Den byl při kontrole skenu "
+        "opraven z chybného 16. na 12. XI; den 16. XI je v tabuli bez čitelného jména.) "
         "Časové sloupce "
         "souhlasí s přepočtem do minuty. Plný přepis záhlaví, význam sloupců, legenda znamení a "
         "vysvětlení českých hodin jsou v poznámce pod tabulkou.",
@@ -1231,14 +1236,15 @@ def _toc_item(n: int, snip: str, teige: bool) -> str:
 _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
     ("f1", "předsádka", "—", "na", "—"),
     ("f2–f3", "úvodní astron. tabulky — Hájek z Hájku (přední list, opis ≈ 1684)",
-     "D · ~1684", "partial",
+     "D · ~1684", "done",
      "f2 = táž tabule jen předkreslená a nevyplněná, ale s týmž záhlavím a <b>touž rukou jako "
      "f3</b> (kopista r. 1684 list nadepsal a nalinkoval, vyplnil až f3); f3 = symetrická "
      "perpetuální tabule po krocích délky dne (Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — "
      "přepsána věrně a kompletně: jarní i podzimní blok (měsíc, den, svátek, vstupy Slunce) čteny "
      "ze skenu, časy ověřeny výpočtem; německý návod, jak takovou tabuli užít, je dole na f54 — "
      "ale ten platí pro f3 i f55 (tytéž hodnoty), vznikl až po tabuli (≥1641) a je rukou "
-     "pozdějšího, německy mluvícího orlojníka; jen několik méně zřetelných jmen [?]"),
+     "pozdějšího, německy mluvícího orlojníka. Jediné zbylé [?] je přízvisko jména „Jana“ "
+     "u dne 12. XI (sv. Jan Almužník?) — viz ediční pozn. u tabulky"),
     ("f4", "latinský epigram (sedm pahorků pražských)", "—", "done",
      "přepsáno + překlad; „Praha jako nový Řím“, bez podpisu"),
     ("f5–f12", "Táborský: verš, dedikace, kap. I–VI", "A · 1587", "done", "drobná [?] místa"),
