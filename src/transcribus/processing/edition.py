@@ -1613,9 +1613,24 @@ def _index_doc(
         "číslic selhává) a poté <b>deterministicky ověřeny nezávislým výpočtem</b> — dobové "
         "komputistické vzorce a astronomie (Meeus); ověřovací skripty jsou součástí "
         "repozitáře.</p>"
-        "<p><b>Počítačová identifikace písaře (writer-ID).</b> Z ~4100 řádkových výřezů se "
-        "extrahovaly texturní rysy písma (ResNet-50) a shlukovaly (UMAP/HDBSCAN) — jako jedno "
-        "ze tří kritérií atribuce vedle paleografie a obsahu/datace.</p>"
+        "<p><b>Počítačová identifikace písaře (writer-ID).</b> Ruce jsme nejdřív roztřídili "
+        "<b>vlastním skriptem</b> (<code>cluster_hands.py</code>, otevřený, licence EUPL-1.2), "
+        "inspirovaným běžnými postupy <i>writer-identification</i> / <i>script-classification</i>. "
+        "Postup: ze <b>4132 řádkových výřezů</b> všech 81 folií se neuronovou sítí <b>ResNet-50</b> "
+        "(předtrénovanou na ImageNetu, knihovna <i>torchvision</i>) vzaly <b>texturní rysy</b> ze "
+        "střední vrstvy (drží <i>duktus</i> písma, ne obsah), zprůměrovaly přes drobné výřezy podél "
+        "tahů a L2-normalizovaly; volitelně se přidala ruční stylometrie (sklon, tloušťka tahu, "
+        "hustota inkoustu). Vektory se zobrazily do nízkého rozměru (<b>UMAP</b>) a shlukovaly "
+        "(<b>HDBSCAN</b>). Skript <b>spolehlivě oddělí hrubé rozdíly</b> — německý Kurrent "
+        "(fol. 51–52) vyšel jako čistý samostatný shluk — a mapuje rejstříky kodexu "
+        "(próza × tabulky × němčina). <b>Doložená mez:</b> na atribuci <b>jednotlivé krátké "
+        "glosy</b> skript nestačí — cílené nejbližší-ruka srovnání dalo všem kandidátům "
+        "podobnost 0,96–0,99 bez odstupu a kontrola selhala (přípisek fol. 22, o němž z písma "
+        "víme, že je ruka C, vyšel nejblíž ruce A); na krátkém fragmentu dominuje morfologie "
+        "výřezu, ne identita ruky. Writer-ID je proto <b>jen jedno ze tří kritérií</b> atribuce — "
+        "jednotlivé přiřazení stojí na paleografii a obsahu/dataci, ne na skriptu. Použitý "
+        "open-source základ: PyTorch/<i>torchvision</i> (ResNet-50), <i>umap-learn</i>, "
+        "<i>hdbscan</i>.</p>"
         "<p><b>Čtenářské rozhraní.</b> Český text lze zobrazit ve <b>třech režimech</b> "
         "(diplomatický / normalizovaný / Teige), s <b>číslováním řádků podle předlohy</b> "
         "a rozbalovacími edičními poznámkami; okrajové přípisky stojí ve vnější margině "
@@ -1820,6 +1835,7 @@ body.mode-teige .teige-pane{display:block;margin-top:1rem;background:#fff;border
 .uvod ul{margin:.4rem 0;padding-left:1.2rem}
 .uvod li{margin:.35rem 0}
 .uvod a{color:#7a5c2e}
+.uvod code{font-size:.86em;background:#efe7d4;padding:0 .25em;border-radius:2px}
 .uvod .more{font-size:.86rem;color:#6b6256;margin-top:1rem}
 .status{font-family:system-ui,sans-serif;font-size:.82rem;border-collapse:collapse;width:100%;margin:0 0 1.4rem}
 .status caption{text-align:left;font-weight:bold;font-size:1rem;margin-bottom:.4rem;color:#3a342a}
