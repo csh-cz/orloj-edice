@@ -1254,8 +1254,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
     ("f51–f52", "List purkmistra 1410 (něm., opsáno 1628)", "B · 1628", "done", "—"),
     ("f53–f54", "List purkmistra — dobový český překlad", "B · 1628", "partial",
      "český překlad hotov (ruka B); německý návod na f54 (přepočet německé↔orlojní hodiny) "
-     "přepsán + český překlad — je to <b>zvláštní německy píšící ruka</b> (≥1641); přesné "
-     "německé znění spojovacích vět čeká na expertní revizi"),
+     "přepsán + přeložen — <b>zvláštní německy píšící ruka</b> (≥1641); <b>všechna čísla "
+     "příkladu ověřena</b> tabulkou f55 (3. máj = 4:43) + aritmetikou + astronomií "
+     "(verify_f54_sunrise.py), jen spojovací německé fráze zůstávají orientační ([?]/[…])"),
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641–42)", "C · ~1641–42", "done",
      "vše přepsáno a ověřeno výpočtem: litera dominicalis (f50/56), epakty (f57), vejchod Slunce "
      "(f55), intervallum jul./greg. (f60/61 — týden Velikonoc), festa mobilia jul./greg. (f58/59), "
