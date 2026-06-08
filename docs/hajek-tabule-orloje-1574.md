@@ -69,7 +69,11 @@ knize počítá ještě po staru z předrudolfínských pomůcek (viz pozn. u f7
 
 Hájkova tabule z 1574 byla **jednolist (broadsheet)** zhotovený pro provoz orloje. Takové
 užitkové jednolisty se dochovávají zcela výjimečně; **dochovaný exemplář originálu se zatím
-nepodařilo doložit** (Knihopis číslo ani digitalizát nenalezeny rychlou rešerší — **k ověření**).
+nepodařilo doložit**. Prověřením **Knihopisu** (`knihoveda.lib.cas.cz`) se ukázalo, že jsou
+tam sice vedeny Hájkovy **minuce** (ročníky 1560–1598; např. č. K17639, K02860, K05635), ale
+**tato orlojní tabule mezi nimi není** — což odpovídá nedochovanému jednolistu (Knihopis
+jednolisty často nevede vůbec). Definitivní ověření zbývá ruční (Manuscriptorium, katalog
+starých tisků NK ČR, hájkovské monografie).
 
 Pokud se originál nedochoval, je **opis na f3 (1689) vzácným, ne-li jediným svědkem obsahu
 Hájkovy orlojní tabule** — navíc už v gregoriánské úpravě. To zvyšuje pramennou hodnotu f3
@@ -77,9 +81,11 @@ nad rámec „pozdního opisu".
 
 ## 6. Otevřené otázky / další zpracování
 
-1. **Dochování originálu 1574** — prověřit **Knihopis** (knihopis.cz), katalog **NK ČR**,
-   *Bibliografii cizojazyčných bohemikálních tisků* / STT, příp. zahraniční sbírky.
-   Zjistit **Knihopis číslo**, formát (jednolist?), tiskaře, místo.
+1. **Dochování originálu 1574** — **Knihopis prověřen** (`knihoveda.lib.cas.cz`, 2026-06):
+   Hájkovy minuce v něm vedeny jsou, **tato tabule ne** → patrně nedochovaný jednolist
+   (nebo v Knihopisu nezachycený). Zbývá **ruční** dohledání: **Manuscriptorium**, **katalog
+   starých tisků NK ČR** (Klementinum), hájkovské monografie (Hladký–Šolc; NTM), příp.
+   zahraniční sbírky (VD16). Pokud potvrzeno bez exempláře → **f3 = unikátní svědek**.
 2. **Přímá kolace** f3 ↔ Hájkův originál (kdyby se sken našel) — jako jsme udělali u Rittera.
 3. **Literatura:** V. Hladký – M. Šolc, *Tadeáš Hájek z Hájku a gregoriánská reforma kalendáře*;
    monografie NTM o Hájkovi — projít, zda tabuli pro orloj zmiňují a kde ji kladou.

@@ -88,8 +88,11 @@ Co o něm víme (z obsahu a paleografie knihy):
 5. **Cech hodinářů / pražští hodináři** 17. stol. — členové, kromě Švorcpachů.
 6. **Cross-check:** kdo v Praze ~1640 vlastnil/anotoval **Ritterovo *Astrolabium* (1613)**;
    kdo ~1689 opisoval/upravoval astronomické tabule.
-7. **Knihopis / NK ČR**: dochování Hájkovy „Tabule… k spravování orloje" (1574) — vedlejší
-   úkol, ale potvrdil by okruh.
+7. **Dochování Hájkovy „Tabule… k spravování orloje" (1574)** — vedlejší úkol. **Knihopis už
+   prověřen** (`knihoveda.lib.cas.cz`): vede Hájkovy minuce (1560–1598), ale **tuto tabuli ne**
+   — patrně nedochovaný jednolist; opis na fol. 3 je pak pravděpodobně **unikátní svědek**.
+   Zbývá ruční dohledání v **Manuscriptoriu**, **katalogu starých tisků NK ČR** a hájkovských
+   monografiích (Hladký–Šolc; NTM).
 
 ## Omezení (čti dřív, než začneš)
 
