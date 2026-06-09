@@ -1645,7 +1645,7 @@ def _index_doc(
         "B Mikuláš Petr 1628 · C orlojník-astronom ~1641–42 · D ~1689) syntézou paleografie, "
         "<b>počítačové analýzy písma</b> a obsahu/datace. Kniha tedy nevznikla najednou r. 1587, "
         "ale <b>narůstala po vrstvách</b> přes celé století; <b>Astrolabium parvum je vlastní "
-        "český překlad orlojníka C</b> (~1642), ne součást Carchesiova opisu.</li>"
+        "český překlad orlojníka C</b> (~1642).</li>"
         "<li><b>Doklad pro vznik orloje r. 1410.</b> Přeřazení vzniku orloje od legendárního "
         "„mistra Hanuše (~1490)“ k r. <b>1410</b> stojí na <b>pozdějším přípisku na fol. 38</b>, "
         "který odkazuje na vložený List purkmistra — to je opora datace Z. Horského.</li>"
