@@ -262,7 +262,7 @@ def _teige_html(passage: str | None, page_folded: set[str]) -> str:
 
 # Popisky tabulkových folií (z hlaviček; data zatím nepřepsána). Komputistický aparát.
 _TABLE_CAPTIONS: dict[int, str] = {
-    2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — předtištěná (z větší části nevyplněná) tabule pro zpravování orloje.",
+    2: "Tabule dlúhosti dne i noci, vejchodu, poledne a západu — předkreslená (z větší části nevyplněná) tabule pro zpravování orloje.",
     3: "Perpetuální tabule délky dne i noci, východu, poledne a západu Slunce v orlojních (českých) i obecných hodinách — po 10min krocích délky dne od zimního k letnímu slunovratu; symetrická (jaro vlevo, podzim vpravo). Opis tištěné tabule Tadeáše Hájka z Hájku „Tabule dlúhosti dne a noci k spravování orloje“ (1574), zhotovené přímo pro pražský orloj; výška pólu 50° (Praha), upraveno na nový kalendář; opis ≈ 1689 (ruka D). Viz poznámku pod tabulkou.",
     50: "Tabula, ex qua Litera Dominicalis desumitur in ingressu cum Cyclo Solari („N. I”) — nedělní písmeno pro každý rok 28letého slunečního cyklu, juliánské i gregoriánské.",
     55: "Tabule vejchodu Slunce wedle polovičního orloje — čas východu pro každý den (1–31) a měsíc (h:min).",
@@ -286,7 +286,7 @@ _TABLE_CAPTIONS: dict[int, str] = {
 # surového HTR, který u zpracovaných folií ukazoval staré chyby. Próza f5–49 zůstává
 # na incipitu (rozpoznaný text), strukturovaná folia dostávají kurátorský popis.
 _FOLIO_SNIP: dict[int, str] = {
-    2: "Předtištěná (z větší části nevyplněná) tabule pro zpravování orloje",
+    2: "Předkreslená (z větší části nevyplněná) tabule pro zpravování orloje",
     3: "Hájkova perpetuální tabule délky dne, východu, poledne a západu Slunce (jaro/podzim, nový kalendář)",
     4: "Latinský epigram o sedmi pražských pahorcích („Praha jako nový Řím“)",
     # Táborského Zpráva (kap. I–XVIII): začátky kapitol ukotveny rukopisnými záhlavími
@@ -1294,13 +1294,13 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
      "marginálie ověřeny ze skenu (f13 nejisté); pozdější vsuvka f22 (přestavba měsíční koule "
      "na samootáčivou) = ruka C ~1641–42"),
     ("f31–f42", "Táborský: kap. XIII–XVIII", "A · 1587", "done",
-     "ověřeno <b>kolací proti Teigeho edici 1570</b> (každé slovo porovnáno, "
-     "<code>tools/collate_carchesius_teige.py</code>) + vizuální kontrolou skenu: všech 97 "
-     "odlišností jsou buď systematické dobové pravopisné varianty opisu (au/ú, ej/aj, ů/uo, "
-     "zodyaku, jsau/sou, sem/jsem), nebo OCR šum v Teigeho referenci — <b>ne chyby přepisu</b>; "
-     "několik reálných lexikálních variant opis × originál (mínění/mírněji ap.) zachováno. "
-     "Pozdější vsuvka f38 (redatace orloje k r. 1410, „vide list purkmistra“) = jiná pozdější "
-     "ruka ≥1628 (B/C nerozhodnuto, obsahově spíše B)"),
+     "ověřeno <b>kolací proti Teigeho edici i přímo proti autografu 1570</b> (porovnáno každé "
+     "slovo; <code>collate_carchesius_teige.py</code>, <code>collate_1587_1570.py</code>) + "
+     "vizuální kontrolou skenu — <b>žádné chyby přepisu</b>. Odlišnosti jsou skutečné dobové "
+     "varianty opisu × originálu (au/ú, ej/aj, ů/uo, zodyaku, jsau/sou); že se týchž záměn opis "
+     "liší i od autografu, ne jen od Teige, potvrzuje, že jde o genuinní rozdíl 1587×1570, "
+     "nikoli o Teigeho editorskou normalizaci. Pozdější vsuvka f38 (redatace orloje k r. 1410, "
+     "„vide list purkmistra“) = jiná pozdější ruka ≥1628 (B/C nerozhodnuto, obsahově spíše B)"),
     ("f43–f49", "Táborský: biografický závěr, verše, kolofony 1570 + 1587", "A · 1587", "done", "—"),
     ("f50", "Tabula Litera dominicalis (N. I)", "C · ~1641–42", "done",
      "cyklus solaris → nedělní písmeno (jul./greg.), 28 řádků, ověřeno vzorcem"),
