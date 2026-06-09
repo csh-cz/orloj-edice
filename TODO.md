@@ -54,7 +54,7 @@ SPDX-License-Identifier: EUPL-1.2
         Dies Concurrentes 0–6 ze skenu. `tools/build_f61_table.py`.
   - **Cesta:** spustit Titan ve webovém Transkribu (kredity na účtu jsou; API token na TrHtr
     nemá nárok — 403), pak naimportovat přes `get_page_xml` (funguje).
-  - **f2** — předtištěná, z větší části nevyplněná tabule (jen hlavička) → nic k přepisu.
+  - **f2** — předkreslená, z větší části nevyplněná tabule (jen hlavička) → nic k přepisu.
 - [x] **f4** — latinský epigram o sedmi pražských pahorcích („Praha jako nový Řím") — přepsáno + překlad.
 - [x] **f80** — dva latinské epigramy (Pythagoras: hekatomba; Archimedes: „pohnu zemí") + nákres
       pravoúhlého trojúhelníku — přepsáno + překlad. (Pozn.: NE latinsko-český, jak dříve uvedeno.)
