@@ -21,3 +21,4 @@ build/
 
 # local preview / editor config
 .claude/
+data/teige_taborsky.raw.txt
