@@ -1607,9 +1607,10 @@ def _index_doc(
     )
     uvod = (
         '<section class="uvod"><h2>Úvod</h2>'
-        '<p class="lead">Orlojní kniha pražského orloje — pracovní rukopis, do něhož se přes '
-        "celé století (1587–1689) zapisovalo vše kolem stroje: opis Táborského zprávy o orloji, "
-        "smlouva z roku 1410, komputistické tabulky i návod k astrolábu.</p>"
+        '<p class="lead">Orlojní kniha pražského orloje — rukopis, který přes celé století '
+        "(1587–1689) sloužil patrně jako <b>příručka orlojníků</b>: shromažďoval, co bylo "
+        "potřeba k nastavování a obsluze orloje — opis Táborského zprávy o orloji, smlouvu "
+        "z roku 1410, komputistické tabulky i návod k astrolábu.</p>"
         "<p>Rukopis je uložen v Archivu hlavního města Prahy (Sbírka rukopisů, inv. č. 7916). "
         "Není to sborník volně vložených listů, ale <b>prázdný sešit svázaný vcelku a teprve pak "
         "postupně popisovaný</b> — což jsme ověřili přímým ohledáním originálu v archivu. Je to "
