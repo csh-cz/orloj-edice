@@ -1041,6 +1041,9 @@ def _page_doc(
     figures = figures or []
     has_text = any(r.lines and any(line.strip() for line in r.lines) for r in regions)
     has_content = has_text or bool(tables) or bool(figures) or bool(clean_lines) or table_page
+    # Teige režim/volba dává smysl jen u Carchesiova opisu Táborského zprávy (fol. 5–49),
+    # kterou Teige (1901) vydal; jinde (tabulky, List, Astrolabium, vazba) reference není.
+    has_teige = 5 <= page_nr <= 49
     # AHMP rules: any internet publication of a reproduction needs an agreement +
     # <=500px + watermark. Until that is in place, NOTHING is republished — figures are
     # only referenced with an out-link to the AHMP viewer.
@@ -1179,21 +1182,30 @@ def _page_doc(
             )
         else:
             folio = f'<div class="folio">{marginalia}{fig_note}{body_regions}</div>'
-        body = (
-            folio
-            + '<div class="teige-pane"><div class="teige-label">Teige (1570), '
-            f"přibližné zarovnání</div>{teige}</div>"
+        teige_inner = teige if teige_passage else (
+            '<div class="teige-empty">Tato strana patří k Táborského zprávě (Carchesiův opis), '
+            "ale referenční pasáž se pro ni nepodařilo automaticky zarovnat.</div>"
+        )
+        body = folio + (
+            '<div class="teige-pane"><div class="teige-label">Teige (1570), '
+            f"přibližné zarovnání</div>{teige_inner}</div>" if has_teige else ""
         )
     else:
         body = f'<div class="empty">{_esc(binding_note) if binding_note else "[prázdná strana / vazba]"}</div>'
 
     body = _zodiac_textstyle(body)
+    # Teige radio jen na Carchesiových foliích (has_teige výše). Jinde se vynechá; JS na
+    # takové stránce uložený režim „teige“ zobrazí jako diplomatický (preference se nepřepíše).
+    teige_radio = (
+        '<label><input type="radio" name="mode" value="teige"> edice (Teige)</label>'
+        if has_teige else ""
+    )
     return f"""<!doctype html>
 <html lang="cs"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>fol. {page_nr:04d} — {_esc(title)}</title>
 <link rel="stylesheet" href="assets/edition.css"></head>
-<body class="mode-dipl layout-lined app-on">
+<body class="mode-dipl layout-lined app-on{' has-teige' if has_teige else ''}">
 <header>
   <a class="home" href="index.html">≡</a>
   <h1>{_esc(title)}</h1>
@@ -1202,7 +1214,7 @@ def _page_doc(
       <span class="ctl-lbl">Znění</span>
       <label><input type="radio" name="mode" value="dipl" checked> transliterace</label>
       <label><input type="radio" name="mode" value="norm"> transkripce</label>
-      <label><input type="radio" name="mode" value="teige"> edice (Teige)</label>
+      {teige_radio}
     </span>
     <span class="ctl">
       <span class="ctl-lbl">Sazba</span>
@@ -1941,9 +1953,10 @@ _JS = """
   function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
   function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
   function setMode(m){
-    B.classList.remove('mode-dipl','mode-norm','mode-teige');B.classList.add('mode-'+m);
-    for(const r of document.querySelectorAll('input[name=mode]'))r.checked=(r.value===m);
-    store('edmode',m);}
+    store('edmode',m);                                  // zachovej preferenci uživatele
+    var eff=(m==='teige'&&!B.classList.contains('has-teige'))?'dipl':m;  // Teige jen kde dává smysl
+    B.classList.remove('mode-dipl','mode-norm','mode-teige');B.classList.add('mode-'+eff);
+    for(const r of document.querySelectorAll('input[name=mode]'))r.checked=(r.value===eff);}
   function setLayout(l){
     B.classList.remove('layout-lined','layout-flow');B.classList.add('layout-'+l);
     for(const r of document.querySelectorAll('input[name=layout]'))r.checked=(r.value===l);
