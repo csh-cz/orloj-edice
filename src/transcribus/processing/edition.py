@@ -44,14 +44,32 @@ _SECTION_LABEL = {
 _ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
 
 
+# Kurátorované členění orlojní knihy 1587 (AHMP inv. č. 7916) — explicitní, ne
+# heuristické: celý Carchesiův opis Táborského zprávy je JEDEN oddíl (f5–49).
+_SECTIONS_1587: list[tuple[str, int, int, str]] = [
+    ("vazba", 1, 1, "Vazba — přední deska"),
+    ("hajek", 2, 3, "Přední list — Hájkova tabule délky dne (opis ≈ 1689)"),
+    ("epigram", 4, 4, "Latinský epigram — sedm pražských pahorků"),
+    ("taborsky", 5, 49, "Táborského Zpráva o orloji pražském — opis Matouše Carchesia (1587)"),
+    ("komputus", 50, 50, "Komputus — Tabula Litera dominicalis"),
+    ("list", 51, 54, "List purkmistra 1410 — opis Mikuláše Petra (1628)"),
+    ("komputus", 55, 69, "Komputistické a astronomické tabulky (~1641–42)"),
+    ("astrolabium", 70, 79, "Astrolabium parvum — český překlad Franze Rittera (~1642)"),
+    ("epigram", 80, 80, "Latinské epigramy — Pythagoras, Archimedes"),
+    ("vazba", 81, 81, "Vazba — zadní deska"),
+]
+
+
 def derive_sections(
     matched: set[int], total: int, *, gap: int = 2, work_slug: str = ""
 ) -> list[tuple[str, int, int, str]]:
-    """Group folios into sections from the Teige-match blocks.
+    """Group folios into sections.
 
-    Contiguous matched folios (small gaps bridged) form a Táborský section; the
-    stretches between them are 'other writings'. Returns (kind, lo, hi, label).
+    For the 1587 book use the curated `_SECTIONS_1587` (Carchesius = one section).
+    For the 1570 autograph derive from Teige-match blocks. Returns (kind, lo, hi, label).
     """
+    if "1570" not in work_slug:
+        return [(k, lo, min(hi, total), lbl) for k, lo, hi, lbl in _SECTIONS_1587 if lo <= total]
     # Merge matched folios into intervals, bridging gaps <= ``gap``.
     intervals: list[list[int]] = []
     for n in sorted(matched):
@@ -1725,7 +1743,7 @@ def _index_doc(
 {'' if is_1570 and not has_marginalia_page else '<p class="marg-link">▸ <a href="marginalia.html">Rozbor marginálií</a> — přepisy okrajových přípisků folií 13–46, co přinášejí, identifikace písaře a datace.</p>'}
 {tiraz}
 <p class="note">{'Autograf Jana Táborského (1570), jeden svázaný celek.' if is_1570 else 'Jedna svázaná kniha (více částí, jeden celek).'} <span class="teige-badge">T</span> = {'folia, k nimž Teigeho edice originálu (1901) poskytuje srovnávací znění' if is_1570 else 'folia s opisem Táborského zprávy, kde existuje referenční edice (Teige 1901); ostatní oddíly referenci nemají'}.
-Označeno {n_teige} z {len(pages)} folií. Hranice oddílů jsou odvozené automaticky (heuristika).</p>
+Označeno {n_teige} z {len(pages)} folií. {'Hranice oddílů jsou odvozené automaticky (heuristika).' if is_1570 else 'Oddíly odpovídají částem knihy; celý Carchesiův opis Táborského zprávy (fol. 5–49) je jeden oddíl.'}</p>
 {"".join(blocks)}</main>
 <footer>{len(pages)} folií. Diplomatická edice z Transkribus HTR.</footer>
 <script>document.querySelectorAll('.status tbody tr[data-href]').forEach(function(tr){{tr.addEventListener('click',function(e){{if(e.target.closest('a'))return;location.href=tr.dataset.href;}});}});</script>
