@@ -153,6 +153,20 @@ _PENCIL_FOLIO: dict[int, str] = {
     68: "41", 70: "46", 72: "47", 74: "48", 76: "49", 77: "50", 79: "51", 80: "52",
 }
 
+# Přerušení staré (tužkové) foliace = podle ní v knize CHYBÍ listy. Klíč = naše folio,
+# PŘED nímž mezera je; hodnota = popis. Patrně ztracené listy (k ověření na originále —
+# ústřižky v hřbetu). Viz docs / mail Petru Skálovi.
+_MISSING_BEFORE: dict[int, str] = {
+    56: "Podle staré (tužkové) foliace zde mezi listy 32 a 35 <b>chybějí dva listy "
+        "(st. fol. 33–34)</b> — patrně ztracené. Obsahově padly doprostřed komputistického "
+        "oddílu (mezi tabuli východu Slunce a Litera dominicalis). Naše foliace dle skenů je "
+        "souvislá; chybí jen v původní knize.",
+    70: "Podle staré (tužkové) foliace zde mezi listy 41 a 46 <b>chybějí čtyři listy "
+        "(st. fol. 42–45)</b> — patrně ztracené. Padly na přechod mezi koncem komputistického "
+        "oddílu a začátkem Astrolabia parvum. Naše foliace dle skenů je souvislá; chybí jen "
+        "v původní knize.",
+}
+
 
 def _line_html(
     line: str, *, normalize: bool = True, page_nr: int = 0, n: int | None = None
@@ -1081,6 +1095,10 @@ def _page_doc(
         f' · <span class="oldfol" title="původní foliace tužkou (čísluje listy)">st. fol. '
         f'{_PENCIL_FOLIO[page_nr]}</span>' if page_nr in _PENCIL_FOLIO else ""
     )
+    missing_html = (
+        f'<div class="missing-leaves">⚠ {_MISSING_BEFORE[page_nr]}</div>'
+        if page_nr in _MISSING_BEFORE else ""
+    )
     # AHMP rules: any internet publication of a reproduction needs an agreement +
     # <=500px + watermark. Until that is in place, NOTHING is republished — figures are
     # only referenced with an out-link to the AHMP viewer.
@@ -1267,7 +1285,7 @@ def _page_doc(
   <a class="next" href="{next_link}"{'' if next_link else ' hidden'}>další →</a>
 </nav>
 <div class="section-label">{_esc(section_label)}</div>
-<main class="leaf">{body}{scan_embed}</main>
+<main class="leaf">{missing_html}{body}{scan_embed}</main>
 <footer>Diplomatický přepis (Transkribus HTR, model 263129). Normalizace heuristická — nutná korektura.
 Teige: edice 1901, public domain. Vyobrazení ani skeny se zde nereprodukují — odkazy „sken"
 vedou na stabilní permalink archiválie v Archivu hlavního města Prahy (katalog.ahmp.cz);
@@ -1660,6 +1678,11 @@ def _index_doc(
         "prázdný sešit a popisována postupně, <b>pořadí folií odráží chronologii vzniku</b> — díky tomu lze "
         "datovat i nedatované přípisky. (Výjimka: přední volné listy fol. 2–3 byly dopsány "
         "<b>nejpozději</b>, ≈ 1689, takže fyzicky první jsou časově poslední.)</li>"
+        "<li><b>Podle staré foliace chybějí listy.</b> Srovnání původní (tužkou psané) foliace "
+        "s dnešním pořadím skenů odhalilo dvě přerušení: mezi naším fol. 55 a 56 chybějí "
+        "<b>2 listy</b> (st. fol. 33–34, uvnitř komputu) a mezi fol. 68 a 70 <b>4 listy</b> "
+        "(st. fol. 42–45, na přechodu komputus → Astrolabium) — patrně ztracené. V edici jsou "
+        "tato místa vyznačena přímo u příslušných folií (fol. 56 a 70).</li>"
         "<li><b>Čtyři hlavní písařské ruce.</b> Rozlišili jsme je (A Carchesius 1587 · "
         "B Mikuláš Petr 1628 · C orlojník-astronom ~1641–42 · D ~1689) syntézou paleografie, "
         "<b>počítačové analýzy písma</b> a obsahu/datace. Kniha tedy nevznikla najednou r. 1587, "
@@ -1794,6 +1817,9 @@ header .home{font-size:1.3rem;text-decoration:none;color:var(--accent)}
 .pager a{color:var(--accent);text-decoration:none}
 .pager .folno{color:#6b6256}
 .pager .oldfol{color:#8a7a52;font-variant:small-caps}
+.missing-leaves{margin:0 0 1rem;padding:.55rem .8rem;background:#fbe7d6;border:1px solid #d8a25a;
+  border-left:4px solid #b8600b;border-radius:4px;font-family:system-ui,sans-serif;
+  font-size:.84rem;line-height:1.5;color:#5a3a12}
 .pager a[hidden]{visibility:hidden}
 main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 /* folio pages use (almost) the full screen width so lines need not wrap */
