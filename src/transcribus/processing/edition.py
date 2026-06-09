@@ -138,6 +138,20 @@ def _zodiac_textstyle(s: str) -> str:
 # (g→j apod.), takže se u nich „normalizovaný" pohled rovná diplomatickému.
 _NO_NORMALIZE: frozenset[int] = frozenset({4, 51, 52, 54, 62, 80})
 
+# Starší (původní) foliace TUŽKOU — čísluje LISTY, psaná na rectu, takže verso/prázdné
+# strany číslo nemají (to není mezera). Přečteno ze skenů (pravý horní roh). Naše „folio"
+# = index skenu; tato mapa skenový index → tužkové číslo listu se zachovává jako historický
+# údaj. Přední blok (f5–49) je pravidelný; v zadní části (f50+) je foliace nepravidelná a
+# má diskontinuitu (mezi f68=41 a f70=46), proto se čísla jen čtou, nedopočítávají.
+_PENCIL_FOLIO: dict[int, str] = {
+    2: "4",
+    5: "6", 7: "7", 9: "8", 11: "9", 13: "10", 15: "11", 17: "12", 19: "13", 21: "14",
+    23: "15", 25: "16", 27: "17", 29: "18", 31: "19", 33: "20", 35: "21", 37: "22",
+    39: "23", 41: "24", 43: "25", 45: "26", 47: "27", 49: "28",
+    50: "29", 51: "30", 53: "31", 55: "32", 60: "37", 62: "38", 64: "39", 66: "40",
+    68: "41", 70: "46", 72: "47", 74: "48", 76: "49", 77: "50", 79: "51", 80: "52",
+}
+
 
 def _line_html(
     line: str, *, normalize: bool = True, page_nr: int = 0, n: int | None = None
@@ -1062,6 +1076,10 @@ def _page_doc(
     # Teige režim/volba dává smysl jen u Carchesiova opisu Táborského zprávy (fol. 5–49),
     # kterou Teige (1901) vydal; jinde (tabulky, List, Astrolabium, vazba) reference není.
     has_teige = 5 <= page_nr <= 49
+    pencil_html = (
+        f' · <span class="oldfol" title="původní foliace tužkou (čísluje listy)">st. fol. '
+        f'{_PENCIL_FOLIO[page_nr]}</span>' if page_nr in _PENCIL_FOLIO else ""
+    )
     # AHMP rules: any internet publication of a reproduction needs an agreement +
     # <=500px + watermark. Until that is in place, NOTHING is republished — figures are
     # only referenced with an out-link to the AHMP viewer.
@@ -1244,7 +1262,7 @@ def _page_doc(
 </header>
 <nav class="pager">
   <a class="prev" href="{prev_link}"{'' if prev_link else ' hidden'}>← předchozí</a>
-  <span class="folno">fol. {page_nr:04d} / {total:04d} &nbsp; {ahmp}</span>
+  <span class="folno">fol. {page_nr:04d} / {total:04d}{pencil_html} &nbsp; {ahmp}</span>
   <a class="next" href="{next_link}"{'' if next_link else ' hidden'}>další →</a>
 </nav>
 <div class="section-label">{_esc(section_label)}</div>
@@ -1774,6 +1792,7 @@ header .home{font-size:1.3rem;text-decoration:none;color:var(--accent)}
   align-items:center;font-family:system-ui,sans-serif;font-size:.85rem}
 .pager a{color:var(--accent);text-decoration:none}
 .pager .folno{color:#6b6256}
+.pager .oldfol{color:#8a7a52;font-variant:small-caps}
 .pager a[hidden]{visibility:hidden}
 main{max-width:62rem;margin:1rem auto 3rem;padding:0 1rem}
 /* folio pages use (almost) the full screen width so lines need not wrap */
