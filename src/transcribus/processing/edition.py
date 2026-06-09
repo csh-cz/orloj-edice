@@ -1248,7 +1248,9 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
      "D · ~1689", "done",
      "f2 = táž tabule jen předkreslená a nevyplněná, ale s týmž záhlavím a <b>touž rukou jako "
      "f3</b> (kopista r. 1689 list nadepsal a nalinkoval, vyplnil až f3); f3 = symetrická "
-     "perpetuální tabule po krocích délky dne (Tadeáš Hájek z Hájku, pól 50°, nový kalendář) — "
+     "perpetuální tabule po krocích délky dne — <b>opis Hájkovy „Tabule dlúhosti dne a noci "
+     "k spravování orloje“ (1574)</b>, pól 50°, upraveno na nový kalendář; originál tisku "
+     "v Knihopisu nedoložen, f3 patrně vzácný svědek — "
      "přepsána věrně a kompletně: jarní i podzimní blok (měsíc, den, svátek, vstupy Slunce) čteny "
      "ze skenu, časy ověřeny výpočtem; německý návod, jak takovou tabuli užít, je dole na f54 — "
      "ale ten platí pro f3 i f55 (tytéž hodnoty), vznikl až po tabuli (≥1641) a je rukou "
@@ -1277,11 +1279,13 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
      "jen spojovací německé fráze ([?]/[…])"),
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641–42)", "C · ~1641–42", "done",
      "vše přepsáno a ověřeno výpočtem: litera dominicalis (f50/56), epakty (f57), vejchod Slunce "
-     "(f55), intervallum jul./greg. (f60/61 — týden Velikonoc), festa mobilia jul./greg. (f58/59), "
+     "(f55), intervallum Velikonoc (f60 jul. souhlasí 133/133; f61 greg. 191/210 — zóna epakty "
+     "25 k dořešení na originále), festa mobilia jul./greg. (f58/59), "
      "calendarium novoluní po dnech (f66), násobilka (f69) + komputistické prózy f62–65, 67, 68"),
     ("f70–f79", "Astrolabium parvum (~1642, čes. překlad Franze Rittera)", "C · ~1641–42", "done",
      "noční určení času ze stínu Měsíce + oprava astrolábem; datovaný příklad z 1. XI 1642 "
-     "ověřen nezávislým výpočtem (tools/verify_astrolabe_1642.py)"),
+     "ověřen nezávislým výpočtem (tools/verify_astrolabe_1642.py). Doložen jako překlad "
+     "Ritterova <i>Astrolabia</i> (Norimberk 1613) — kolace pasáží i figur (viz článek u f70)"),
     ("f80", "dva latinské epigramy (Pythagoras, Archimedes) + nákres trojúhelníku",
      "C? · ~1641–42", "done",
      "přepsáno + překlad (hekatomba; „pohnu zemí“). Ruka pracovně připsána <b>C</b> "
