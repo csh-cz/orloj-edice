@@ -1607,15 +1607,15 @@ def _index_doc(
     )
     uvod = (
         '<section class="uvod"><h2>Úvod</h2>'
-        '<p class="lead">Digitální vědecká edice jediného rukopisu — orlojní knihy '
-        "pražského orloje, do níž po celé století "
-        "(~1587–1689) psali různí pisatelé — městský i kancelářský písař, orlojník-astronom a opisovač.</p>"
-        "<p>Tato edice zpřístupňuje <b>jednu svázanou knihu</b> z Archivu hlavního města "
-        "Prahy (Sbírka rukopisů, inv. č. 7916). Není to sborník volně vložených listů, "
-        "ale <b>prázdný sešit svázaný vcelku a teprve pak postupně popisovaný</b> — což jsme "
-        "ověřili přímým ohledáním originálu v archivu. Kniha je proto <b>konvolut</b>: vrství "
-        "v sobě texty od konce 16. do konce 17. století, jak je psali po sobě jdoucí "
-        "pisatelé.</p>"
+        '<p class="lead">Orlojní kniha pražského orloje — pracovní rukopis, do něhož se přes '
+        "celé století (1587–1689) zapisovalo vše kolem stroje: opis Táborského zprávy o orloji, "
+        "smlouva z roku 1410, komputistické tabulky i návod k astrolábu.</p>"
+        "<p>Rukopis je uložen v Archivu hlavního města Prahy (Sbírka rukopisů, inv. č. 7916). "
+        "Není to sborník volně vložených listů, ale <b>prázdný sešit svázaný vcelku a teprve pak "
+        "postupně popisovaný</b> — což jsme ověřili přímým ohledáním originálu v archivu. Je to "
+        "tedy <b>konvolut</b>: vrství v sobě texty od konce 16. do konce 17. století, jak je "
+        "psali po sobě jdoucí pisatelé — městský i kancelářský písař, orlojník-astronom, "
+        "opisovač.</p>"
         "<h3>O čem kniha je</h3>"
         "<ul>"
         "<li><b>Jádro (fol. 5–49):</b> opis <i>Zprávy o orloji pražském</i> Jana Táborského, "
