@@ -1275,9 +1275,14 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
     ("f13–f30", "Táborský: kap. VI–XIII", "A · 1587", "done",
      "marginálie ověřeny ze skenu (f13 nejisté); pozdější vsuvka f22 (přestavba měsíční koule "
      "na samootáčivou) = ruka C ~1641–42"),
-    ("f31–f42", "Táborský: kap. XIII–XVIII", "A · 1587", "partial",
-     "Teige-ukotveno; diplomatická kontrola po řádcích; pozdější vsuvka f38 (redatace orloje "
-     "k r. 1410, „vide list purkmistra“) = jiná pozdější ruka ≥1628 (B/C nerozhodnuto, obsahově spíše B)"),
+    ("f31–f42", "Táborský: kap. XIII–XVIII", "A · 1587", "done",
+     "ověřeno <b>kolací proti Teigeho edici 1570</b> (každé slovo porovnáno, "
+     "<code>tools/collate_carchesius_teige.py</code>) + vizuální kontrolou skenu: všech 97 "
+     "odlišností jsou buď systematické dobové pravopisné varianty opisu (au/ú, ej/aj, ů/uo, "
+     "zodyaku, jsau/sou, sem/jsem), nebo OCR šum v Teigeho referenci — <b>ne chyby přepisu</b>; "
+     "několik reálných lexikálních variant opis × originál (mínění/mírněji ap.) zachováno. "
+     "Pozdější vsuvka f38 (redatace orloje k r. 1410, „vide list purkmistra“) = jiná pozdější "
+     "ruka ≥1628 (B/C nerozhodnuto, obsahově spíše B)"),
     ("f43–f49", "Táborský: biografický závěr, verše, kolofony 1570 + 1587", "A · 1587", "done", "—"),
     ("f50", "Tabula Litera dominicalis (N. I)", "C · ~1641–42", "done",
      "cyklus solaris → nedělní písmeno (jul./greg.), 28 řádků, ověřeno vzorcem"),
@@ -1374,9 +1379,9 @@ def _status_html(slug: str = "") -> str:
             "místo. Sloupec „ruka · datace“ ukazuje vrstvení konvolutu: <b>A</b> Carchesius 1587 "
             "(jádro), <b>B</b> Mikuláš Petr 1628 (List purkmistra), <b>C</b> orlojník-astronom "
             "~1641–42 (komputus + Astrolabium), <b>D</b> ~1689 (Hájkova tabule). <b>Do finální "
-            "kritické edice zbývá:</b> diplomatická kontrola f31–42 po řádcích, expertní revize "
-            "německého znění návodu f54 a dořešení zbylých nejistých čtení [?]. Prázdné/předsádky: "
-            "f1, f81.</p>"
+            "kritické edice zbývá:</b> expertní revize německého znění návodu f54, dořešení zbylých "
+            "nejistých čtení [?] a kritický variantní aparát opis × Teige (kolace už hotová, "
+            "<code>tools/collate_carchesius_teige.py</code>). Prázdné/předsádky: f1, f81.</p>"
         )
     return (
         '<table class="status"><caption>Stav zpracování (průběžně aktualizováno)</caption>'
@@ -1489,9 +1494,10 @@ def _index_doc(
         "kolace</b> a <b>odlišnosti opisu se záměrně zachovávají</b> (a značí), nikoli zarovnávají "
         "na originál.</p>"
         '<p class="warn"><b>Stav: rozpracovaná pracovní edice.</b> Normalizace je heuristická a '
-        "vyžaduje korekturu; část přípisků na okraji (fol. 13–30) není ověřena proti skenu; oddíl "
-        "fol. 31–42 je čtecí oporou ukotven na Teigem. Zatím neslouží jako citovatelná kritická "
-        "edice.</p>"
+        "vyžaduje korekturu; část přípisků na okraji (fol. 13–30) je ověřena jen zčásti. Oddíl "
+        "fol. 31–42 byl nově ověřen <b>kolací proti Teigeho edici 1570</b> (porovnáno každé slovo) "
+        "a vizuální kontrolou skenu — odlišnosti jsou dobové pravopisné varianty opisu, ne chyby "
+        "přepisu. Zatím přesto neslouží jako plně citovatelná kritická edice.</p>"
         '<p class="verify"><b>Ověření tabulek výpočtem.</b> Číselné komputistické a astronomické '
         "tabulky byly přepsány ručně (strojové rozpoznání rukopisných číslic selhává) a poté "
         "<b>deterministicky ověřeny nezávislým výpočtem</b> (skript <code>tools/verify_computus.py</code> "
