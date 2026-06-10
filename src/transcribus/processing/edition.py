@@ -208,6 +208,15 @@ def _clean_block(main_lines: list[str], page_nr: int, do_norm: bool) -> str:
             # editorial separator: a new, different text begins on the same folio
             out.append('<hr class="text-sep">')
             continue
+        if ln.lstrip().startswith("[Překlad"):
+            # in-flow translation of a foreign-language passage: a reading aid that
+            # belongs right under the text, not buried in the apparatus
+            body = re.sub(r"^\[Překlad[^:]*:\s*", "", ln.strip()).rstrip("] ")
+            out.append(
+                '<div class="trans-block"><span class="trans-label">překlad</span>'
+                f"{_apparatus(_esc(body))}</div>"
+            )
+            continue
         n += 1
         out.append(_line_html(ln, normalize=do_norm, page_nr=page_nr, n=n))
     out.append("</div>")
@@ -1269,6 +1278,11 @@ a.lno:hover{color:var(--accent);text-decoration:underline}
 .ln.flash{animation:lnflash 1.1s ease-out}
 @keyframes lnflash{0%{background:#f4dd8a}100%{background:transparent}}
 .pbreak{display:block;height:.7rem}
+.trans-block{display:block;margin:.55rem 0 .9rem 2.2rem;max-width:46rem;padding:.5rem .8rem;
+  background:#f0f5f1;border-left:3px solid #6f9678;border-radius:0 4px 4px 0;
+  font-style:italic;font-size:.92em;line-height:1.55;color:#3c4f42}
+.trans-block .trans-label{display:block;font-style:normal;font-family:system-ui,sans-serif;
+  font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;color:#6f9678;margin-bottom:.18rem}
 hr.text-sep{border:0;border-top:1px solid #b8a87e;margin:1.1rem 12% 1.1rem 0;position:relative}
 hr.text-sep::after{content:"✦";position:absolute;top:-.72rem;left:50%;transform:translateX(-50%);
   background:var(--paper);padding:0 .6rem;color:#8a7a52;font-size:.8rem}
