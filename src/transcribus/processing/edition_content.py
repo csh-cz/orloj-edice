@@ -597,9 +597,10 @@ _STATUS_ROWS: list[tuple[str, str, str, str, str]] = [
      "český překlad kompletní (ruka B) — od „My, purkmistr…“ přes datovací doložku 1410 "
      "(„ve čtvrtek před sv. Havlem“, ověřeno: 9. X 1410 = čtvrtek) až po připsaný kancelářský "
      "kolofon 1628 (Mikuláš Petr). Německý návod na f54 (přepočet německé↔orlojní hodiny) — "
-     "<b>zvláštní německy píšící ruka</b> (≥1641) — přepsán a přeložen, <b>všechna čísla "
-     "příkladu ověřena</b> (f55: 3. máj = 4:43; verify_f54_sunrise.py); orientační zůstávají "
-     "jen spojovací německé fráze ([?]/[…])"),
+     "<b>zvláštní německy píšící ruka</b> (≥1641) — <b>plný diplomatický přepis čtením skenu "
+     "řádek po řádku</b> (mj. „die mittlere Zahl duplirn“ = délka dne zdvojením doplňku; "
+     "lapsus „Untergang“ [!]; oprava „34“ nad škrtem) a <b>všechna čísla příkladu ověřena</b> "
+     "(f55: 3. máj = 4:43; verify_f54_sunrise.py)"),
     ("f55–f69", "komputistické/astron. tabulky + próza (sekce ~1641–42)", "C · ~1641–42", "done",
      "vše přepsáno a ověřeno výpočtem: litera dominicalis (f50/56), epakty (f57), vejchod Slunce "
      "(f55), intervallum Velikonoc (f60 jul. souhlasí 133/133; f61 greg. 191/210 — zóna epakty "

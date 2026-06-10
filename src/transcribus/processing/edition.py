@@ -816,9 +816,9 @@ def _status_html(slug: str = "") -> str:
             "místo. Sloupec „ruka · datace“ ukazuje vrstvení konvolutu: <b>A</b> Carchesius 1587 "
             "(jádro), <b>B</b> Mikuláš Petr 1628 (List purkmistra), <b>C</b> orlojník-astronom "
             "~1641–42 (komputus + Astrolabium), <b>D</b> ~1689 (Hájkova tabule). <b>Do finální "
-            "kritické edice zbývá:</b> expertní revize německého znění návodu f54, dořešení zbylých "
-            "nejistých čtení [?] a kritický variantní aparát opis × Teige (kolace už hotová, "
-            "<code>tools/collate_carchesius_teige.py</code>). Prázdné/předsádky: f1, f81.</p>"
+            "kritické edice zbývá:</b> dořešení zbylých nejistých čtení [?] a kritický variantní "
+            "aparát opis × Teige (kolace už hotová, <code>tools/collate_carchesius_teige.py</code>). "
+            "Prázdné/předsádky: f1, f81.</p>"
         )
     return (
         '<table class="status"><caption>Stav zpracování (průběžně aktualizováno)</caption>'

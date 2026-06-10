@@ -11,9 +11,10 @@ zbývají dořešitelné nejistoty a navazující výzkum. (Hotové položky se 
 mažou; úplný stav po částech = tabulka na úvodní stránce edice.)
 
 ## Otevřené — text a čtení
-- [ ] **f54 němčina** — expertní revize spojovacích vět německého návodu ([?]/[…]).
-      Věcně hotovo: všechna čísla příkladu ověřena (3. V: 4:43 → doplněk 7:17 → poledne čes.
-      16:43 → východ čes. 9:26 → délka dne 14:34; = tabule f55 + `tools/verify_f54_sunrise.py`).
+- [x] **f54 němčina** — **přečteno ze skenu řádek po řádku** (plný diplomatický přepis;
+      „die mittlere Zahl duplirn" = délka dne zdvojením doplňku, lapsus „Untergang" [!],
+      oprava „34" nad škrtem). Čísla ověřena (`tools/verify_f54_sunrise.py`). Expertní
+      revize německého paleografa už jen volitelná kontrola.
 - [ ] **Zbylá `[?]` (~31)** — legitimní paleografické nejistoty: marginálie ruky A (f13–45),
       latina f4, jednotlivá slova v próze (cangla, rynkl, kluštice, Bechyně…), „Jana [?]"
       na f3 (12. XI; datem sv. Jan Almužník, litery přízviska nečitelné). Cílený skenový
