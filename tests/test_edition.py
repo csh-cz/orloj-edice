@@ -35,7 +35,10 @@ def test_build_edition_html(tmp_path):
     xml_dir = tmp_path / "page_xml"
     xml_dir.mkdir()
     (xml_dir / "0001.xml").write_text(PAGE, encoding="utf-8")
-    index = build_edition(tmp_path, title="Test", ahmp_permalink="https://katalog.ahmp.cz/x")
+    index = build_edition(
+        tmp_path, title="Test",
+        ahmp_permalink="https://katalog.ahmp.cz/pragapublica/permalink?xid=ABC123",
+    )
 
     assert index.exists() and index.name == "index.html"
     assert (tmp_path / "edition" / "assets" / "edition.css").exists()
@@ -72,13 +75,38 @@ def test_parse_and_render_table(tmp_path):
     assert "<table" in html and "Januarius" in html and "<td>28</td>" in html
 
 
-def test_edition_renders_table_page(tmp_path):
+def test_edition_renders_verified_table_page(tmp_path):
+    # Only verified tables (tables_clean/NNNN.json) are rendered as a grid; raw
+    # PAGE-XML TableRegions are deliberately ignored (Docling/HTR of handwritten
+    # digits is unreliable). This codifies that design.
+    import json
+
+    xml_dir = tmp_path / "page_xml"
+    xml_dir.mkdir()
+    (xml_dir / "0055.xml").write_text(TABLE_PAGE, encoding="utf-8")
+    tc = tmp_path / "tables_clean"
+    tc.mkdir()
+    (tc / "0055.json").write_text(json.dumps([{
+        "region_id": "t1",
+        "cells": [
+            {"row": 0, "col": 0, "text": "Januarius", "row_span": 1, "col_span": 1},
+            {"row": 0, "col": 1, "text": "Februarius", "row_span": 1, "col_span": 1},
+        ],
+    }]), encoding="utf-8")
+    build_edition(tmp_path, title="T")
+    page = (tmp_path / "edition" / "p0055.html").read_text(encoding="utf-8")
+    assert 'class="page-table"' in page and "Februarius" in page
+
+
+def test_edition_ignores_raw_table_regions(tmp_path):
+    # A page with ONLY a raw TableRegion (no tables_clean JSON) must not render a
+    # grid — it falls back to the 'table not yet transcribed' placeholder.
     xml_dir = tmp_path / "page_xml"
     xml_dir.mkdir()
     (xml_dir / "0055.xml").write_text(TABLE_PAGE, encoding="utf-8")
     build_edition(tmp_path, title="T")
     page = (tmp_path / "edition" / "p0055.html").read_text(encoding="utf-8")
-    assert 'class="page-table"' in page and "Februarius" in page
+    assert 'class="page-table"' not in page
 
 
 def test_docling_tables_json_roundtrip():

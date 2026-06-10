@@ -65,10 +65,12 @@ def derive_sections(
 ) -> list[tuple[str, int, int, str]]:
     """Group folios into sections.
 
-    For the 1587 book use the curated `_SECTIONS_1587` (Carchesius = one section).
-    For the 1570 autograph derive from Teige-match blocks. Returns (kind, lo, hi, label).
+    For the 1587 orloj book use the curated `_SECTIONS_1587` (Carchesius = one
+    section). Any other work (incl. the 1570 autograph) derives sections from the
+    Teige-match blocks — the curated list is orloj-specific and must not leak into
+    other documents built with this pipeline. Returns (kind, lo, hi, label).
     """
-    if "1570" not in work_slug:
+    if "1587" in work_slug:
         return [(k, lo, min(hi, total), lbl) for k, lo, hi, lbl in _SECTIONS_1587 if lo <= total]
     # Merge matched folios into intervals, bridging gaps <= ``gap``.
     intervals: list[list[int]] = []
