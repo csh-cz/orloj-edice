@@ -1,8 +1,14 @@
 # Secrets
 .env
 
-# Pipeline output / work dirs
-work/
+# Pipeline output / work dirs — EXCEPT the hand-corrected scholarly content
+# (clean transcriptions + decoded tables), which is the primary edition source
+# and must be versioned. Everything else under work/ is regenerable output.
+work/*
+!work/orloj1587/
+work/orloj1587/*
+!work/orloj1587/clean/
+!work/orloj1587/tables_clean/
 *.zip
 
 # Python

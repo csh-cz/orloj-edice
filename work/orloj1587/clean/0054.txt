@@ -1,0 +1,28 @@
+Kteréžto takové jeho náklady a těžké práce, kteréž městu tomuto k poctivosti činil a dále
+činiti bude, při sobě považivše — poněvadž každý dělník, aby mu mzda jeho dána byla, hoden
+jest — protož jsme s dobrým rozmyslem naším svrchu psanému mistru Mikulášovi a dědicům jeho
+za odměnu učiniti a jemu dům dali vedle brány městské, kdež se do Nového Města na Koňský trh
+jde, po příkopích městských, blíže našich chlebných kotcův, kterýž on rozšířil a na svůj
+náklad vystavěl. K tomu zapisujeme jemu a dědicům jeho na témž domě a místě padesát kop grošů
+hotových peněz, kteréž na něm míti má, na tento způsob: pokudž bychom my aneb budoucí naši
+správcové města Prahy týž dům zbořiti aneb jináč k potřebě města obrátiti chtěli, tehdy máme
+my aneb kdokoliv jiný jemu hotových padesát kop grošů dáti a téhož domu se ujíti. A vedle
+svrchu psaného práva může dotčený mistr Mikuláš za zdravého života svého aneb na smrtelné
+posteli své o tom o všem říditi bez překážky všeliké.
+
+Tomu na svědomí k listu tomuto pečeť naši městskou jsme přivěsili, jenž jest dán v Praze po
+narození Kristovém čtrnáctistého léta a potom desátého léta, ve čtvrtek před sv. Havlem.
+
+[Pod listinou připsáno toutéž rukou (B, Mikuláš Petr, 1628):] Vypsáno ze starých kněh v kanceláři hořejší dne 15. novembris léta 1628. Mikuláš Petr.
+
+[Ediční pozn.: Závěr listiny (koroborační a datovací doložka) i připsaná kancelářská poznámka z r. 1628 v dosavadní edici chyběly — doplněny podle Macháčkova přepisu, zarovnány na HTR. Datum „ve čtvrtek před sv. Havlem" je ověřeno výpočtem: 9. října 1410 (jul.) skutečně připadlo na čtvrtek (i sv. Havel 16. X byl čtvrtek), což potvrzuje čtení dne i doloženou dataci 9. X 1410 — HTR zde chybně nabízelo „pátek". Tato doložka nese letopočet 1410, o nějž se opírá redatace vzniku orloje (srov. přípisek f38); připsaná poznámka 1628 datuje opis a podepisuje písaře B (Mikuláš Petr).]
+
+[Německý komputistický návod — dolní část folia, novogotická kurzíva. Nejisté čtení značeno [?]/[…]:]
+
+„Auß dieser Tafel des Aufgangs wirst du wiederum der Sonnen Untergang auch nach deutscher [Uhr] finden, und den [Aufgang] nach der böhmischen [Uhr]; dann auch die Länge des Tags. Wann du über den Tag des Sonnenaufgangs so viel an der Zahl [nimmst], daß es zu [12] macht, so wirds der Untergang nach der deutschen Uhr [weisen]; hernach wiederum die Zahl subtrahier von 24 — was überbleibt, wird der Mittag der böhm[ischen Uhr] sein; wiederum [nimm] die Zahl […], so wirds [weisen] den Aufgang der böhm[ischen Uhr]; [wann du] […] die Zahl, [daraus] wird die Länge des Tags.
+
+Verbi gratia: dieses wirst du wissen auf den 3ten May, so sprich also: diesen Tag gehet die Sonn auf (nach der halben [= deutschen] Uhr) umb 4 Uhr 43 Min. Diese 4 Uhr 43 Min [bring] zu seinem Complement, das ist so viel, daß an der Zahl 12 herauskommt: nimm 7 Uhr 17 Min. Diese 7 Uhr 17 Min subtrahier von 24 […] den Untergang in der deutschen Uhr; [diese 7:17] subtrahier von 24, so kommt 16 [Uhr] 43 [Min] — das ist der Mittag der böhm[ischen] Uhr. Von diesen 16:43 [sub]trahier den Untergang, nämlich 7:17, so bleibt 9 Uhr 26 Min — dieses ist der Aufgang der böhm[ischen] Uhr. Wann ich […] abziehe den Untergang [7:17], so kommt heraus 14 [Uhr 34 Min] — das ist die Tageslänge. Und so ist es von oben gewiesen."
+
+[Český překlad (smysl): Z této tabule východu Slunce (srov. fol. 55) najdeš i západ Slunce v německých (obecných) hodinách, i východ a poledne v českých (orlojních) hodinách, a délku dne. — Příklad na 3. května: Slunce vychází ve 4 h 43 min (obecných) — tuto hodnotu má přímo tabule f55 (sloupec Máj, 3. den = 4:43); doplněk do 12 h je 7 h 17 min (= polovina délky dne). Odečteno od 24 → poledne v českých hodinách 16 h 43 min; od něj odečti 7:17 → východ v českých hodinách 9 h 26 min; délka dne 14 h 34 min. Všechna čísla souhlasí s tabulí f55 i s geometrickým modelem (ověřeno skriptem tools/verify_f54_sunrise.py).]
+
+[Ediční pozn.: německá novogotická kurzíva; čtení spojovacích vět nejisté ([?]/[…]). Návod učí, jak z tabule východu Slunce dopočítat západ, poledne a délku dne v německých (obecných) i českých (orlojních) hodinách, s příkladem na 3. května. — Ověření čísly: pražský model sedí (3. 5. východ ≈ 4:43, délka dne ≈ 14:34), jenže tytéž hodnoty dávají OBĚ tabule v knize — f55 (dedikovaná tabule východu Slunce, ~1641) i f3 (Hájkova tabule délky dne, 1689) — takže příklad sám NEROZLIŠÍ, ke které se vztahuje. Patří k f55: ta totiž má pod tabulkou TÝŽ návod ČESKY (stejný postup i stejný příklad na 3. května) — tento německý text je tedy německou paralelou českého návodu u f55. (f55 dává jen obecný východ a návod učí dopočítat orlojní hodiny a délku dne, což f3 už tabeluje sama.) Tak jako tak vznikl AŽ PO té tabuli — tj. ≥1641 (možná ≥1689) — a protože je psán německy k českým tabulím a jde o uživatelskou příručku, jde patrně o POZDĚJŠÍHO, německy mluvícího orlojníka: jinou ruku než český kopista f2–3 i než německý kurent Mikuláše Petra (1628). V dvojjazyčném prostředí orloje (List purkmistra německy i česky) to nepřekvapí. — Čísla příkladu jsou jistá: východ 4:43 je přímo hodnota tabule f55 (3. máj) a celý řetězec (doplněk 7:17, poledne čes. 16:43, východ čes. 9:26, délka dne 14:34) je uzavřený a souhlasí s aritmetikou i nezávislým astronomickým výpočtem (ověřeno skriptem tools/verify_f54_sunrise.py). Dřívější rekonstrukce zde chybně uváděla 4:48/7:12/16:48/9:36/14:24 — opraveno podle tabule f55 i podle Kurrent HTR. Nejisté zůstávají už jen spojovací německé fráze ([?]/[…]), kde by německý paleograf přepis ještě vyhladil; podstata a všechna čísla jsou hotová. Strojový základ čtení: PyLaia German Kurrent (model 27457).]

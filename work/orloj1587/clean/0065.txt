@@ -1,0 +1,12 @@
+Ukazatel nového měsíčného.
+Pakliž se nedostávalo, že by nemohl těch 10 odníti, přilož k tomu 30 a pak odejmi; ukáže
+přítomného roku epacta lunae vedle nového kalendáře.
+
+Ku příkladu: roku 1641 jest zlatého počtu 8; ten multiplikuji skrze 11, vyjde mi 88; to
+dividuji skrze 30, zbude mi 28; odtud odejmu 10, zustane epacta téhož roku 1641 vedle nového
+kalendáře 18. (Takto: 8 aureus numerus → 88 → 30 → 18 epacta.)
+
+Druhé: následujícího pak roku 1642 bude aureus numerus 9; ten když multiplikuji skrze 11,
+vynese 99; kterýžto počet zase dividuji skrze 30, zustane mi po divisí toliko 9; odtud
+poněvadž 10 odníti nemohu, přidám k nim 30, učiní obojího 39, odtud odejmu 10, zustane téhož
+roku 1642 epacta lunae 29 wedle nového kalendáře. A tak dále.

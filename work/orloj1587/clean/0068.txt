@@ -1,0 +1,22 @@
+Každého měsíce nový a plný měsíc skrze počítání vynajdeš. (Z francouzského autora.)
+
+Předně věděti se má, že epacta jmenují se liché dni, kteříž se k měsíčným počtům přidávají
+k doplnění dokonalého běhu měsíce; kterážto epacta každého roku o 11 [dní] se množí. Ku
+příkladu: když předešlého roku epacta byla 8, tehdy tohoto roku bude 19; a což jich přes 30
+jest, od toho odejmi 30, ostatek epacta ukáže.
+
+K vynalezení tedy dne nového měsíce: má se k počtu každého měsíce (kteréž se od Martie
+počítají) přidati epacta téhož roku, a tu summu od 30 odníti, a rest ukáže den nového měsíce;
+k tomu přidajíc 15 ukáže pln měsíce.
+
+Ku příkladu, chci věděti, kterého dne in Januario anno 1641 nový měsíc bude: zhledám předně
+počet epact téhož roku, jichž nacházím 2; k tomu přidám 11 (neb Januarius jest v počtu
+jedenáctý měsíc od Martie), bude 13; od 30 odejmu, zustane 17 — a tak nový měsíc bude 17.
+Januarii; k tomu přidajíc 15, pln měsíce 1. Februarii. Pakliby summa první 30 převyšovala,
+odloží se 30, a rest jeho od 30 odejma ukáže ti pravý den nového měsíce.
+
+Druhý příklad, chci věděti nový měsíc anno 1609 in Januario: epacta toho roku jest 24;
+k tomu přidajíc 11 bude 35; odloží-li se 30, zustane ještě 5; ta opět odejmana od 30, zustane
+25 — a to bude den nového měsíce 25. Januarii.
+
+[Ediční pozn.: Obě číselné epakty jsou jisté z vlastní aritmetiky příkladů — text uvádí mezisoučet: 1641 → „epacta… 2; k tomu přidám 11… bude 13" (2 + 11 = 13), 1609 → „epacta… 24; k tomu přidajíc 11 bude 35" (24 + 11 = 35). Čtení číslic tedy nevyplývá z odhadu, nýbrž z uzavřeného počtu (ověřeno skriptem tools/verify_f68_epact.py). • Tato „epakta" je číslo stáří Měsíce k 1. lednu podle francouzské pomůcky, jíž se oddíl výslovně dovolává („Z francouzského autora"): roste o +11 za rok (mod 30) a slouží jen k přibližnému odhadu dne nového a úplňkového Měsíce — není totožná s juliánskou ani gregoriánskou epaktou liturgických tabulí (ty pro tytéž roky dávají jiné hodnoty). Metoda je středověké „computus digitorum": den nového Měsíce = 30 − (epakta + pořadí měsíce od března), úplněk +15.]

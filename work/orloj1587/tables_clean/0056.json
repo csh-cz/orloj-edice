@@ -1,0 +1,616 @@
+[
+{
+"region_id": "f56_litera_dom_n1",
+"cells": [
+{
+"row": 0,
+"col": 0,
+"text": "Cyklus solaris",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 0,
+"col": 1,
+"text": "Litera dom. juliánská",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 0,
+"col": 2,
+"text": "Litera dom. gregoriánská",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 1,
+"col": 0,
+"text": "1",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 1,
+"col": 1,
+"text": "G F",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 1,
+"col": 2,
+"text": "C B",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 2,
+"col": 0,
+"text": "2",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 2,
+"col": 1,
+"text": "E",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 2,
+"col": 2,
+"text": "A",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 3,
+"col": 0,
+"text": "3",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 3,
+"col": 1,
+"text": "D",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 3,
+"col": 2,
+"text": "G",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 4,
+"col": 0,
+"text": "4",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 4,
+"col": 1,
+"text": "C",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 4,
+"col": 2,
+"text": "F",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 5,
+"col": 0,
+"text": "5",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 5,
+"col": 1,
+"text": "B A",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 5,
+"col": 2,
+"text": "E D",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 6,
+"col": 0,
+"text": "6",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 6,
+"col": 1,
+"text": "G",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 6,
+"col": 2,
+"text": "C",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 7,
+"col": 0,
+"text": "7",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 7,
+"col": 1,
+"text": "F",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 7,
+"col": 2,
+"text": "B",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 8,
+"col": 0,
+"text": "8",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 8,
+"col": 1,
+"text": "E",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 8,
+"col": 2,
+"text": "A",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 9,
+"col": 0,
+"text": "9",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 9,
+"col": 1,
+"text": "D C",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 9,
+"col": 2,
+"text": "G F",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 10,
+"col": 0,
+"text": "10",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 10,
+"col": 1,
+"text": "B",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 10,
+"col": 2,
+"text": "E",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 11,
+"col": 0,
+"text": "11",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 11,
+"col": 1,
+"text": "A",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 11,
+"col": 2,
+"text": "D",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 12,
+"col": 0,
+"text": "12",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 12,
+"col": 1,
+"text": "G",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 12,
+"col": 2,
+"text": "C",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 13,
+"col": 0,
+"text": "13",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 13,
+"col": 1,
+"text": "F E",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 13,
+"col": 2,
+"text": "B A",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 14,
+"col": 0,
+"text": "14",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 14,
+"col": 1,
+"text": "D",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 14,
+"col": 2,
+"text": "G",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 15,
+"col": 0,
+"text": "15",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 15,
+"col": 1,
+"text": "C",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 15,
+"col": 2,
+"text": "F",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 16,
+"col": 0,
+"text": "16",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 16,
+"col": 1,
+"text": "B",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 16,
+"col": 2,
+"text": "E",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 17,
+"col": 0,
+"text": "17",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 17,
+"col": 1,
+"text": "A G",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 17,
+"col": 2,
+"text": "D C",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 18,
+"col": 0,
+"text": "18",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 18,
+"col": 1,
+"text": "F",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 18,
+"col": 2,
+"text": "B",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 19,
+"col": 0,
+"text": "19",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 19,
+"col": 1,
+"text": "E",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 19,
+"col": 2,
+"text": "A",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 20,
+"col": 0,
+"text": "20",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 20,
+"col": 1,
+"text": "D",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 20,
+"col": 2,
+"text": "G",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 21,
+"col": 0,
+"text": "21",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 21,
+"col": 1,
+"text": "C B",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 21,
+"col": 2,
+"text": "F E",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 22,
+"col": 0,
+"text": "22",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 22,
+"col": 1,
+"text": "A",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 22,
+"col": 2,
+"text": "D",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 23,
+"col": 0,
+"text": "23",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 23,
+"col": 1,
+"text": "G",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 23,
+"col": 2,
+"text": "C",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 24,
+"col": 0,
+"text": "24",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 24,
+"col": 1,
+"text": "F",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 24,
+"col": 2,
+"text": "B",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 25,
+"col": 0,
+"text": "25",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 25,
+"col": 1,
+"text": "E D",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 25,
+"col": 2,
+"text": "A G",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 26,
+"col": 0,
+"text": "26",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 26,
+"col": 1,
+"text": "C",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 26,
+"col": 2,
+"text": "F",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 27,
+"col": 0,
+"text": "27",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 27,
+"col": 1,
+"text": "B",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 27,
+"col": 2,
+"text": "E",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 28,
+"col": 0,
+"text": "28",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 28,
+"col": 1,
+"text": "A",
+"row_span": 1,
+"col_span": 1
+},
+{
+"row": 28,
+"col": 2,
+"text": "D",
+"row_span": 1,
+"col_span": 1
+}
+]
+}
+]

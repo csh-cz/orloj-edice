@@ -1,0 +1,32 @@
+[lehč]eji se děje, má centrum své v jiném místě než sphera; a to slunce tím pravidlkem se
+zdržuje, aby ne po kraji sphery s rukau, ale po kraji zodyaku, někdy blíž někdy dále od
+ruky, na prutu declinací, ono postupovalo, aby bylo poznáno na kterém znamení i na kolikém
+gradu slunce stojí, a aby okolky neviditedlné dvanácti znamení i graduov jich pravě dělalo,
+a aby pravě hodinní planetní nejednostejné i vejchod svůj ukazovalo, ale hodinu vejchodu
+jeho ruka sama ukazuje. A to pravidlko podchází také pod měsíc i pod index jeho. Druhé pak
+pravidlko, na vosu zodyaku vsazené, na konci vosu zpravuje měsíc, tajně objíždí jako první
+slunce, neb jest na konec jeho přinítováno lůžko měsícovo; a pod tím lůžkem, na samém konci
+pravidlka, udělán jest kranzek, a ten kranzek vstrčen jest na prut indexu declinací měsíce,
+aby po tom prutu mohl postupovati a svau declinací konati, též jako slunce. A tak to
+pravidlko s tím lůžkem sedí na tom prutu, až se o něco tře, když se minutí mají, neb prut
+pod pravidlko podchází. Na samém pak kraji vosi zodyakova jest vsazené kolečko železné
+s zaubky, kteréž se netočí, ale na místě svém tuze sedí; a okolo toho kolečka jest ohnutí
+v kraji neb konci toho pravidlka, a na samém konci toho ohnutí jest dírka, jakoby byla
+kštudlička, do kteréž vstrčen jest jeden konec aneb čípek vřetena aneb hřídelíku, na kterémž
+sedí měsíc; a druhý konec neb čípek toho vřetena vsazen jest v konci lůžka měsícova. A na to
+vřeteno, u prvního konce při tom kolečku nehnutedlném, vsazeno jest jiné kolečko hnutedlné,
+též s zaubky, jehožto krajové jdau po krajích onoho kolečka nehnutedlného. A když měsíc své
+postupování po zodyaku koná, tehdy to kolečko hnutedlné, potkávajíc se s zaubky toho kolečka
+nehnutedlného, musí se jim poddávati a po maličku zatáčovati, a tím svým zatáčováním točí
+měsícem, poněvadž na témž hřídelíku neb vřetenu sedí, že se on v svém lůžku obrací; a tak
+jeho přibývání a ubývání se vykonává. A tu se jemu podiviti takovému mistrovství, i tomu, že
+ve všech těch sphernních kol hřídelové jdau v jednom vosu, jeden v druhý provedeni.
+
+[přípis pozdější rukau:] Nyní jest to jinače spraveno a lehčeji, neboť žádných koleček není,
+které by měsícem hýbali, viděti není, nežli vnitř v tlustosti měsíce jest příprava dosti
+sprostá, však předce dosti trefně vymyšlená, tak že samým otočováním se měsíce po sféře v 24
+hodinách corpus lunae o 1 grad se pohne, a v 30 dnech celý se obrátí, a svau náležitost
+vykonává; a kdyby se někdy jaký omyl přihodil, samým otočením se napraví.
+[Ediční pozn.: pozdější vsuvka — ruka se s dobrou pravděpodobností shoduje s rukou Astrolabia parvum (fol. 70–79) a komputistické prózy (fol. 62–68), tj. orlojníka-astronoma činného ~1641–1642 (týž pravý sklon, hnědý inkoust a mísení latiny: corpus lunae, gradus, sphera). Slovem „nyní" tedy datuje přestavbu měsíčního mechanismu k ~1641–1642. Dataci té vrstvy nezávisle ukotvuje výpočet příkladu z 1. XI 1642 v Astrolabiu (skript tools/verify_astrolabe_1642.py). Tím revidujeme dřívější přiřazení Mikuláši Petrovi (~1628); doporučena expertní verifikace na originále.]
+
+[přípisy na okraji:] O postupování lišty[?] po prutu. — O měsíci, k zodyaku zůstávání a po indexu postupování. — O kolečku hnutedlném. — Kterak přibývá a ubývá měsíce.
