@@ -44,6 +44,8 @@ select = ["E", "F", "I", "UP", "B"]
 "src/transcribus/cli.py" = ["B008"]
 # Inline HTML/CSS template strings naturally exceed the line length.
 "src/transcribus/processing/edition.py" = ["E501"]
+# Curated editorial content (long HTML note strings).
+"src/transcribus/processing/edition_content.py" = ["E501"]
 # Test fixtures embed long PAGE XML lines.
 "tests/**" = ["E501"]
 
