@@ -50,11 +50,22 @@ _PENCIL_FOLIO: dict[int, str] = {
 _MISSING_BEFORE: dict[int, str] = {
     56: "Podle staré (tužkové) foliace zde mezi listy 32 a 35 <b>chybějí dva listy "
         "(st. fol. 33–34)</b> — patrně ztracené. Obsahově padly doprostřed komputistického "
-        "oddílu (mezi tabuli východu Slunce a Litera dominicalis). Naše foliace dle skenů je "
-        "souvislá; chybí jen v původní knize.",
+        "oddílu (mezi tabuli východu Slunce a Litera dominicalis). <b>Hypotéza:</b> oba listy "
+        "jsou poloviny <b>jednoho přeloženého archu — nejvnitřnějšího dvojlistu složky</b> se "
+        "středem mezi listy 33|34 (okolní listy 31, 32 i 35, 36 jsou všechny dochované). "
+        "Vnitřní dvojlist drží jen šitím v přehybu a vypadává vcelku; mluví to spíše pro "
+        "uvolnění/vyjmutí celého archu než pro vyřezání jednotlivých stránek. Ověřitelné na "
+        "originále: vypadl-li střední dvojlist, nebudou v hřbetu žádné pahýly, jen obnažený "
+        "střed složky se šitím. Naše foliace dle skenů je souvislá; chybí jen v původní knize.",
     70: "Podle staré (tužkové) foliace zde mezi listy 41 a 46 <b>chybějí čtyři listy "
         "(st. fol. 42–45)</b> — patrně ztracené. Padly na přechod mezi koncem komputistického "
-        "oddílu a začátkem Astrolabia parvum. Naše foliace dle skenů je souvislá; chybí jen "
+        "oddílu a začátkem Astrolabia parvum. <b>Hypotéza:</b> mezera přesně odpovídá "
+        "<b>dvěma nejvnitřnějším dvojlistům kvaternu listů 40–47</b> (dvojice 42+45 a 43+44): "
+        "všechny čtyři vnější listy složky — 40, 41, 46 a 47 — jsou dochované a chybí právě "
+        "střed. Vnitřní dvojlisty drží jen šitím v přehybu a vypadávají vcelku; mluví to spíše "
+        "pro uvolnění/vyjmutí celých archů než pro vyřezání jednotlivých stránek. Ověřitelné "
+        "na originále: vypadly-li střední dvojlisty, nebudou v hřbetu žádné pahýly (při "
+        "vyřezávání by naopak zůstaly čtyři). Naše foliace dle skenů je souvislá; chybí jen "
         "v původní knize.",
 }
 
