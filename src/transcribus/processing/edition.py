@@ -1278,7 +1278,7 @@ a.lno:hover{color:var(--accent);text-decoration:underline}
 .ln.flash{animation:lnflash 1.1s ease-out}
 @keyframes lnflash{0%{background:#f4dd8a}100%{background:transparent}}
 .pbreak{display:block;height:.7rem}
-.trans-block{display:block;margin:.55rem 0 .9rem 2.2rem;max-width:46rem;padding:.5rem .8rem;
+.trans-block{display:block;margin:.55rem 0 .9rem;padding:.5rem .8rem;
   background:#f0f5f1;border-left:3px solid #6f9678;border-radius:0 4px 4px 0;
   font-style:italic;font-size:.92em;line-height:1.55;color:#3c4f42}
 .trans-block .trans-label{display:block;font-style:normal;font-family:system-ui,sans-serif;
