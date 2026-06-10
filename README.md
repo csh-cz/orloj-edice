@@ -14,19 +14,33 @@ Bach VadeMeCum se Zoomify prohlížečem). HTR běží přes **Transkribus TrpSe
 je přes readcoop SSO (OAuth2, Bearer token; auto-refresh). Žádný scraping prohlížeče
 není potřeba.
 
-## Webová edice — Pražský orloj
+## Webová edice — Orlojní kniha (opis 1587)
 
 **Živá edice: <https://csh-cz.github.io/orloj-edice/>**
 
-Digitální edice opisu spisu **Jana Táborského z Klokotské Hory** *Zpráva o orloji
-pražském* (opis **1587**, opisovač **Matouš Carchesius Jablonský**; Archiv hlavního
-města Prahy, Sbírka rukopisů, inv. č. 7916). Diplomatický přepis (Transkribus HTR)
-+ heuristická normalizace podle normy Šťovíček + kolace proti edici originálu 1570
-(J. Teige, 1901). **Rozpracovaná pracovní edice** — podrobnosti v tiráži na úvodní stránce.
+Digitální edice **celé orlojní knihy** pražského orloje (Archiv hlavního města Prahy,
+Sbírka rukopisů, inv. č. 7916) — konvolutu, do něhož se psalo přes celé století
+(**1587–1689**): opis *Zprávy o orloji pražském* Jana Táborského (1587, písař **Matouš
+Carchesius Jablonský**, fol. 5–49), opis **Listu purkmistra 1410** (Mikuláš Petr, 1628),
+**komputistické a astronomické tabulky** (~1641–42), **Astrolabium parvum** (český
+překlad F. Rittera, ~1642) a opis **Hájkovy tabule délky dne** (1689). Rozlišeny čtyři
+písařské ruce (paleografie + writer-ID + obsah/datace).
+
+Metoda: diplomatický přepis (Transkribus HTR) + ruční korektura + heuristická
+normalizace (norma Šťovíček) + **kolace proti Teigeho edici 1901 i přímo proti
+autografu 1570**; číselné tabulky **deterministicky ověřeny výpočtem** (skripty
+v `tools/`). Stará tužková foliace zachována („st. fol."), vyznačeny chybějící listy.
+Podrobnosti v úvodu a tiráži edice. **Rozpracovaná pracovní edice.**
 
 Skeny ani vyobrazení se nereprodukují (práva k reprodukcím: AHMP) — edice na ně
 odkazuje per folio do prohlížeče AHMP. Nasazení edice: **`./deploy.sh`** (regenerace
 bez vložených skenů → publikace na větvi `gh-pages`).
+
+**Zdrojová data edice** (ručně korigované přepisy a dekódované tabulky) jsou verzovaná
+v `work/orloj1587/clean/` a `work/orloj1587/tables_clean/`; zbytek `work/` je
+regenerovatelný výstup (gitignored). Ediční **obsah** (poznámky, popisky, stavová
+tabulka) žije v `src/transcribus/processing/edition_content.py`, renderovací **engine**
+v `edition.py`.
 
 ## Pipeline
 
@@ -74,16 +88,17 @@ Výstup: `work/<zakázka>/text/transcript.md` (+ per-page `.txt` a `page_xml/`).
 
 ## Stav / TODO
 
-- AHMP Zoomify mapping (`src/transcribus/sources/ahmp.py`) je postaven na
-  ověřeném vzoru Bach VadeMeCum, ale přesné URL pro `Zoomify.action` se finalizují
-  proti jednomu živému permalinku — viz docstring v modulu.
-- Transkribus klient cílí na Metagrapho `processing/v1` (ověřeno proti veřejnému
-  OpenAPI). Login (`transcribus login`) stojí 0 kreditů; kredity čerpá teprve
-  `POST /processes` za stránku.
-- `htrId` / `lineDetection.modelId` se zadávají ručně — Metagrapho nemá endpoint
-  pro výpis modelů; ID se berou z katalogu modelů na webu Transkribusu.
+Otevřené úkoly edice: **`TODO.md`** (nejistá čtení, identita pisatelů C/D, chybějící
+listy, předloha f55…). Badatelské podklady a handoffy: **`docs/`**. Verifikační a
+kolacní skripty: **`tools/`** (`verify_*` — komputus, astroláb 1642, epakty, f54;
+`collate_*` — Carchesius × Teige / × autograf 1570; `build_*` — rekonstrukce tabulek).
+
+Poznámky k pipeline:
+- Transkribus klient cílí na Metagrapho `processing/v1`; login stojí 0 kreditů,
+  kredity čerpá až `POST /processes` za stránku. `htrId` / `modelId` se zadávají
+  ručně (z katalogu modelů na webu Transkribusu).
 - Překlad je zatím no-op (`processing/translate.py`); vrstva je připravená jako
-  pluggable krok (Claude / DeepL).
+  pluggable krok.
 
 ## Testy
 
