@@ -180,12 +180,20 @@ def _clean_block(main_lines: list[str], page_nr: int, do_norm: bool) -> str:
     """
     ed_start = re.compile(r"^\[(?:[Ee]diční pozn|[Pp]ozn[.:])")
     text_lines: list[str] = []
-    ed_lines: list[str] = []
+    ed_blocks: list[list[str]] = []  # each [Ediční pozn.]/[Pozn.] paragraph separately
     in_ed = False
     for ln in main_lines:
-        if not in_ed and ed_start.match(ln.lstrip()):
+        if ed_start.match(ln.lstrip()):
             in_ed = True
-        (ed_lines if in_ed else text_lines).append(ln)
+            ed_blocks.append([ln])
+            continue
+        if in_ed:
+            if ln.strip():
+                ed_blocks[-1].append(ln)
+            else:
+                in_ed = False  # blank line ends the note block; running text may resume
+            continue
+        text_lines.append(ln)
 
     out = [
         '<span class="clean-flag">opravený přepis</span>',
@@ -196,16 +204,24 @@ def _clean_block(main_lines: list[str], page_nr: int, do_norm: bool) -> str:
         if not ln.strip():
             out.append('<span class="pbreak"></span>')
             continue
+        if ln.strip() == "* * *":
+            # editorial separator: a new, different text begins on the same folio
+            out.append('<hr class="text-sep">')
+            continue
         n += 1
         out.append(_line_html(ln, normalize=do_norm, page_nr=page_nr, n=n))
     out.append("</div>")
 
-    ed_text = " ".join(s.strip() for s in ed_lines if s.strip())
-    if ed_text:
-        ed_text = re.sub(r"^\[(?:[Ee]diční pozn|[Pp]ozn)[.:\s]*", "", ed_text).rstrip("] ")
+    paras = []
+    for block in ed_blocks:
+        txt = " ".join(s.strip() for s in block if s.strip())
+        txt = re.sub(r"^\[(?:[Ee]diční pozn|[Pp]ozn)[.:\s—-]*", "", txt).rstrip("] ")
+        if txt:
+            paras.append(f"<p>{_apparatus(_esc(txt))}</p>")
+    if paras:
         out.append(
             '<details class="ed-note"><summary>Ediční poznámka</summary>'
-            f"<p>{_apparatus(_esc(ed_text))}</p></details>"
+            + "".join(paras) + "</details>"
         )
     return "".join(out)
 
@@ -1253,6 +1269,9 @@ a.lno:hover{color:var(--accent);text-decoration:underline}
 .ln.flash{animation:lnflash 1.1s ease-out}
 @keyframes lnflash{0%{background:#f4dd8a}100%{background:transparent}}
 .pbreak{display:block;height:.7rem}
+hr.text-sep{border:0;border-top:1px solid #b8a87e;margin:1.1rem 12% 1.1rem 0;position:relative}
+hr.text-sep::after{content:"✦";position:absolute;top:-.72rem;left:50%;transform:translateX(-50%);
+  background:var(--paper);padding:0 .6rem;color:#8a7a52;font-size:.8rem}
 /* čtecí (continuous) sazba: join lines into justified prose at a comfortable
    measure (the wide no-wrap column is for the lineated „řádky" view only) */
 body.layout-flow .lines{text-align:justify;line-height:1.8;hyphens:auto;max-width:46rem}
