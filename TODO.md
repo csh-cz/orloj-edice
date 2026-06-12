@@ -29,9 +29,12 @@ mažou; úplný stav po částech = tabulka na úvodní stránce edice.)
       staroměstské účty 1641–42 a 1689 (plat orlojníkovi), radní manuály, listina 1659.
 
 ## Otevřené — kodikologie a předlohy
-- [ ] **Chybějící listy** (objev ze staré tužkové foliace): st. fol. 33–34 (mezi naším
-      f55/f56) a 42–45 (mezi f68/f70). Fyzicky ověřit na originále v AHMP (ústřižky
-      v hřbetu?). V edici vyznačeno bannery na f56/f70; mail Petru Skálovi odeslán/draft.
+- [ ] **Chybějící listy** (objev ze staré tužkové foliace): st. fol. 33–34 (f55/f56)
+      a 42–45 (f68/f70); hypotéza vypadlých středních dvojlistů (B = střed kvaternu
+      40–47). Rešerše hotová: **v literatuře nepublikováno** (Macháček 1962 nezmiňuje,
+      udává „51 listů" → ztráta možná až po 1962; Horský 1988 k fyzickému ověření).
+      Podrobně `docs/chybejici-listy.md`. Zbývá: autopsie hřbetu v AHMP (pahýly ano/ne),
+      čelo knihy (listy 1–3), Horský 1988; mail Petrovi = draft, čeká na odeslání.
 - [ ] **Hájkova „Tabule dlúhosti dne a noci k spravování orloje" (1574)** — dochování
       originálu: Knihopis prověřen (tabule v něm NENÍ, minuce ano) → zbývá ručně
       Manuscriptorium, katalog starých tisků NK ČR, monografie (Hladký–Šolc; NTM).

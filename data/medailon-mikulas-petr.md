@@ -29,3 +29,21 @@ pražské, Díl I*, oddíl XVI. Kostel sv. Valentina, **s. 285** (Teigeho odkaz 
   Jan Severyn Leinhoz z Břevnova (s. 287).
 - AHMP signatura ověřena v katalogu (`katalog.ahmp.cz`): řada PPL I – 451 = spor o sv. Valentina
   (1268–1663). **Svědomí z 6/1645 NENÍ digitalizováno** (z řady naskenováno jen 7 starších kusů).
+
+---
+
+## ⭐ Rodina — rod Petrů „od tří košíků" (doplněno 2026-06-10)
+Z knih finančních příkazů rady SM (M. Ďurčanský, FHB 22/2006; T. Dvořák, dipl. FF UK) plyne rodinné
+zázemí i **pokračování vazby rodu na orloj**:
+- **Děd:** **Mikuláš od (tří) košíků** (manž. Lidmila) — starší záduší, dům **U tří košíků** na Starém
+  Městě, obligace z 1587. *(Mikuláš Petr je jeho syn — odtud rodové přízvisko „z Košíkova".)*
+- **Mikuláš Petr** (~1589 – †mezi 1645 a 1656): město r. **1656** uhradilo jeho dědicům nárok za „záslužné
+  práce, jež pro město vykonal".
+- **Synové:** **Zikmund Petr** (měšťan) a **⭐ Ondřej (Andres) Oktavián Petr „z Košíkova"** — **malíř, žák
+  Karla Škréty**, mistr malířského cechu ~1656, měšťan SM 1669 (ručitelem **sám Karel Škréta**), **cechmistr
+  staroměstského malířského cechu 1674–1680**. Částku za zemřelého otce vyzvedl **12. 10. 1656 syn Ondřej**.
+
+**Pointa pro edici:** rod Petrů je s orlojem spjatý **přes dvě generace** — otec **Mikuláš Petr opsal list
+purkmistra do orlojní knihy (fol. 51–53, 1629)**, a jeho syn **Ondřej Oktavián Petr (žák Škréty) prováděl
+malířskou část velké opravy orloje 1659** (s hodinářem Janem Jiřím Millerem; Ďurčanský 2006; Horský 1988,
+s. 106–108).

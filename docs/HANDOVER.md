@@ -57,7 +57,13 @@ session. Po přečtení smaž/aktualizuj.
   místo „orlojníci", medailon Mikuláše Petra na f52 (nar. ~1589, písař hořejší kanceláře,
   pramen PPL I–451 / Teige Místopis I/1 s. 285).
 
-## ROZDĚLANÉ — okamžité další kroky (uživatel řekl „napiš si handover, restartuji")
+## ROZDĚLANÉ — stav po dokončení (2026-06-12)
+
+Bod 1 HOTOV: rešerše zapsána do `docs/chybejici-listy.md`, bannery f56/f70 doplněny
+(„v literatuře nezaznamenáno… Macháček 51 listů“), TODO aktualizováno. Bod 2: mail
+Petrovi = finální draft v konverzaci, ČEKÁ jen na adresu/kanál od uživatele.
+
+### (původní zadání bodů níže — již vyřízeno)
 
 1. **Rešerše „jsou vypadlé listy publikované?" — dokončeno zjištění, NEZAPSÁNO:**
    - Macháček 1962 (Zotero `PCXNHQ8T`, fulltext v note): výpadek NEzmiňuje; píše

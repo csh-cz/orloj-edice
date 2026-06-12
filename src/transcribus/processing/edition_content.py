@@ -56,7 +56,7 @@ _MISSING_BEFORE: dict[int, str] = {
         "Vnitřní dvojlist drží jen šitím v přehybu a vypadává vcelku; mluví to spíše pro "
         "uvolnění/vyjmutí celého archu než pro vyřezání jednotlivých stránek. Ověřitelné na "
         "originále: vypadl-li střední dvojlist, nebudou v hřbetu žádné pahýly, jen obnažený "
-        "střed složky se šitím. Naše foliace dle skenů je souvislá; chybí jen v původní knize.",
+        "střed složky se šitím.  V literatuře výpadek zaznamenán není (Macháček 1962 jej nezmiňuje a udává „rukopis mající 51 listů“ — což naznačuje, že listy tehdy možná ještě byly; Horský 1988 k ověření). Podrobně docs/chybejici-listy.md. Naše foliace dle skenů je souvislá; chybí jen v původní knize.",
     70: "Podle staré (tužkové) foliace zde mezi listy 41 a 46 <b>chybějí čtyři listy "
         "(st. fol. 42–45)</b> — patrně ztracené. Padly na přechod mezi koncem komputistického "
         "oddílu a začátkem Astrolabia parvum. <b>Hypotéza:</b> mezera přesně odpovídá "
@@ -65,7 +65,7 @@ _MISSING_BEFORE: dict[int, str] = {
         "střed. Vnitřní dvojlisty drží jen šitím v přehybu a vypadávají vcelku; mluví to spíše "
         "pro uvolnění/vyjmutí celých archů než pro vyřezání jednotlivých stránek. Ověřitelné "
         "na originále: vypadly-li střední dvojlisty, nebudou v hřbetu žádné pahýly (při "
-        "vyřezávání by naopak zůstaly čtyři). Naše foliace dle skenů je souvislá; chybí jen "
+        "vyřezávání by naopak zůstaly čtyři).  V literatuře výpadek zaznamenán není (Macháček 1962 jej nezmiňuje a udává „rukopis mající 51 listů“ — což naznačuje, že listy tehdy možná ještě byly; Horský 1988 k ověření). Podrobně docs/chybejici-listy.md. Naše foliace dle skenů je souvislá; chybí jen "
         "v původní knize.",
 }
 
