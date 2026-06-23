@@ -32,6 +32,28 @@ SPDX-License-Identifier: CC-BY-4.0
 > zdroje. Po doběhnutí vypiš, co se podařilo zaindexovat (počty dokumentů) a co zůstalo jako
 > stub.
 
+## Co už v korpusu JE (neduplikovat)
+
+| index | dok. | obsah |
+|---|---|---|
+| `tomek-mistopis` | 41761 | Tomek, Základy starého místopisu Pražského (1865) |
+| `teige-mistopis` | 12147 | Teige, Základy starého místopisu pražského — Staré Město |
+| `tadra-akta` | 2898 | Tadra, Soudní akta konsistoře pražské III (1392–98) |
+| `edice-externi` | 2501 | externí plné texty (mj. Tomek Základy — archive.txt) |
+| `liber-vetustissimus-edice` | 2055 | Liber vetustissimus (Pátková 2011) |
+| `cirkevni-prameny` | 1418 | Libri confirmationum ad beneficia eccl. Pragensem |
+| `berni-knihy-patkova-1079` | 1046 | Berní knihy SM 1427–1434 (Pátková) |
+| `cim-praha-1886` | 925 | Čelakovský, Codex iuris municipalis I — Privilegia měst pražských |
+| `kniha-pametni-992` | 538 | Kniha pamětní (Liber Tertius), AHMP rkp. 992, 1417–1480 |
+| `seznamy-mestanu` | 237 | Teige, Seznamy měšťanů pražských — Staré Město |
+| `berni-knihy-1427` | 234 | AHMP rkp. 20: Berní knihy SM |
+| `lehner-1911` | 117 | Lehner, Die mittelalterliche Tageseinteilung… |
+| `tomek-ccm-1844` | 23 | Tomek, Kniha Starého Města pražského od r. 1310 (ČČM 18, 1844) |
+| `ahisto` | 17 | Acta judiciaria + Archiv pražské metropolitní kapituly (via AHISTO) |
+| **`orloj-zaznamy`** | 6 | **jádro** — ručně autopsované primární záznamy k orloji 1366–1410 (radniční orloj, listina 1410 z rkp. 7916, katedrální orloj). Nové zdroje se mají sémanticky vázat sem. |
+
+(Počty dokumentů k 2026-06; ignoruj systémové `.kibana*`, `.opensearch-*`, `top_queries-*`.)
+
 ## Zdroje k doplnění (priorita shora)
 
 | zdroj | citace | Zotero | dostupnost / odkud vzít text |
