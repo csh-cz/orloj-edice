@@ -71,6 +71,14 @@ Co o něm víme (z obsahu a paleografie knihy):
   Pragensis horologium hoc renovatum*), 1659 (obnova orloje a vížky; **pamětní listina
   podepsaná 71 osobami** — rychtář, primátor, konšelé, úředníci, **písaři**, sluhové — uložená
   ve Spisovně radnice staroměstské, cit. Zlatá Praha XXXIV, s. 599), 1661 (oprava).
+- **Doložený orlojník/hodinář v mezeře posloupnosti: Jan Jiří Miller (Georg Müller).**
+  Hodinář, jenž r. **1659** dělal **strojní (hodinářskou) část** velké obnovy orloje; malířskou
+  část téže opravy dělal **Ondřej Oktavián Petr** (žák Škréty, syn našeho písaře B Mikuláše
+  Petra). Prameny: **Ďurčanský 2006** (knihy finančních příkazů rady SM, FHB 22/2006);
+  **Horský 1988, s. 106–108**. — Rokem 1659 leží **mezi** vrstvou C (1641–42) a D (1689), padá
+  tedy do jmenné mezery mezi Švorcpachem (1624) a Kleinem (~1700). Přímý kandidát na C ani D to
+  není (1659 ≠ ani jedna datace), ale je to **konkrétní jmenné vodítko**, koho a jakou dílnu
+  hledat v účtech kolem 1641–42 a 1689 (drží Millerova dílna orloj i dříve/později?).
 - **Tadeáš Hájek z Hájku** (1525/26–1600), dvorní matematik Rudolfa II., je autorem předlohy f3
   (tabule pro orloj 1574) — souvislost orloj ↔ Hájek je doložená; netýká se přímo identity C/D,
   ale ukazuje okruh.
@@ -85,7 +93,8 @@ Co o něm víme (z obsahu a paleografie knihy):
    a případného orlojníka; pomůže ohraničit C i D.
 4. **Matriky Karlo-Ferdinandovy univerzity / Klementinum** (jezuitská matematika) ~1620–1640:
    pro vzdělání ruky C (latina, komputus, astronomie).
-5. **Cech hodinářů / pražští hodináři** 17. stol. — členové, kromě Švorcpachů.
+5. **Cech hodinářů / pražští hodináři** 17. stol. — členové, kromě Švorcpachů; zvlášť **rod/dílna
+   Jana Jiřího Millera (Georg Müller)**, doložený u opravy 1659 — dohledat jeho působení před a po.
 6. **Cross-check:** kdo v Praze ~1640 vlastnil/anotoval **Ritterovo *Astrolabium* (1613)**;
    kdo ~1689 opisoval/upravoval astronomické tabule.
 7. **Dochování Hájkovy „Tabule… k spravování orloje" (1574)** — vedlejší úkol. **Knihopis už
